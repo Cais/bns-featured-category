@@ -39,13 +39,17 @@ if ( version_compare( $wp_version, "2.9", "<" ) ) {
     exit ( $exit_message );
 }
 
-/* Add our function to the widgets_init hook. */
-add_action( 'widgets_init', 'load_bnsfc_widget' );
-  
-/* Function that registers our widget. */
-function load_bnsfc_widget() {
-        register_widget( 'BNS_Featured_Category_Widget' );
-}
+/* BNS Featured Category TextDomain
+ * Make plugin text available for translation (i18n)
+ *
+ * @package: BNS Featured Category
+ * @since: 1.8.6    October 29, 2011
+ *
+ * Note: Translation files are expected to be found in the plugin root folder / directory.
+ * `bns-fc` is being used in place of `bns-featured-category`
+ */
+load_plugin_textdomain( 'bns-fc' );
+// End: BNS Plugin TextDomain
 
 // Begin the mess of Excerpt Length fiascoes
 function bnsfc_first_words( $text, $length = 55 ) {
@@ -61,6 +65,14 @@ function bnsfc_first_words( $text, $length = 55 ) {
         return $text;
 }
 // End Excerpt Length
+
+/* Add our function to the widgets_init hook. */
+add_action( 'widgets_init', 'load_bnsfc_widget' );
+  
+/* Function that registers our widget. */
+function load_bnsfc_widget() {
+        register_widget( 'BNS_Featured_Category_Widget' );
+}
 
 class BNS_Featured_Category_Widget extends WP_Widget {
     function BNS_Featured_Category_Widget() {
@@ -345,17 +357,5 @@ function bnsfc_shortcode( $atts ) {
 }
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
 /* BNSFC Shortcode End - Say your prayers ... */
-
-/* BNSFC Plugin TextDomain
- * Make available for translation
- *
- * @package: BNS Featured Category
- * @since: 1.8.6    October 29, 2011
- *
- * Note: Translation files are expected to be found in the plugin root folder / directory.
- * `bns-fc` is being used in place of `bns-featured-category`
- */
-load_plugin_textdomain( 'bns-fc' );
-// End: BNS Plugin TextDomain
 ?>
 <?php /* Last revised: October 29, 2011 v1.8.6 */ ?>

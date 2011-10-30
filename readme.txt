@@ -127,6 +127,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * confirmed compatible with WordPress 3.3
 * added i18n support
 * minor code and format clean-up
+* put code blocks into more logical order
 
 = 1.8.5 =
 * released May 2011
