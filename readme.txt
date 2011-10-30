@@ -124,6 +124,8 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 1.8.6 =
 * released ...
+* confirmed compatible with WordPress 3.3
+* added i18n support
 * minor code and format clean-up
 
 = 1.8.5 =

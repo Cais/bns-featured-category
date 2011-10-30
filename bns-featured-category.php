@@ -65,7 +65,7 @@ function bnsfc_first_words( $text, $length = 55 ) {
 class BNS_Featured_Category_Widget extends WP_Widget {
     function BNS_Featured_Category_Widget() {
             /* Widget settings. */
-            $widget_ops = array( 'classname' => 'bns-featured-category', 'description' => __( 'Displays most recent posts from a specific featured category or categories.' ) );
+            $widget_ops = array( 'classname' => 'bns-featured-category', 'description' => __( 'Displays most recent posts from a specific featured category or categories.', 'bns-fc' ) );
             /* Widget control settings. */
             $control_ops = array( 'width' => 450, 'height' => 350, 'id_base' => 'bns-featured-category' );
             /* Create the widget. */
@@ -120,16 +120,20 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     break;
                 } else { ?>
                     <div <?php post_class(); ?>>
-                        <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
+                        <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
                         <div class="post-details">
-                            <?php if ( $show_meta )
-                                printf( __( 'by %1$s on %2$s' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
-                            <?php if ( ( $show_comments ) && ( ! post_password_required() ) )
-                                comments_popup_link( __( 'with No Comments' ), __( 'with 1 Comment' ), __( 'with % Comments' ), '', __( 'with Comments Closed' ) ); ?><br />
-                            <?php if ( $show_cats )
-                                printf( __( 'in %s' ), get_the_category_list( ', ' ) ); ?><br />
-                            <?php if ( $show_tags )
-                                the_tags( __( 'as ' ), ', ', '' ); ?><br />
+                            <?php if ( $show_meta ) {
+                                printf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
+                            <?php }
+                            if ( ( $show_comments ) && ( ! post_password_required() ) ) {
+                                comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?><br />
+                            <?php }
+                            if ( $show_cats ) {
+                                printf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ); ?><br />
+                            <?php }
+                            if ( $show_tags ) {
+                                the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?><br />
+                            <?php } ?>
                         </div> <!-- .post-details -->
                         <?php if ( !$only_titles ) { ?>
                             <div style="overflow-x: auto"> <!-- for images wider than widget area -->
@@ -153,7 +157,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 }
             endwhile;
   		else :
-            _e( 'Yes, we have no bananas, or posts, today.' );
+            _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
         endif;
 
         /** @var $after_widget TYPE_NAME */
@@ -188,7 +192,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
     function form( $instance ) {
             /* Set up some default widget settings. */
             $defaults = array(
-                'title'           => __( 'Featured Category' ),
+                'title'           => __( 'Featured Category', 'bns-fc' ),
                 'cat_choice'      => '1',
                 'use_current'     => false,
                 'count'           => '0', /* resets count to zero as default */
@@ -208,36 +212,36 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $instance = wp_parse_args( (array) $instance, $defaults );
             ?>
             <p>
-                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bns-fc' ); ?></label>
                 <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
             </p>
 
             <p>
-                <label for="<?php echo $this->get_field_id( 'cat_choice' ); ?>"><?php _e('Category IDs, separated by commas (no spaces):'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'cat_choice' ); ?>"><?php _e( 'Category IDs, separated by commas (no spaces):', 'bns-fc' ); ?></label>
                 <input id="<?php echo $this->get_field_id( 'cat_choice' ); ?>" name="<?php echo $this->get_field_name( 'cat_choice' ); ?>" value="<?php echo $instance['cat_choice']; ?>" style="width:100%;" />
             </p>
 
             <p>
                 <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_current'], true ); ?> id="<?php echo $this->get_field_id( 'use_current' ); ?>" name="<?php echo $this->get_field_name( 'use_current' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'use_current' ); ?>"><?php _e('Use current category in single view?'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'use_current' ); ?>"><?php _e( 'Use current category in single view?', 'bns-fc' ); ?></label>
             </p>
 
             <p>
                 <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e('Use Featured Image / Post Thumbnails?'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image / Post Thumbnails?', 'bns-fc' ); ?></label>
             </p>
 
             <table width="100%">
                 <tr>
                     <td>
                         <p>
-                            <label for="<?php echo $this->get_field_id( 'content_thumb' ); ?>"><?php _e('Content Thumbnail Size (in px):'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'content_thumb' ); ?>"><?php _e( 'Content Thumbnail Size (in px):', 'bns-fc' ); ?></label>
                             <input id="<?php echo $this->get_field_id( 'content_thumb' ); ?>" name="<?php echo $this->get_field_name( 'content_thumb' ); ?>" value="<?php echo $instance['content_thumb']; ?>" style="width:85%;" />
                         </p>
                     </td>
                     <td>
                         <p>
-                            <label for="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>"><?php _e('Excerpt Thumbnail Size (in px):'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>"><?php _e( 'Excerpt Thumbnail Size (in px):', 'bns-fc' ); ?></label>
                             <input id="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_thumb' ); ?>" value="<?php echo $instance['excerpt_thumb']; ?>" style="width:85%;" />
                         </p>
                     </td>
@@ -246,11 +250,11 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
             <p>
                 <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_cat_desc'], true ); ?> id="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>" name="<?php echo $this->get_field_name( 'show_cat_desc' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>"><?php _e('Show first Category choice description?'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>"><?php _e( 'Show first Category choice description?', 'bns-fc' ); ?></label>
             </p>
 
             <p>
-                <label for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e('Total Posts to Display:'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e( 'Total Posts to Display:', 'bns-fc' ); ?></label>
                 <input id="<?php echo $this->get_field_id( 'show_count' ); ?>" name="<?php echo $this->get_field_name( 'show_count' ); ?>" value="<?php echo $instance['show_count']; ?>" style="width:100%;" />
             </p>
 
@@ -259,13 +263,13 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <td>
                         <p>
                             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_meta'], true ); ?> id="<?php echo $this->get_field_id( 'show_meta' ); ?>" name="<?php echo $this->get_field_name( 'show_meta' ); ?>" />
-                            <label for="<?php echo $this->get_field_id( 'show_meta' ); ?>"><?php _e('Display Author Meta Details?'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'show_meta' ); ?>"><?php _e( 'Display Author Meta Details?', 'bns-fc' ); ?></label>
                         </p>
                     </td>
                     <td>
                         <p>
                             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_comments'], true ); ?> id="<?php echo $this->get_field_id( 'show_comments' ); ?>" name="<?php echo $this->get_field_name( 'show_comments' ); ?>" />
-                            <label for="<?php echo $this->get_field_id( 'show_comments' ); ?>"><?php _e('Display Comment Totals?'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'show_comments' ); ?>"><?php _e( 'Display Comment Totals?', 'bns-fc' ); ?></label>
                         </p>
                     </td>
                 </tr>
@@ -273,33 +277,33 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <td>
                         <p>
                             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_cats'], true ); ?> id="<?php echo $this->get_field_id( 'show_cats' ); ?>" name="<?php echo $this->get_field_name( 'show_cats' ); ?>" />
-                            <label for="<?php echo $this->get_field_id( 'show_cats' ); ?>"><?php _e('Display the Post Categories?'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'show_cats' ); ?>"><?php _e( 'Display the Post Categories?', 'bns-fc' ); ?></label>
                         </p>
                     </td>
                     <td>
                         <p>
                             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_tags'], true ); ?> id="<?php echo $this->get_field_id( 'show_tags' ); ?>" name="<?php echo $this->get_field_name( 'show_tags' ); ?>" />
-                            <label for="<?php echo $this->get_field_id( 'show_tags' ); ?>"><?php _e('Display the Post Tags?'); ?></label>
+                            <label for="<?php echo $this->get_field_id( 'show_tags' ); ?>"><?php _e( 'Display the Post Tags?', 'bns-fc' ); ?></label>
                         </p>
                     </td>
                 </tr>
             </table>
 
             <hr /> <!-- separates meta details display from content/excerpt display options -->
-            <p>The default is to show the excerpt, if it exists, or the first 55 words of the post as the excerpt.</p>
+            <p><?php _e( 'The default is to show the excerpt, if it exists, or the first 55 words of the post as the excerpt.', 'bns-fc'); ?></p>
 
             <p>
                 <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"></label><input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e('Display only the Post Titles?'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display only the Post Titles?', 'bns-fc' ); ?></label>
             </p>
 
             <p>
                 <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_full'], true ); ?> id="<?php echo $this->get_field_id( 'show_full' ); ?>" name="<?php echo $this->get_field_name( 'show_full' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e('Display entire Post?'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display entire Post?', 'bns-fc' ); ?></label>
             </p>
 
             <p>
-                <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e('Set your preferred value for the amount of words'); ?></label>
+                <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( 'Set your preferred value for the amount of words', 'bns-fc' ); ?></label>
                 <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:100%;" />
             </p>
     <?php }
@@ -310,7 +314,7 @@ function bnsfc_shortcode( $atts ) {
         ob_start(); /* Get ready to capture the elusive widget output */
         the_widget( 'BNS_Featured_Category_Widget',
                     $instance = shortcode_atts( array(
-                                                     'title'           => __( 'Featured Category' ),
+                                                     'title'           => __( 'Featured Category', 'bns-fc' ),
                                                      'cat_choice'      => '1',
                                                      'use_current'     => false,
                                                      'count'           => '0',
@@ -341,5 +345,17 @@ function bnsfc_shortcode( $atts ) {
 }
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
 /* BNSFC Shortcode End - Say your prayers ... */
+
+/* BNSFC Plugin TextDomain
+ * Make available for translation
+ *
+ * @package: BNS Featured Category
+ * @since: 1.8.6    October 29, 2011
+ *
+ * Note: Translation files are expected to be found in the plugin root folder / directory.
+ * `bns-fc` is being used in place of `bns-featured-category`
+ */
+load_plugin_textdomain( 'bns-fc' );
+// End: BNS Plugin TextDomain
 ?>
 <?php /* Last revised: October 29, 2011 v1.8.6 */ ?>
