@@ -3,14 +3,14 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 1.8.6 (NOT PUBLISHED)
+Version: 1.8.6
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-/* Last revised October 29, 2011 v1.8.6 */
+/* Last revised October 31, 2011 v1.8.6 */
 
 /*  Copyright 2009-2011  Edward Caissie  (email : edward.caissie@gmail.com)
 
@@ -358,4 +358,4 @@ function bnsfc_shortcode( $atts ) {
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
 /* BNSFC Shortcode End - Say your prayers ... */
 ?>
-<?php /* Last revised: October 29, 2011 v1.8.6 */ ?>
+<?php /* Last revised: October 31, 2011 v1.8.6 */ ?>
