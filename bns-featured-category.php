@@ -43,7 +43,7 @@ if ( version_compare( $wp_version, "2.9", "<" ) ) {
  * Make plugin text available for translation (i18n)
  *
  * @package: BNS Featured Category
- * @since: 1.8.6    October 29, 2011
+ * @since: 1.9    October 31, 2011
  *
  * Note: Translation files are expected to be found in the plugin root folder / directory.
  * `bns-fc` is being used in place of `bns-featured-category`
@@ -84,97 +84,97 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $this->WP_Widget( 'bns-featured-category', 'BNS Featured Category', $widget_ops, $control_ops );
     }
     function widget( $args, $instance ) {
-        extract( $args );
-        /* User-selected settings. */
-        $title          = apply_filters( 'widget_title', $instance['title'] );
-        $cat_choice     = $instance['cat_choice'];
-        $use_current    = $instance['use_current'];
-        $show_count     = $instance['show_count'];
-        $use_thumbnails = $instance['use_thumbnails'];
-        $content_thumb  = $instance['content_thumb'];
-        $excerpt_thumb  = $instance['excerpt_thumb'];
-        $show_meta      = $instance['show_meta'];
-        $show_comments  = $instance['show_comments'];
-        $show_cats      = $instance['show_cats'];
-        $show_cat_desc	= $instance['show_cat_desc'];
-        $show_tags      = $instance['show_tags'];
-        $only_titles    = $instance['only_titles'];
-        $show_full      = $instance['show_full'];
-        $excerpt_length	= $instance['excerpt_length'];
-        $count          = $instance['count']; /* Plugin requires counter variable to be part of its arguments?! */
+            extract( $args );
+            /* User-selected settings. */
+            $title          = apply_filters( 'widget_title', $instance['title'] );
+            $cat_choice     = $instance['cat_choice'];
+            $use_current    = $instance['use_current'];
+            $show_count     = $instance['show_count'];
+            $use_thumbnails = $instance['use_thumbnails'];
+            $content_thumb  = $instance['content_thumb'];
+            $excerpt_thumb  = $instance['excerpt_thumb'];
+            $show_meta      = $instance['show_meta'];
+            $show_comments  = $instance['show_comments'];
+            $show_cats      = $instance['show_cats'];
+            $show_cat_desc	= $instance['show_cat_desc'];
+            $show_tags      = $instance['show_tags'];
+            $only_titles    = $instance['only_titles'];
+            $show_full      = $instance['show_full'];
+            $excerpt_length	= $instance['excerpt_length'];
+            $count          = $instance['count']; /* Plugin requires counter variable to be part of its arguments?! */
 
-        /** @var $before_widget TYPE_NAME */
-        echo $before_widget;
+            /** @var $before_widget TYPE_NAME */
+            echo $before_widget;
 
-        /* Title of widget (before and after defined by themes). */
-        // $cat_choice_class = '';
-        $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice );
-        if ( $title ) {
-            /** @var $before_title TYPE_NAME */
-            /** @var $after_title TYPE_NAME */
-            echo $before_title . '<span class="bns-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
-        }
+            /* Title of widget (before and after defined by themes). */
+            // $cat_choice_class = '';
+            $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice );
+            if ( $title ) {
+                /** @var $before_title TYPE_NAME */
+                /** @var $after_title TYPE_NAME */
+                echo $before_title . '<span class="bns-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
+            }
 
-        /* Display posts from widget settings. */
-        if ( is_single() && $use_current ){
-            $cat_choices = wp_get_post_categories( get_the_ID() );
-            $cat_choice = $cat_choices[0];
-        }
+            /* Display posts from widget settings. */
+            if ( is_single() && $use_current ){
+                $cat_choices = wp_get_post_categories( get_the_ID() );
+                $cat_choice = $cat_choices[0];
+            }
 
-        query_posts( "cat=$cat_choice&posts_per_page=$show_count" );
-        if ( $show_cat_desc )
-            echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
+            query_posts( "cat=$cat_choice&posts_per_page=$show_count" );
+            if ( $show_cat_desc )
+                echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 
-        if ( have_posts() ) : while ( have_posts() ) : the_post();
-                // echo $cat_choice . ' bacon!!'; /* Test phrase! */
-                // static $count = 0; /* see above */
-                if ( $count == $show_count ) {
-                    break;
-                } else { ?>
-                    <div <?php post_class(); ?>>
-                        <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
-                        <div class="post-details">
-                            <?php if ( $show_meta ) {
-                                printf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
-                            <?php }
-                            if ( ( $show_comments ) && ( ! post_password_required() ) ) {
-                                comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?><br />
-                            <?php }
-                            if ( $show_cats ) {
-                                printf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ); ?><br />
-                            <?php }
-                            if ( $show_tags ) {
-                                the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?><br />
+            if ( have_posts() ) : while ( have_posts() ) : the_post();
+                    // echo $cat_choice . ' bacon!!'; /* Test phrase! */
+                    // static $count = 0; /* see above */
+                    if ( $count == $show_count ) {
+                        break;
+                    } else { ?>
+                        <div <?php post_class(); ?>>
+                            <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
+                            <div class="post-details">
+                                <?php if ( $show_meta ) {
+                                    printf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
+                                <?php }
+                                if ( ( $show_comments ) && ( ! post_password_required() ) ) {
+                                    comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?><br />
+                                <?php }
+                                if ( $show_cats ) {
+                                    printf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ); ?><br />
+                                <?php }
+                                if ( $show_tags ) {
+                                    the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?><br />
+                                <?php } ?>
+                            </div> <!-- .post-details -->
+                            <?php if ( !$only_titles ) { ?>
+                                <div style="overflow-x: auto"> <!-- for images wider than widget area -->
+                                    <?php if ( $show_full ) {
+                                        if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
+                                        the_content();
+                                    } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
+                                        if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
+                                        echo bnsfc_first_words( get_the_content(), $instance['excerpt_length'] );
+                                    } else {
+                                        if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
+                                        the_excerpt();
+                                    } ?>
+                                </div>
                             <?php } ?>
-                        </div> <!-- .post-details -->
-                        <?php if ( !$only_titles ) { ?>
-                            <div style="overflow-x: auto"> <!-- for images wider than widget area -->
-                                <?php if ( $show_full ) {
-                                    if ( has_post_thumbnail() && ( $use_thumbnails ) )
-                                        the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
-                                    the_content();
-                                } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
-                                    if ( has_post_thumbnail() && ( $use_thumbnails ) )
-                                        the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
-                                    echo bnsfc_first_words( get_the_content(), $instance['excerpt_length'] );
-                                } else {
-                                    if ( has_post_thumbnail() && ( $use_thumbnails ) )
-                                        the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
-                                    the_excerpt();
-                                } ?>
-                            </div>
-                        <?php } ?>
-                    </div> <!-- .post #post-ID -->
-                    <?php $count++;
-                }
-            endwhile;
-  		else :
-            _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
-        endif;
+                        </div> <!-- .post #post-ID -->
+                        <?php $count++;
+                    }
+                endwhile;
+            else :
+                _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
+            endif;
 
-        /** @var $after_widget TYPE_NAME */
-        echo $after_widget;
-        wp_reset_query();
+            /** @var $after_widget TYPE_NAME */
+            echo $after_widget;
+            wp_reset_query();
     }
 
     function update( $new_instance, $old_instance ) {
@@ -326,28 +326,28 @@ function bnsfc_shortcode( $atts ) {
         ob_start(); /* Get ready to capture the elusive widget output */
         the_widget( 'BNS_Featured_Category_Widget',
                     $instance = shortcode_atts( array(
-                                                     'title'           => __( 'Featured Category', 'bns-fc' ),
-                                                     'cat_choice'      => '1',
-                                                     'use_current'     => false,
-                                                     'count'           => '0',
-                                                     'show_count'      => '3',
-                                                     'use_thumbnails'  => true,
-                                                     // 'content_thumb'   => '100', /* Does not apply if show_full is not usable */
-                                                     'excerpt_thumb'   => '50',
-                                                     'show_meta'       => false,
-                                                     'show_comments'   => false,
-                                                     'show_cats'       => false,
-                                                     'show_cat_desc'   => false,
-                                                     'show_tags'       => false,
-                                                     'only_titles'     => false,
-                                                     // 'show_full'       => false, /* Showing the full post causes a recursive nightmare to infinity and beyond! */
-                                                     'excerpt_length'  => ''
+                                                     'title'            => __( 'Featured Category', 'bns-fc' ),
+                                                     'cat_choice'       => '1',
+                                                     'use_current'      => false,
+                                                     'count'            => '0',
+                                                     'show_count'       => '3',
+                                                     'use_thumbnails'   => true,
+                                                     // 'content_thumb' => '100', /* Does not apply if show_full is not usable */
+                                                     'excerpt_thumb'    => '50',
+                                                     'show_meta'        => false,
+                                                     'show_comments'    => false,
+                                                     'show_cats'        => false,
+                                                     'show_cat_desc'    => false,
+                                                     'show_tags'        => false,
+                                                     'only_titles'      => false,
+                                                     // 'show_full'     => false, /* Showing the full post causes a recursive nightmare to infinity and beyond! */
+                                                     'excerpt_length'   => ''
                                                 ), $atts ),
                     $args = array(
-                        $before_widget = '',
-                        $after_widget = '',
-                        $before_title = '',
-                        $after_title = '',
+                        $before_widget  = '',
+                        $after_widget   = '',
+                        $before_title   = '',
+                        $after_title    = '',
                     )
         );
         $bnsfc_content = ob_get_contents(); /* Get the_widget output and put into its own container */
