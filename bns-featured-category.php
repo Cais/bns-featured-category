@@ -305,8 +305,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             <p><?php _e( 'The default is to show the excerpt, if it exists, or the first 55 words of the post as the excerpt.', 'bns-fc'); ?></p>
 
             <p>
-                <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"></label><input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display only the Post Titles?', 'bns-fc' ); ?></label>
+                <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
+                <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'Display only the Post Titles?', 'bns-fc' ); ?></label>
             </p>
 
             <p>

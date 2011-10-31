@@ -126,6 +126,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * released ...
 * confirmed compatible with WordPress 3.3
 * added i18n support
+* fix 'only_titles' form issue
 * minor code and format clean-up
 * put code blocks into more logical order
 * correct documentation typos
