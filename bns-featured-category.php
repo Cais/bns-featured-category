@@ -10,7 +10,7 @@ License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-/* Last revised October 31, 2011 v1.9 */
+/* Last revised November 6, 2011 v1.9 */
 
 /*  Copyright 2009-2011  Edward Caissie  (email : edward.caissie@gmail.com)
 
@@ -39,11 +39,12 @@ if ( version_compare( $wp_version, "2.9", "<" ) ) {
     exit ( $exit_message );
 }
 
-/* BNS Featured Category TextDomain
+/**
+ * BNS Featured Category TextDomain
  * Make plugin text available for translation (i18n)
  *
- * @package: BNS Featured Category
- * @since: 1.9    October 31, 2011
+ * @package:    BNS Featured Category
+ * @since:      1.9    October 31, 2011
  *
  * Note: Translation files are expected to be found in the plugin root folder / directory.
  * `bns-fc` is being used in place of `bns-featured-category`
@@ -51,7 +52,7 @@ if ( version_compare( $wp_version, "2.9", "<" ) ) {
 load_plugin_textdomain( 'bns-fc' );
 // End: BNS Featured Category TextDomain
 
-// Begin the mess of Excerpt Length fiascoes
+/** Begin the mess of Excerpt Length fiascoes */
 function bnsfc_first_words( $text, $length = 55 ) {
         if ( !$length )
             return $text;
@@ -110,8 +111,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             // $cat_choice_class = '';
             $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice );
             if ( $title ) {
-                /** @var $before_title TYPE_NAME */
-                /** @var $after_title TYPE_NAME */
+                /**
+                 * @var $before_title   string
+                 * @var $after_title    string
+                 */
                 echo $before_title . '<span class="bns-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
             }
 
@@ -172,7 +175,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
             endif;
 
-            /** @var $after_widget TYPE_NAME */
+            /**
+             * @var $after_widget  string
+             */
             echo $after_widget;
             wp_reset_query();
     }
@@ -358,4 +363,4 @@ function bnsfc_shortcode( $atts ) {
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
 /* BNSFC Shortcode End - Say your prayers ... */
 ?>
-<?php /* Last revised: October 31, 2011 v1.9 */ ?>
+<?php /* Last revised November 6, 2011 v1.9 */ ?>

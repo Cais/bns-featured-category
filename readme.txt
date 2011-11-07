@@ -185,7 +185,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * updated license declaration
 
 = 1.6.2.2 =
-* clarified the plugin's release under a GPL license
+* clarified the plugin release under a GPL license
 
 = 1.6.2.1 =
 * compatibility check for 2.9.1 completed
