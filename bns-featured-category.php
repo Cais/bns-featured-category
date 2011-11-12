@@ -47,7 +47,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised November 11, 2011
+ * Last revised November 12, 2011
  */
 
 global $wp_version;
@@ -117,6 +117,7 @@ function BNSFC_Scripts_and_Styles() {
         /** Enqueue Scripts */
         /** Enqueue Style Sheets */
         wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . '/bnsfc-style.css', array(), '1.9', 'screen' );
+        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . '/bnsfc-custom-style.css', array(), '1.9', 'screen' );
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 
@@ -173,7 +174,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                      * @var $before_title   string - defined by theme
                      * @var $after_title    string - defined by theme
                      */
-                    echo $before_title . '<span class="bns-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
+                    echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
                 }
 
                 /** Display posts from widget settings. */
@@ -243,7 +244,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         function update( $new_instance, $old_instance ) {
                 $instance = $old_instance;
 
-                /* Strip tags (if needed) and update the widget settings. */
+                /** Strip tags (if needed) and update the widget settings */
                 $instance['title']          = strip_tags( $new_instance['title'] );
                 $instance['cat_choice']     = strip_tags( $new_instance['cat_choice'] );
                 $instance['use_current']    = $new_instance['use_current'];
@@ -259,14 +260,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 $instance['only_titles']    = $new_instance['only_titles'];
                 $instance['show_full']      = $new_instance['show_full'];
                 $instance['excerpt_length']	= $new_instance['excerpt_length'];
-                /** added to be able to reset count to zero for every instance of the plugin */
+                /** Added to reset count for every instance of the plugin */
                 $instance['count']          = $new_instance['count'];
 
                 return $instance;
         }
 
         function form( $instance ) {
-                /* Set up some default widget settings. */
+                /** Set default widget settings */
                 $defaults = array(
                     'title'           => __( 'Featured Category', 'bns-fc' ),
                     'cat_choice'      => '1',
@@ -365,7 +366,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </tr>
                 </table>
 
-                <hr /> <!-- separates meta details display from content/excerpt display options -->
+                <hr /> <!-- Separates meta details from content/excerpt display options -->
                 <p><?php _e( 'The default is to show the excerpt, if it exists, or the first 55 words of the post as the excerpt.', 'bns-fc'); ?></p>
 
                 <p>
@@ -386,7 +387,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 } // End Class BNS_Featured_Category_Widget
 
 /**
- * BNSFC Shortcode Start
+ * BNSFC Shortcode
  * - May the Gods of programming protect us all!
  *
  * @param $atts
@@ -431,5 +432,5 @@ function bnsfc_shortcode( $atts ) {
         return $bnsfc_content;
 }
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
-// BNSFC Shortcode End - Say your prayers ...
+// End BNSFC Shortcode - Say your prayers ...
 ?>
