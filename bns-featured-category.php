@@ -213,7 +213,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                                         <?php if ( $show_full ) {
                                             if ( has_post_thumbnail() && ( $use_thumbnails ) )
                                                 the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
-                                            the_content();
+                                            the_content(); ?>
+                                            <div class="bnsfc-clear"></div>
+                                            <?php wp_link_pages( array( 'before' => '<p><strong>' . __( 'Pages: ', 'bns-fc') . '</strong>', 'after' => '</p>', 'next_or_number' => 'number' ) );
                                         } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
                                             if ( has_post_thumbnail() && ( $use_thumbnails ) )
                                                 the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );

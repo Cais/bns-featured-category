@@ -133,6 +133,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * added phpDoc Style documentation
 * added `bnsfc-style.css` for plugin specific elements
 * changed `bnsfc_first_words` to `bnsfc_custom_excerpt` (refactored documentation)
+* added `wp_link_pages` after `the_content`
 
 = 1.8.5 =
 * released May 2011
