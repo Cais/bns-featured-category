@@ -134,7 +134,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 $widget_ops = array( 'classname' => 'bns-featured-category', 'description' => __( 'Displays most recent posts from a specific featured category or categories.', 'bns-fc' ) );
 
                 /** Widget control settings. */
-                $control_ops = array( 'width' => 450, 'height' => 350, 'id_base' => 'bns-featured-category' );
+                $control_ops = array( 'width' => 200, 'id_base' => 'bns-featured-category' );
 
                 /** Create the widget. */
                 $this->WP_Widget( 'bns-featured-category', 'BNS Featured Category', $widget_ops, $control_ops );
