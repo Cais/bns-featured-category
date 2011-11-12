@@ -130,13 +130,16 @@ Please stay current with your WordPress installation, your active theme, and you
 * minor code and format clean-up
 * put code blocks into more logical order
 * correct documentation typos
+* added phpDoc Style documentation
+* added `bnsfc-style.css` for plugin specific elements
+* changed `bnsfc_first_words` to `bnsfc_custom_excerpt` (refactored documentation)
 
 = 1.8.5 =
 * released May 2011
 * confirmed compatible with WordPress version 3.2
 * addressed some minor items in the readme (this file)
 * cleaned up some text strings in the code
-* minor variable changes - `load_bnsfc_widget()`, `bnsfc_first_words()`
+* minor variable changes - `load_bnsfc_widget()`, `bnsfc_custom_excerpt()`
 
 = 1.8.4 / 1.8.4.1 =
 * released April 2011
