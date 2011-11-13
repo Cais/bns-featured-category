@@ -108,7 +108,7 @@ Additional style elements may be available but are most likely created through W
 As of version 1.6.2 the Total Posts to Display is independent of the "posts per page" setting as set under Settings | Reading.
 
 == Screenshots ==
-1. The options panel.
+1. The options panel as it appears in default.
 
 == Other Notes ==
 * Copyright 2009-2011  Edward Caissie  (email : edward.caissie@gmail.com)
@@ -138,7 +138,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 1.9 =
-* released ...
+* released November 2011
 * confirmed compatible with WordPress 3.3
 * added phpDoc Style documentation
 * added i18n support
@@ -147,11 +147,12 @@ Please stay current with your WordPress installation, your active theme, and you
 * changed code blocks order to more logical sequence
 * changed `bnsfc_first_words` to `bnsfc_custom_excerpt` (refactored documentation)
 * changed options panel width to 200px to fit within Administration Panel Sidebar
-* changed for consistency `bns-cat-class-` to `bnsfc-cat-class-` CSS prefix for category choices
+* changed `bns-cat-class-` to `bnsfc-cat-class-` CSS prefix for category choices for consistency
 * corrected documentation typos
 * fix 'only_titles' form issue
 * minor code and format clean-up
 * updated 'readme.txt' Frequently Asked Questions
+* updated screenshot image
 
 = 1.8.5 =
 * released May 2011

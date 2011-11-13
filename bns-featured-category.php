@@ -50,6 +50,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Last revised November 12, 2011
  */
 
+/** Check installed WordPress version for compatibility */
 global $wp_version;
 $exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
 if ( version_compare( $wp_version, "2.9", "<" ) )
@@ -110,6 +111,8 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
 /**
  * Enqueue Plugin Scripts and Styles
  *
+ * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
+ *
  * @package BNS_Featured_Category
  * @since   1.9
  */
@@ -121,13 +124,11 @@ function BNSFC_Scripts_and_Styles() {
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 
-/* Add our function to the widgets_init hook. */
-add_action( 'widgets_init', 'load_bnsfc_widget' );
-  
-/* Function that registers our widget. */
+/** Register widget */
 function load_bnsfc_widget() {
         register_widget( 'BNS_Featured_Category_Widget' );
 }
+add_action( 'widgets_init', 'load_bnsfc_widget' );
 
 class BNS_Featured_Category_Widget extends WP_Widget {
         function BNS_Featured_Category_Widget() {
