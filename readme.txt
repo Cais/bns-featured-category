@@ -137,6 +137,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 1.9.1 =
+* removed extra slash in `wp_enqueue_scripts` parameters
+
 = 1.9 =
 * released November 2011
 * confirmed compatible with WordPress 3.3
