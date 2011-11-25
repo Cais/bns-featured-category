@@ -23,7 +23,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     1.9
+ * @version     1.9.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2011, Edward Caissie
  *
@@ -47,7 +47,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised November 12, 2011
+ * Last revised November 24, 2011
  */
 
 /** Check installed WordPress version for compatibility */
@@ -391,9 +391,20 @@ class BNS_Featured_Category_Widget extends WP_Widget {
  * BNSFC Shortcode
  * - May the Gods of programming protect us all!
  *
+ * @package BNS_Featured_Category
+ * @since 1.8
+ *
  * @param $atts
+ * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
+ * @internal Note 'content_thumb' although available has no use if 'show_full=false'
  *
  * @return ob_get_contents
+ *
+ * @version 1.9.1
+ * Last revised November 24, 2011
+ * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
+ *
+ * @todo Fix 'show_full=true' issue
  */
 function bnsfc_shortcode( $atts ) {
         /** Get ready to capture the elusive widget output */
@@ -406,7 +417,7 @@ function bnsfc_shortcode( $atts ) {
                                                      'count'            => '0',
                                                      'show_count'       => '3',
                                                      'use_thumbnails'   => true,
-                                                     // 'content_thumb' => '100',
+                                                     'content_thumb'    => '100',
                                                      'excerpt_thumb'    => '50',
                                                      'show_meta'        => false,
                                                      'show_comments'    => false,
@@ -414,7 +425,7 @@ function bnsfc_shortcode( $atts ) {
                                                      'show_cat_desc'    => false,
                                                      'show_tags'        => false,
                                                      'only_titles'      => false,
-                                                     // 'show_full'     => false,
+                                                     'show_full'        => false, // Do not set to true!!!
                                                      'excerpt_length'   => ''
                                                 ), $atts ),
                     $args = array(
