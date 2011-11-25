@@ -138,6 +138,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 1.9.1 =
+* released ...
 * removed extra slash in `wp_enqueue_scripts` parameters
 * added 'content_thumb' and 'show_full' to shortcode options - back to beta
 
