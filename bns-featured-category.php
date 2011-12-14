@@ -115,12 +115,18 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
  *
  * @package BNS_Featured_Category
  * @since   1.9
+ *
+ * Last revised December 14, 2011
+ * @version 1.9.1
+ * Fixed 404 error when 'bnsft-custom-style.css' is not available
  */
 function BNSFC_Scripts_and_Styles() {
         /** Enqueue Scripts */
         /** Enqueue Style Sheets */
         wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), '1.9', 'screen' );
-        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '1.9', 'screen' );
+        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
+            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '1.9', 'screen' );
+        }
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 
