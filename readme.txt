@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.3
-Stable tag: 1.9.1
+Stable tag: 1.9.2-alpha
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -137,6 +137,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 1.9.2 =
+* Add CSS to set background to none; and width to 100% when shortcode used
+
 = 1.9.1 =
 * Removed extra slash in `wp_enqueue_scripts` parameters
 * Added 'content_thumb' and 'show_full' to shortcode options - back to beta

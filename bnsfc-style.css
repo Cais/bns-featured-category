@@ -1,5 +1,5 @@
 /*  This file is part of BNS Featured Category
-    Last revised at version 1.9
+    Last revised at version 1.9.2-alpha
 
     Copyright 2011  Edward Caissie  (email : edward.caissie@gmail.com)
 
@@ -31,3 +31,9 @@ a.bnsfc-link:active { font-size: 125%; text-decoration: none; }
 
 .bnsfc-content { overflow-x: auto; }
 .bnsfc-clear { clear: both; }
+
+.post .widget.bns-featured-category,
+.post .widget.bns-featured-category h2 {
+    background: none;
+    width: 100%;
+}
