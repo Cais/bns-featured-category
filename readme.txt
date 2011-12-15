@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.3
-Stable tag: 1.9
+Stable tag: 1.9.1
 
 Displays most recent posts from a specific featured category or categories.
 
