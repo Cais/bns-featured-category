@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 1.9.1
+Version: 1.9.1-alpha
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
@@ -23,7 +23,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     1.9.1
+ * @version     1.9.1-alpha
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2011, Edward Caissie
  *
@@ -115,12 +115,18 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
  *
  * @package BNS_Featured_Category
  * @since   1.9
+ *
+ * Last revised December 14, 2011
+ * @version 1.9.1
+ * Fixed 404 error when 'bnsft-custom-style.css' is not available
  */
 function BNSFC_Scripts_and_Styles() {
         /** Enqueue Scripts */
         /** Enqueue Style Sheets */
         wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), '1.9', 'screen' );
-        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '1.9', 'screen' );
+        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
+            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '1.9', 'screen' );
+        }
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 
