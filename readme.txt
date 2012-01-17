@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.3
-Stable tag: 1.9
+Stable tag: 1.9.2
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -53,20 +53,21 @@ Read this article for further assistance: http://wpfirstaid.com/2009/12/plugin-i
 = Shortcode: bnsfc =
 Parameters are very similar to the plugin:
 
-*   'title'           => '',
-*   'cat_choice'      => '1'
-*   'use_current'     => false
-*   'count'           => '0'
-*   'show_count'      => '3'
-*   'use_thumbnails'  => true
-*   'excerpt_thumb'   => '50'
-*   'show_meta'       => false
-*   'show_comments'   => false
-*   'show_cats'       => false
-*   'show_cat_desc'   => false
-*   'show_tags'       => false
-*   'only_titles'     => false
-*   'excerpt_length'  => ''
+*   'title'             => '',
+*   'cat_choice'        => '1'
+*   'use_current'       => false
+*   'count'             => '0'
+*   'show_count'        => '3'
+*   'offset'            => '0'
+*   'use_thumbnails'    => true
+*   'excerpt_thumb'     => '50'
+*   'show_meta'         => false
+*   'show_comments'     => false
+*   'show_cats'         => false
+*   'show_cat_desc'     => false
+*   'show_tags'         => false
+*   'only_titles'       => false
+*   'excerpt_length'    => ''
 
 NB: Use the shortcode at your own risk!
 
@@ -137,9 +138,14 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 1.9.2 =
+* Added 'offset' option
+* Add CSS to set background to none; and width to 100% when shortcode used
+
 = 1.9.1 =
-* removed extra slash in `wp_enqueue_scripts` parameters
-* added 'content_thumb' and 'show_full' to shortcode options - back to beta
+* Removed extra slash in `wp_enqueue_scripts` parameters
+* Added 'content_thumb' and 'show_full' to shortcode options - back to beta
+* Fixed 404 error when 'bnsft-custom-style.css' is not available
 
 = 1.9 =
 * released November 2011
