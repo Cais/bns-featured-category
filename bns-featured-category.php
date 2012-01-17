@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 1.9.2
+Version: 1.9.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
@@ -23,9 +23,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     1.9.2
+ * @version     1.9.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
- * @copyright   Copyright (c) 2009-2012, Edward Caissie
+ * @copyright   Copyright (c) 2009-2011, Edward Caissie
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 2, as published by the
@@ -47,8 +47,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised January 16, 2012
- * Added 'offset' option
+ * Last revised November 24, 2011
  */
 
 /** Check installed WordPress version for compatibility */
@@ -151,7 +150,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 $cat_choice     = $instance['cat_choice'];
                 $use_current    = $instance['use_current'];
                 $show_count     = $instance['show_count'];
-                $offset         = $instance['offset'];
                 $use_thumbnails = $instance['use_thumbnails'];
                 $content_thumb  = $instance['content_thumb'];
                 $excerpt_thumb  = $instance['excerpt_thumb'];
@@ -187,7 +185,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     $cat_choice = $cat_choices[0];
                 }
 
-                query_posts( "cat=$cat_choice&posts_per_page=$show_count&offset=$offset" );
+                query_posts( "cat=$cat_choice&posts_per_page=$show_count" );
                 if ( $show_cat_desc )
                     echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 
@@ -252,7 +250,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 $instance['cat_choice']     = strip_tags( $new_instance['cat_choice'] );
                 $instance['use_current']    = $new_instance['use_current'];
                 $instance['show_count']     = $new_instance['show_count'];
-                $instance['offset']         = $new_instance['offset'];
                 $instance['use_thumbnails'] = $new_instance['use_thumbnails'];
                 $instance['content_thumb']  = $new_instance['content_thumb'];
                 $instance['excerpt_thumb']  = $new_instance['excerpt_thumb'];
@@ -273,23 +270,22 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         function form( $instance ) {
                 /** Set default widget settings */
                 $defaults = array(
-                    'title'             => __( 'Featured Category', 'bns-fc' ),
-                    'cat_choice'        => '1',
-                    'use_current'       => false,
-                    'count'             => '0',
-                    'show_count'        => '3',
-                    'offset'            => '0',
-                    'use_thumbnails'    => true,
-                    'content_thumb'     => '100',
-                    'excerpt_thumb'     => '50',
-                    'show_meta'         => false,
-                    'show_comments'     => false,
-                    'show_cats'         => false,
-                    'show_cat_desc'     => false,
-                    'show_tags'         => false,
-                    'only_titles'       => false,
-                    'show_full'         => false,
-                    'excerpt_length'    => ''
+                    'title'           => __( 'Featured Category', 'bns-fc' ),
+                    'cat_choice'      => '1',
+                    'use_current'     => false,
+                    'count'           => '0',
+                    'show_count'      => '3',
+                    'use_thumbnails'  => true,
+                    'content_thumb'   => '100',
+                    'excerpt_thumb'   => '50',
+                    'show_meta'       => false,
+                    'show_comments'   => false,
+                    'show_cats'       => false,
+                    'show_cat_desc'   => false,
+                    'show_tags'       => false,
+                    'only_titles'     => false,
+                    'show_full'       => false,
+                    'excerpt_length'  => ''
                 );
                 $instance = wp_parse_args( (array) $instance, $defaults );
                 ?>
@@ -338,11 +334,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 <p>
                     <label for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e( 'Total Posts to Display:', 'bns-fc' ); ?></label>
                     <input id="<?php echo $this->get_field_id( 'show_count' ); ?>" name="<?php echo $this->get_field_name( 'show_count' ); ?>" value="<?php echo $instance['show_count']; ?>" style="width:100%;" />
-                </p>
-
-                <p>
-                    <label for="<?php echo $this->get_field_id( 'offset' ); ?>"><?php _e( 'Posts Offset:', 'bns-fc' ); ?></label>
-                    <input id="<?php echo $this->get_field_id( 'offset' ); ?>" name="<?php echo $this->get_field_name( 'offset' ); ?>" value="<?php echo $instance['offset']; ?>" style="width:100%;" />
                 </p>
 
                 <table width="100%">
@@ -412,8 +403,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
  * @version 1.9.1
  * Last revised November 24, 2011
  * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
- * @version 1.9.2
- * Added 'offset' option
  *
  * @todo Fix 'show_full=true' issue
  */
@@ -422,24 +411,23 @@ function bnsfc_shortcode( $atts ) {
         ob_start();
         the_widget( 'BNS_Featured_Category_Widget',
                     $instance = shortcode_atts( array(
-                        'title'            => __( 'Featured Category', 'bns-fc' ),
-                        'cat_choice'       => '1',
-                        'use_current'      => false,
-                        'count'            => '0',
-                        'show_count'       => '3',
-                        'offset'            => '0',
-                        'use_thumbnails'   => true,
-                        'content_thumb'    => '100',
-                        'excerpt_thumb'    => '50',
-                        'show_meta'        => false,
-                        'show_comments'    => false,
-                        'show_cats'        => false,
-                        'show_cat_desc'    => false,
-                        'show_tags'        => false,
-                        'only_titles'      => false,
-                        'show_full'        => false, // Do not set to true!!!
-                        'excerpt_length'   => ''
-                    ), $atts ),
+                                                     'title'            => __( 'Featured Category', 'bns-fc' ),
+                                                     'cat_choice'       => '1',
+                                                     'use_current'      => false,
+                                                     'count'            => '0',
+                                                     'show_count'       => '3',
+                                                     'use_thumbnails'   => true,
+                                                     'content_thumb'    => '100',
+                                                     'excerpt_thumb'    => '50',
+                                                     'show_meta'        => false,
+                                                     'show_comments'    => false,
+                                                     'show_cats'        => false,
+                                                     'show_cat_desc'    => false,
+                                                     'show_tags'        => false,
+                                                     'only_titles'      => false,
+                                                     'show_full'        => false, // Do not set to true!!!
+                                                     'excerpt_length'   => ''
+                                                ), $atts ),
                     $args = array(
                             /** clear variables defined by theme for widgets */
                             $before_widget  = '',
