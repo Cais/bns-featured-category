@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
-Tested up to: 3.3
-Stable tag: 1.9.2
+Tested up to: 3.3.1
+Stable tag: 1.9.3
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -138,6 +138,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 1.9.3 =
+* Fixed problem with non-existent custom stylesheet (see 1.9.1)
+
 = 1.9.2 =
 * Added 'offset' option
 * Add CSS to set background to none; and width to 100% when shortcode used
