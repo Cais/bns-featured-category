@@ -142,7 +142,7 @@ add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 function BNSFC_Options_Scripts_and_Styles() {
         /** Enqueue Options Scripts */
         /** Enqueue Options Style Sheets */
-        wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '1.9.3', 'screen' );
+        wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );
         if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
             wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), '2.0', 'screen' );
         }
