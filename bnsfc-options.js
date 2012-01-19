@@ -22,3 +22,10 @@
  *      51 Franklin St, Fifth Floor
  *      Boston, MA  02110-1301  USA
  */
+jQuery(document).ready(function($) {
+    // Note: $() will work as an alias for jQuery() inside of this function
+    /**
+     * Test script is enqueued.
+     * alert( 'Hola!' );
+     **/
+});

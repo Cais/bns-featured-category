@@ -134,13 +134,15 @@ add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 /**
  * Enqueue Options Plugin Scripts and Styles
  *
- * Add plugin options stylesheet and scripts to the be used only in the Administration Panels
+ * Add plugin options scripts and stylesheet(s) to be used only on the Administration Panels
  *
  * @package BNS_Featured_Category
  * @since   2.0
  */
 function BNSFC_Options_Scripts_and_Styles() {
         /** Enqueue Options Scripts */
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), '2.0' );
         /** Enqueue Options Style Sheets */
         wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );
         if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
