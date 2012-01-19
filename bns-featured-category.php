@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 1.9.3
+Version: 2.0-alpha
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
@@ -23,7 +23,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     1.9.3
+ * @version     2.0-alpha
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2012, Edward Caissie
  *
@@ -47,8 +47,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised January 18, 2012
- * @version     1.9.3
+ * Last revised January 19, 2012
+ * @version     2.0
+ * Add `BNSFC_Options_Scripts_and_Styles`
  */
 
 /** Check installed WordPress version for compatibility */
@@ -129,6 +130,24 @@ function BNSFC_Scripts_and_Styles() {
         }
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
+
+/**
+ * Enqueue Options Plugin Scripts and Styles
+ *
+ * Add plugin options stylesheet and scripts to the be used only in the Administration Panels
+ *
+ * @package BNS_Featured_Category
+ * @since   2.0
+ */
+function BNSFC_Options_Scripts_and_Styles() {
+        /** Enqueue Options Scripts */
+        /** Enqueue Options Style Sheets */
+        wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '1.9.3', 'screen' );
+        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
+            wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), '2.0', 'screen' );
+        }
+}
+add_action( 'admin_enqueue_scripts', 'BNSFC_Options_Scripts_and_Styles' );
 
 /** Register widget */
 function load_bnsfc_widget() {
