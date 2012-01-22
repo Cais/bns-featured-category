@@ -24,8 +24,15 @@
  */
 jQuery(document).ready(function($) {
     // Note: $() will work as an alias for jQuery() inside of this function
-    /**
-     * Test script is enqueued.
-     * alert( 'Hola!' );
-     **/
+    $("p.bnsfc-display-all-posts-check input.checkbox").click(function () {
+        $(".bnsfc-all-options-open").toggleClass("bnsfc-all-options-closed");
+    });
+
+    $("p.bnsfc-display-thumbnail-sizes input.checkbox").click( function(){
+        $(".bnsfc-thumbnails-open").toggleClass("bnsfc-thumbnails-closed");
+    });
+
+    $("p.bnsfc-excerpt-option-open-check input.checkbox").click( function(){
+        $(".bnsfc-excerpt-option-open").toggleClass("bnsfc-excerpt-option-closed");
+    });
 });
