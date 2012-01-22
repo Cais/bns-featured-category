@@ -47,9 +47,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised January 19, 2012
+ * Last revised January 22, 2012
  * @version     2.0
  * Add `BNSFC_Options_Scripts_and_Styles`
+ * Added code to remove spaces (if used) when multiple categories are chosen
  */
 
 /** Check installed WordPress version for compatibility */
@@ -195,8 +196,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 /** @var    $before_widget  string - defined by theme */
                 echo $before_widget;
 
-                /** @var $cat_choice_class - CSS element created from category choices; replacing commas with hyphens */
-                $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice );
+                /**
+                 * @var $cat_choice_class - CSS element created from category choices
+                 * by removing whitespace and replacing commas with hyphens
+                 */
+                $cat_choice_class = preg_replace( '/\\040/', '', $cat_choice );
+                $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice_class );
                 /** Widget $title, $before_widget, and $after_widget defined by theme */
                 if ( $title ) {
                     /**
@@ -335,12 +340,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 ?>
                 <p>
                     <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bns-fc' ); ?></label>
-                    <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+                    <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:95%;" />
                 </p>
 
                 <p>
-                    <label for="<?php echo $this->get_field_id( 'cat_choice' ); ?>"><?php _e( 'Category IDs, separated by commas (no spaces):', 'bns-fc' ); ?></label>
-                    <input id="<?php echo $this->get_field_id( 'cat_choice' ); ?>" name="<?php echo $this->get_field_name( 'cat_choice' ); ?>" value="<?php echo $instance['cat_choice']; ?>" style="width:100%;" />
+                    <label for="<?php echo $this->get_field_id( 'cat_choice' ); ?>"><?php _e( 'Category IDs, separated by commas:', 'bns-fc' ); ?></label>
+                    <input id="<?php echo $this->get_field_id( 'cat_choice' ); ?>" name="<?php echo $this->get_field_name( 'cat_choice' ); ?>" value="<?php echo $instance['cat_choice']; ?>" style="width:95%;" />
                 </p>
 
                 <p>
@@ -372,6 +377,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
                 <hr />
                 <!-- The following option choices may affect the widget option panel layout -->
+                <p><?php _e( 'NB: Some options may not be available depending on which ones are selected.', 'bns-fc'); ?></p>
                 <p>
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
@@ -430,7 +436,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
                 <p>
                     <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( '... or set the amount of words you want to show:', 'bns-fc' ); ?></label>
-                    <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:100%;" />
+                    <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:95%;" />
                 </p>
         <?php }
 } // End Class BNS_Featured_Category_Widget
