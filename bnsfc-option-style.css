@@ -25,7 +25,7 @@ table.bnsfc-counts,
 table.bnsfc-thumbnails { width: 100%; }
 
 .bnsfc-all-options-open,
-.bnsfc-excerpt-options-open { display: block; }
+.bnsfc-excerpt-option-open { display: block; }
 
 .bnsfc-all-options-closed,
-.bnsfc-excerpt-options-closed { display: none; }
+.bnsfc-excerpt-option-closed { display: none; }

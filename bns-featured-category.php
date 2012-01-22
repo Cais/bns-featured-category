@@ -378,7 +378,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 <hr />
                 <!-- The following option choices may affect the widget option panel layout -->
                 <p><?php _e( 'NB: Some options may not be available depending on which ones are selected.', 'bns-fc'); ?></p>
-                <p>
+                <p class="bnsfc-display-all-posts-check">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
@@ -432,7 +432,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
                 <hr />
                 <!-- Hide excerpt explanation and word count option if entire post is displayed -->
-                <p class="bnsfc-all-options-open">
+                <p class="bnsfc-all-options-open bnsfc-excerpt-option-open-check">
                     <?php _e( 'The post excerpt is shown by default, if it exists; otherwise the first 55 words of the post are shown as the excerpt ...', 'bns-fc'); ?>
                 </p>
 
