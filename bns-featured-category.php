@@ -383,12 +383,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p><!-- Hide all options below if ONLY post titles are to be displayed -->
+                <p class="bnsfc-all-options-open"><!-- Hide all options below if ONLY post titles are to be displayed -->
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image Thumbnails?', 'bns-fc' ); ?></label>
                 </p>
 
-                <table class="bnsfc-thumbnails"><!-- Hide table if featured image / thumbnails are not used -->
+                <table class="bnsfc-thumbnails bnsfc-all-options-open"><!-- Hide table if featured image / thumbnails are not used -->
                     <tr>
                         <td>
                             <p>
@@ -405,36 +405,38 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </tr>
                 </table>
 
-                <p>
+                <p class="bnsfc-all-options-open">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_meta'], true ); ?> id="<?php echo $this->get_field_id( 'show_meta' ); ?>" name="<?php echo $this->get_field_name( 'show_meta' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_meta' ); ?>"><?php _e( 'Display Author Meta Details?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p>
+                <p class="bnsfc-all-options-open">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_comments'], true ); ?> id="<?php echo $this->get_field_id( 'show_comments' ); ?>" name="<?php echo $this->get_field_name( 'show_comments' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_comments' ); ?>"><?php _e( 'Display Comment Totals?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p>
+                <p class="bnsfc-all-options-open">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_cats'], true ); ?> id="<?php echo $this->get_field_id( 'show_cats' ); ?>" name="<?php echo $this->get_field_name( 'show_cats' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_cats' ); ?>"><?php _e( 'Display the Post Categories?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p>
+                <p class="bnsfc-all-options-open">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_tags'], true ); ?> id="<?php echo $this->get_field_id( 'show_tags' ); ?>" name="<?php echo $this->get_field_name( 'show_tags' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_tags' ); ?>"><?php _e( 'Display the Post Tags?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p>
+                <p class="bnsfc-all-options-open">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_full'], true ); ?> id="<?php echo $this->get_field_id( 'show_full' ); ?>" name="<?php echo $this->get_field_name( 'show_full' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display entire Post?', 'bns-fc' ); ?></label>
                 </p>
 
                 <hr />
                 <!-- Hide excerpt explanation and word count option if entire post is displayed -->
-                <p><?php _e( 'The post excerpt is shown by default, if it exists; otherwise the first 55 words of the post are shown as the excerpt ...', 'bns-fc'); ?></p>
+                <p class="bnsfc-all-options-open">
+                    <?php _e( 'The post excerpt is shown by default, if it exists; otherwise the first 55 words of the post are shown as the excerpt ...', 'bns-fc'); ?>
+                </p>
 
-                <p>
+                <p class="bnsfc-all-options-open bnsfc-excerpt-option-open">
                     <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( '... or set the amount of words you want to show:', 'bns-fc' ); ?></label>
                     <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:95%;" />
                 </p>
