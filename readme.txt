@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.3.1
-Stable tag: 1.9.3
+Stable tag: 2.0
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -140,6 +140,7 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.0 =
 * Added `BNS_Options_Scripts_and_Styles`
+* Added inline documentation indicating what conditions will partially collapse the widget options panel
 
 = 1.9.3 =
 * Fixed problem with non-existent custom stylesheet (see 1.9.1)

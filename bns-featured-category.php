@@ -370,17 +370,19 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </tr>
                 </table>
 
+                <hr />
+                <!-- The following option choices may affect the widget option panel layout -->
                 <p>
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p>
+                <p><!-- Hide all options below if ONLY post titles are to be displayed -->
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image Thumbnails?', 'bns-fc' ); ?></label>
                 </p>
 
-                <table class="bnsfc-thumbnails">
+                <table class="bnsfc-thumbnails"><!-- Hide table if featured image / thumbnails are not used -->
                     <tr>
                         <td>
                             <p>
@@ -422,7 +424,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display entire Post?', 'bns-fc' ); ?></label>
                 </p>
 
-                <hr /> <!-- Separates meta details from content/excerpt display options -->
+                <hr />
+                <!-- Hide excerpt explanation and word count option if entire post is displayed -->
                 <p><?php _e( 'The post excerpt is shown by default, if it exists; otherwise the first 55 words of the post are shown as the excerpt ...', 'bns-fc'); ?></p>
 
                 <p>
