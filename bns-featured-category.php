@@ -51,6 +51,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version     2.0
  * Add `BNSFC_Options_Scripts_and_Styles`
  * Added code to remove spaces (if used) when multiple categories are chosen
+ *
+ * @todo Add check for post-thumbnail functionality; required for `has_post_thumbnails` call
  */
 
 /** Check installed WordPress version for compatibility */
@@ -454,7 +456,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
  * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
  * @internal Note 'content_thumb' although available has no use if 'show_full=false'
  *
- * @return ob_get_contents
+ * @return string
  *
  * @version 1.9.1
  * Last revised November 24, 2011
