@@ -53,11 +53,15 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Added code to remove spaces (if used) when multiple categories are chosen
  * Added `*-toggle` variables for collapse effect
  *
- * @todo Add check for post-thumbnail functionality; required for `has_post_thumbnails` call
- * @todo Confirm WordPress version requirement and note what is dictating the specific version
+ * @todo Add check for post-thumbnail functionality required for `*_post_thumbnails` calls; test with no `add_theme_support( 'post-thumbnails' )`
  */
 
-/** Check installed WordPress version for compatibility */
+/**
+ * Check installed WordPress version for compatibility
+ * @internal    Requires WordPress version 2.9
+ * @uses        the_post_thumbnail
+ * @uses        has_post_thumbnail
+ */
 global $wp_version;
 $exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
 if ( version_compare( $wp_version, "2.9", "<" ) )
