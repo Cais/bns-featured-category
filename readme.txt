@@ -141,6 +141,8 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.0 =
 * Added `BNS_Options_Scripts_and_Styles`
 * Added inline documentation indicating what conditions will partially collapse the widget options panel
+* Added `*-toggle` variables for collapse effect
+* Added code to remove spaces (if used) when multiple categories are chosen
 
 = 1.9.3 =
 * Fixed problem with non-existent custom stylesheet (see 1.9.1)

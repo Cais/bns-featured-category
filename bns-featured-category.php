@@ -47,12 +47,14 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised January 22, 2012
+ * Last revised February 6, 2012
  * @version     2.0
- * Add `BNSFC_Options_Scripts_and_Styles`
+ * Added `BNSFC_Options_Scripts_and_Styles`
  * Added code to remove spaces (if used) when multiple categories are chosen
+ * Added `*-toggle` variables for collapse effect
  *
  * @todo Add check for post-thumbnail functionality; required for `has_post_thumbnails` call
+ * @todo Confirm WordPress version requirement and note what is dictating the specific version
  */
 
 /** Check installed WordPress version for compatibility */
@@ -127,9 +129,9 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
 function BNSFC_Scripts_and_Styles() {
         /** Enqueue Scripts */
         /** Enqueue Style Sheets */
-        wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), '1.9.3', 'screen' );
+        wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), '2.0', 'screen' );
         if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
-            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '1.9.3', 'screen' );
+            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '2.0', 'screen' );
         }
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
@@ -199,8 +201,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 echo $before_widget;
 
                 /**
-                 * @var $cat_choice_class - CSS element created from category choices
-                 * by removing whitespace and replacing commas with hyphens
+                 * @var $cat_choice_class - CSS element created from category choices by removing whitespace and replacing commas with hyphens
                  */
                 $cat_choice_class = preg_replace( '/\\040/', '', $cat_choice );
                 $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice_class );
@@ -382,15 +383,17 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 <p><?php _e( 'NB: Some options may not be available depending on which ones are selected.', 'bns-fc'); ?></p>
                 <p class="bnsfc-display-all-posts-check">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
+                    <?php $all_options_toggle = ( checked( (bool) $instance['only_titles'], true, false ) ) ? 'closed' : 'open'; ?>
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-open bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
+                    <?php $thumbnails_toggle = ( checked( (bool) $instance['use_thumbnails'], true, false ) ) ? 'open' : 'closed'; ?>
                     <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image Thumbnails?', 'bns-fc' ); ?></label>
                 </p>
 
-                <table class="bnsfc-thumbnails-open bnsfc-all-options-open"><!-- Hide table if featured image / thumbnails are not used -->
+                <table class="bnsfc-thumbnails-<?php echo $thumbnails_toggle; ?> bnsfc-all-options-<?php echo $all_options_toggle; ?>"><!-- Hide table if featured image / thumbnails are not used -->
                     <tr>
                         <td>
                             <p>
@@ -407,38 +410,39 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </tr>
                 </table>
 
-                <p class="bnsfc-all-options-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_meta'], true ); ?> id="<?php echo $this->get_field_id( 'show_meta' ); ?>" name="<?php echo $this->get_field_name( 'show_meta' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_meta' ); ?>"><?php _e( 'Display Author Meta Details?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_comments'], true ); ?> id="<?php echo $this->get_field_id( 'show_comments' ); ?>" name="<?php echo $this->get_field_name( 'show_comments' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_comments' ); ?>"><?php _e( 'Display Comment Totals?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_cats'], true ); ?> id="<?php echo $this->get_field_id( 'show_cats' ); ?>" name="<?php echo $this->get_field_name( 'show_cats' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_cats' ); ?>"><?php _e( 'Display the Post Categories?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_tags'], true ); ?> id="<?php echo $this->get_field_id( 'show_tags' ); ?>" name="<?php echo $this->get_field_name( 'show_tags' ); ?>" />
                     <label for="<?php echo $this->get_field_id( 'show_tags' ); ?>"><?php _e( 'Display the Post Tags?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-open bnsfc-excerpt-option-open-check">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-excerpt-option-open-check">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_full'], true ); ?> id="<?php echo $this->get_field_id( 'show_full' ); ?>" name="<?php echo $this->get_field_name( 'show_full' ); ?>" />
+                    <?php $show_full_toggle = ( checked( (bool) $instance['show_full'], true, false ) ) ? 'closed' : 'open'; ?>
                     <label for="<?php echo $this->get_field_id( 'show_full' ); ?>"><?php _e( 'Display entire Post?', 'bns-fc' ); ?></label>
                 </p>
 
                 <hr />
                 <!-- Hide excerpt explanation and word count option if entire post is displayed -->
-                <p class="bnsfc-all-options-open bnsfc-excerpt-option-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-excerpt-option-<?php echo $show_full_toggle; ?>">
                     <?php _e( 'The post excerpt is shown by default, if it exists; otherwise the first 55 words of the post are shown as the excerpt ...', 'bns-fc'); ?>
                 </p>
 
-                <p class="bnsfc-all-options-open bnsfc-excerpt-option-open">
+                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-excerpt-option-<?php echo $show_full_toggle; ?>">
                     <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( '... or set the amount of words you want to show:', 'bns-fc' ); ?></label>
                     <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:95%;" />
                 </p>
