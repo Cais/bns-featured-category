@@ -393,8 +393,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
 
-                <?php /** Check if the theme supports post-thumbnails before allowing the thumbnail options to be displayed */
-                if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '<div class="bnsfc-thumbnails-closed">'; ?>
+                <!-- If the theme supports post-thumbnails carry on; otherwise hide the thumbnails section -->
+                <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '<div class="bnsfc-thumbnails-closed">'; ?>
                     <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
                         <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
                         <?php $thumbnails_toggle = ( checked( (bool) $instance['use_thumbnails'], true, false ) ) ? 'open' : 'closed'; ?>
@@ -418,6 +418,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                         </tr>
                     </table>
                 <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '</div>'; ?>
+                <!-- Carry on from here if there is no thumbnail support -->
 
                 <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_meta'], true ); ?> id="<?php echo $this->get_field_id( 'show_meta' ); ?>" name="<?php echo $this->get_field_name( 'show_meta' ); ?>" />
