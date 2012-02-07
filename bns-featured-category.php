@@ -47,19 +47,18 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised February 6, 2012
+ * Last revised February 7, 2012
  * @version     2.0
  * Added `BNSFC_Options_Scripts_and_Styles`
  * Added code to remove spaces (if used) when multiple categories are chosen
  * Added `*-toggle` variables for collapse effect
- *
- * @todo Add check for post-thumbnail functionality required for `*_post_thumbnails` calls; test with no `add_theme_support( 'post-thumbnails' )`
+ * Added `current_theme_supports` check for `post-thumbnails`; no support = no thumbnail options
  */
 
 /**
  * Check installed WordPress version for compatibility
- * @internal    Requires WordPress version 2.9 and
- * @internal    The active theme must support `post_thumbnails` via `add_theme_support`
+ * @internal    Requires WordPress version 2.9
+ * @uses        current_theme_supports
  * @uses        the_post_thumbnail
  * @uses        has_post_thumbnail
  */
@@ -254,17 +253,18 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                                 <?php if ( ! $only_titles ) { ?>
                                     <div class="bnsfc-content">
                                         <?php if ( $show_full ) {
-                                            if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            /** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
+                                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
                                                 the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
                                             the_content(); ?>
                                             <div class="bnsfc-clear"></div>
                                             <?php wp_link_pages( array( 'before' => '<p><strong>' . __( 'Pages: ', 'bns-fc') . '</strong>', 'after' => '</p>', 'next_or_number' => 'number' ) );
                                         } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
-                                            if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
                                                 the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
                                             echo bnsfc_custom_excerpt( get_the_content(), $instance['excerpt_length'] );
                                         } else {
-                                            if ( has_post_thumbnail() && ( $use_thumbnails ) )
+                                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
                                                 the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
                                             the_excerpt();
                                         } ?>
@@ -317,9 +317,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
          *
          * @param   $instance
          *
-         * Last revised January 20, 2012
+         * Last revised February 7, 2012
          * @version 2.0
          * Re-arranged form to more logical sequence
+         * Added `current_theme_supports` check for `post-thumbnails`; no support = no thumbnail options
          *
          * @todo Get new screenshot
          */
@@ -392,28 +393,31 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
                 </p>
 
-                <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
-                    <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
-                    <?php $thumbnails_toggle = ( checked( (bool) $instance['use_thumbnails'], true, false ) ) ? 'open' : 'closed'; ?>
-                    <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image Thumbnails?', 'bns-fc' ); ?></label>
-                </p>
+                <?php /** Check if the theme supports post-thumbnails before allowing the thumbnail options to be displayed */
+                if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '<div class="bnsfc-thumbnails-closed">'; ?>
+                    <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
+                        <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
+                        <?php $thumbnails_toggle = ( checked( (bool) $instance['use_thumbnails'], true, false ) ) ? 'open' : 'closed'; ?>
+                        <label for="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>"><?php _e( 'Use Featured Image Thumbnails?', 'bns-fc' ); ?></label>
+                    </p>
 
-                <table class="bnsfc-thumbnails-<?php echo $thumbnails_toggle; ?> bnsfc-all-options-<?php echo $all_options_toggle; ?>"><!-- Hide table if featured image / thumbnails are not used -->
-                    <tr>
-                        <td>
-                            <p>
-                                <label for="<?php echo $this->get_field_id( 'content_thumb' ); ?>"><?php _e( 'Content Thumbnail Size (in px):', 'bns-fc' ); ?></label>
-                                <input id="<?php echo $this->get_field_id( 'content_thumb' ); ?>" name="<?php echo $this->get_field_name( 'content_thumb' ); ?>" value="<?php echo $instance['content_thumb']; ?>" style="width:85%;" />
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                <label for="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>"><?php _e( 'Excerpt Thumbnail Size (in px):', 'bns-fc' ); ?></label>
-                                <input id="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_thumb' ); ?>" value="<?php echo $instance['excerpt_thumb']; ?>" style="width:85%;" />
-                            </p>
-                        </td>
-                    </tr>
-                </table>
+                    <table class="bnsfc-thumbnails-<?php echo $thumbnails_toggle; ?> bnsfc-all-options-<?php echo $all_options_toggle; ?>"><!-- Hide table if featured image / thumbnails are not used -->
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="<?php echo $this->get_field_id( 'content_thumb' ); ?>"><?php _e( 'Content Thumbnail Size (in px):', 'bns-fc' ); ?></label>
+                                    <input id="<?php echo $this->get_field_id( 'content_thumb' ); ?>" name="<?php echo $this->get_field_name( 'content_thumb' ); ?>" value="<?php echo $instance['content_thumb']; ?>" style="width:85%;" />
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <label for="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>"><?php _e( 'Excerpt Thumbnail Size (in px):', 'bns-fc' ); ?></label>
+                                    <input id="<?php echo $this->get_field_id( 'excerpt_thumb' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_thumb' ); ?>" value="<?php echo $instance['excerpt_thumb']; ?>" style="width:85%;" />
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '</div>'; ?>
 
                 <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
                     <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_meta'], true ); ?> id="<?php echo $this->get_field_id( 'show_meta' ); ?>" name="<?php echo $this->get_field_name( 'show_meta' ); ?>" />
