@@ -15,6 +15,7 @@ Plugin with multi-widget functionality that displays most recent posts from spec
 == Installation ==
 
 This section describes how to install the plugin and get it working.
+NOTE: the active theme must support `post_thumbnails` via `add_theme_support`. Please contact your active theme's author to verify, if necessary.
 
 1. Upload `bns-featured-category.php` to the `/wp-content/plugins/` directory
 2. Activate through the 'Plugins' menu.
@@ -72,6 +73,7 @@ Parameters are very similar to the plugin:
 NB: Use the shortcode at your own risk!
 
 == Frequently Asked Questions ==
+NOTE: the active theme must support `post_thumbnails` via `add_theme_support`. Please contact your active theme's author to verify, if necessary.
 
 = Can I use this in more than one widget area? =
 

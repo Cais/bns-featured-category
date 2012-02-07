@@ -58,7 +58,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 /**
  * Check installed WordPress version for compatibility
- * @internal    Requires WordPress version 2.9 and the active theme must use `add_theme_support` for `post_thumbnails`
+ * @internal    Requires WordPress version 2.9 and
+ * @internal    The active theme must support `post_thumbnails` via `add_theme_support`
  * @uses        the_post_thumbnail
  * @uses        has_post_thumbnail
  */
