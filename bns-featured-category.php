@@ -58,7 +58,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 /**
  * Check installed WordPress version for compatibility
- * @internal    Requires WordPress version 2.9
+ * @internal    Requires WordPress version 2.9 and the active theme must use `add_theme_support` for `post_thumbnails`
  * @uses        the_post_thumbnail
  * @uses        has_post_thumbnail
  */
@@ -514,4 +514,3 @@ function bnsfc_shortcode( $atts ) {
 }
 add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
 // End BNSFC Shortcode - Say your prayers ...
-?>
