@@ -53,6 +53,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Added code to remove spaces (if used) when multiple categories are chosen
  * Added `*-toggle` variables for collapse effect
  * Added `current_theme_supports` check for `post-thumbnails`; no support = no thumbnail options
+ *
+ * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  */
 
 /**
