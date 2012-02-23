@@ -218,6 +218,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                      * @var $after_title    string - defined by theme
                      */
                     echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
+                    // The following `echo` statement will make the widget title link to the category choice
+                    // @todo requires further review before going live
+                    // echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
                 }
 
                 /** Display posts from widget settings. */
