@@ -60,9 +60,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 /**
  * Check installed WordPress version for compatibility
  * @internal    Requires WordPress version 2.9
- * @uses        current_theme_supports
- * @uses        the_post_thumbnail
- * @uses        has_post_thumbnail
+ * @internal    @uses current_theme_supports
+ * @internal    @uses the_post_thumbnail
+ * @internal    @uses has_post_thumbnail
  */
 global $wp_version;
 $exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
@@ -326,8 +326,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
          * @version 2.0
          * Re-arranged form to more logical sequence
          * Added `current_theme_supports` check for `post-thumbnails`; no support = no thumbnail options
-         *
-         * @todo Get new screenshot
          */
         function form( $instance ) {
                 /** Set default widget settings */
