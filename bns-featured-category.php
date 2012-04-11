@@ -56,6 +56,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Updated option panel screenshot
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
+ * @todo Review - add option to allow excerpt to be set to zero characters
  */
 
 /**
