@@ -56,6 +56,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Updated option panel screenshot
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
+ * @todo Add "orderby" option - ascending, descending, random
+ * @todo Review the idea of a date range option ... is it possible? would it have more than a niche interest?
  */
 
 /**
