@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.4
-Stable tag: 2.0
+Stable tag: 2.1-alpha
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -59,6 +59,7 @@ Parameters are very similar to the plugin:
 *   'count'             => '0'
 *   'show_count'        => '3'
 *   'offset'            => '0'
+*   'sort_order'        => 'desc'
 *   'use_thumbnails'    => true
 *   'excerpt_thumb'     => '50'
 *   'show_meta'         => false
@@ -138,6 +139,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.1 =
+* Added option to set post sort order - ascending, descending, and random
+
 = 2.0 =
 * Added `BNS_Options_Scripts_and_Styles`
 * Added inline documentation indicating what conditions will partially collapse the widget options panel
