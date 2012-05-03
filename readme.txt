@@ -141,6 +141,7 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random
+* Added 'no excerpt at all' checkbox option
 
 = 2.0 =
 * Added `BNS_Options_Scripts_and_Styles`

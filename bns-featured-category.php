@@ -47,12 +47,12 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Last revised April 24, 2012
+ * Last revised April May 3, 2012
  * @version     2.1
  * Added option to set post sort order - ascending, descending, and random
+ * Added 'no excerpt at all option'
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
- * @todo Review - add option to allow excerpt to be set to zero characters
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
 
@@ -200,6 +200,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $only_titles    = $instance['only_titles'];
         $show_full      = $instance['show_full'];
         $excerpt_length	= $instance['excerpt_length'];
+        $no_excerpt     = $instance['no_excerpt'];
         /** Plugin requires counter variable to be part of its arguments?! */
         $count          = $instance['count'];
 
@@ -274,11 +275,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
                                     the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
                                 echo bnsfc_custom_excerpt( get_the_content(), $instance['excerpt_length'] );
-                            } else {
+                            } elseif ( ! $instance['no_excerpt'] ) {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
                                     the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
                                 the_excerpt();
-                            } ?>
+                            } else {
+                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
+                                the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
+                            }?>
                         </div> <!-- .bnsfc-content -->
                     <?php } ?>
                 </div> <!-- .post #post-ID -->
@@ -315,6 +319,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $instance['only_titles']    = $new_instance['only_titles'];
         $instance['show_full']      = $new_instance['show_full'];
         $instance['excerpt_length']	= $new_instance['excerpt_length'];
+        $instance['no_excerpt']     = $new_instance['no_excerpt'];
         /** Added to reset count for every instance of the plugin */
         $instance['count']          = $new_instance['count'];
 
@@ -354,7 +359,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             'show_tags'         => false,
             'only_titles'       => false,
             'show_full'         => false,
-            'excerpt_length'    => ''
+            'excerpt_length'    => '',
+            'no_excerpt'        => false
         );
         $instance = wp_parse_args( (array) $instance, $defaults );
         ?>
@@ -479,6 +485,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             <label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( '... or set the amount of words you want to show:', 'bns-fc' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" value="<?php echo $instance['excerpt_length']; ?>" style="width:95%;" />
         </p>
+
+        <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-excerpt-option-<?php echo $show_full_toggle; ?>">
+            <label for="<?php echo $this->get_field_id( 'no_length' ); ?>"><?php _e( '... or have no excerpt at all!', 'bns-fc' ); ?></label>
+            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['no_excerpt'], true ); ?> id="<?php echo $this->get_field_id( 'no_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'no_excerpt' ); ?>" />
+        </p>
+
     <?php }
 } // End Class BNS_Featured_Category_Widget
 
@@ -525,7 +537,8 @@ function bnsfc_shortcode( $atts ) {
             'show_tags'         => false,
             'only_titles'       => false,
             'show_full'         => false, // Do not set to true!!!
-            'excerpt_length'    => ''
+            'excerpt_length'    => '',
+            'no_excerpt'        => false
         ), $atts ),
         $args = array(
             /** clear variables defined by theme for widgets */
