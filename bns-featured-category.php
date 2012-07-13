@@ -355,10 +355,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      *
      * @return string|void
      *
-     * Last revised February 7, 2012
-     * @version 2.0
-     * Re-arranged form to more logical sequence
-     * Added `current_theme_supports` check for `post-thumbnails`; no support = no thumbnail options
+     * @version 2.2
+     * @date    July 13, 2012
+     * Corrected 'no_excerpt" label issue
      */
     function form( $instance ) {
         /** Set default widget settings */
@@ -508,7 +507,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         </p>
 
         <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-excerpt-option-<?php echo $show_full_toggle; ?>">
-            <label for="<?php echo $this->get_field_id( 'no_length' ); ?>"><?php _e( '... or have no excerpt at all!', 'bns-fc' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'no_excerpt' ); ?>"><?php _e( '... or have no excerpt at all!', 'bns-fc' ); ?></label>
             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['no_excerpt'], true ); ?> id="<?php echo $this->get_field_id( 'no_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'no_excerpt' ); ?>" />
         </p>
 
