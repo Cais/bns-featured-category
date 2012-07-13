@@ -142,6 +142,7 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.2 =
 * Documentation updates
 * Corrected 'no_excerpt" label issue
+* Featured images link to post
 
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random

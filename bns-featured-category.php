@@ -48,11 +48,11 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.2
- * @date        July 7, 2012
+ * @date        July 13, 2012
+ * Featured images link to post
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
- * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-make-featured-images-link-to-the-post
  */
 
 /**
@@ -278,23 +278,24 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                         <div class="bnsfc-content">
                             <?php if ( $show_full ) {
                                 /** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
-                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
-                                    the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
-                                the_content(); ?>
+                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
+                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                    // the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
+                                <?php the_content(); ?>
                                 <div class="bnsfc-clear"></div>
                                 <?php wp_link_pages( array( 'before' => '<p><strong>' . __( 'Pages: ', 'bns-fc') . '</strong>', 'after' => '</p>', 'next_or_number' => 'number' ) );
                             } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
-                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
-                                    the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
-                                echo bnsfc_custom_excerpt( get_the_content(), $instance['excerpt_length'] );
+                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
+                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                <?php echo bnsfc_custom_excerpt( get_the_content(), $instance['excerpt_length'] );
                             } elseif ( ! $instance['no_excerpt'] ) {
-                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
-                                    the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
-                                the_excerpt();
+                                if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
+                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                <?php the_excerpt();
                             } else {
-                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) )
-                                the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) );
-                            }?>
+                            if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
+                                <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                            <?php }?>
                         </div> <!-- .bnsfc-content -->
                     <?php } ?>
                 </div> <!-- .post #post-ID -->
