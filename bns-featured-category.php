@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.2-alpha
+Version: 2.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
@@ -80,7 +80,6 @@ if ( version_compare( $wp_version, "2.9", "<" ) )
  * Last revised November 12, 2011
  */
 load_plugin_textdomain( 'bns-fc' );
-// End: BNS Featured Category TextDomain
 
 /**
  * BNS Featured Category Custom Excerpt
@@ -96,9 +95,11 @@ load_plugin_textdomain( 'bns-fc' );
  * @param   $text - post content
  * @param   int $length - user defined amount of words
  *
+ * @uses    get_permalink
+ * @uses    the_title_attribute
+ *
  * @return  string
  */
-// Begin the mess of Excerpt Length fiascoes
 function bnsfc_custom_excerpt( $text, $length = 55 ) {
         $text = strip_tags( $text );
         $words = explode( ' ', $text, $length + 1 );
@@ -117,7 +118,6 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
         $text .= $bnsfc_link;
         return $text;
 }
-// End BNS Featured Category Custom Excerpt
 
 /**
  * Enqueue Plugin Scripts and Styles
@@ -126,6 +126,12 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
  *
  * @package BNS_Featured_Category
  * @since   1.9
+ *
+ * @uses    plugin_dir_path
+ * @uses    plugin_dir_url
+ * @uses    wp_enqueue_style
+ *
+ * @internal Used with action: wp_enqueue_scripts
  *
  * @version 1.9.3
  * Fixed problem with non-existent custom stylesheet
@@ -147,6 +153,13 @@ add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
  *
  * @package BNS_Featured_Category
  * @since   2.0
+ *
+ * @uses    plugin_dir_path
+ * @uses    plugin_dir_url
+ * @uses    wp_enqueue_script
+ * @uses    wp_enqueue_style
+ *
+ * @internal Used with action: admin_enqueue_scripts
  */
 function BNSFC_Options_Scripts_and_Styles() {
         /** Enqueue Options Scripts */
@@ -333,6 +346,15 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      *
      * @param   $instance
      *
+     * @uses    checked
+     * @uses    current_theme_supports
+     * @uses    get_field_id
+     * @uses    get_field_name
+     * @uses    selected
+     * @uses    wp_parse_args
+     *
+     * @return string|void
+     *
      * Last revised February 7, 2012
      * @version 2.0
      * Re-arranged form to more logical sequence
@@ -491,20 +513,25 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         </p>
 
     <?php }
-} // End Class BNS_Featured_Category_Widget
+}
 
 /**
  * BNSFC Shortcode
  * - May the Gods of programming protect us all!
  *
  * @package BNS_Featured_Category
- * @since 1.8
+ * @since   1.8
  *
- * @param $atts
+ * @param   $atts
+ *
+ * @uses    shortcode_atts
+ * @uses    the_widget
+ *
  * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
  * @internal Note 'content_thumb' although available has no use if 'show_full=false'
+ * @internal Used with `add_shortcode`
  *
- * @return string
+ * @return  string
  *
  * @version 1.9.1
  * Last revised November 24, 2011
@@ -535,7 +562,7 @@ function bnsfc_shortcode( $atts ) {
             'show_cat_desc'     => false,
             'show_tags'         => false,
             'only_titles'       => false,
-            'show_full'         => false, // Do not set to true!!!
+            'show_full'         => false, /** Do not set to true!!! */
             'excerpt_length'    => '',
             'no_excerpt'        => false
         ), $atts ),
@@ -550,7 +577,7 @@ function bnsfc_shortcode( $atts ) {
     /** Get the_widget output and put into its own container */
     $bnsfc_content = ob_get_contents();
     ob_end_clean();
-    // All your snipes belong to us!
+    /** All your snipes belong to us! */
 
     return $bnsfc_content;
 }

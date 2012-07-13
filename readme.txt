@@ -139,6 +139,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.2 =
+* Documentation updates
+
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random
 * Added 'no excerpt at all' checkbox option
