@@ -143,6 +143,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Documentation updates
 * Corrected 'no_excerpt" label issue
 * Featured images link to post
+* Changed `query_posts` to `WP_Query`
 
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random

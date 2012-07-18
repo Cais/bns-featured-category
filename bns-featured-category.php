@@ -48,8 +48,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.2
- * @date        July 13, 2012
+ * @date        July 18, 2012
  * Featured images link to post
+ * Changed `query_posts` to `WP_Query`
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
@@ -249,12 +250,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $query_args = "cat=$cat_choice&posts_per_page=$show_count&offset=$offset&orderby=$sort_order";
         else
             $query_args = "cat=$cat_choice&posts_per_page=$show_count&offset=$offset&order=$sort_order";
-        query_posts( $query_args );
+
+        /** @var $bnsfc_query - object of posts matching query criteria */
+        $bnsfc_query = new WP_Query( $query_args );
 
         if ( $show_cat_desc )
             echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 
-        if ( have_posts() ) : while ( have_posts() ) : the_post();
+        if ( have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
             // static $count = 0; /* see above */
             if ( $count == $show_count ) {
                 break;
@@ -307,9 +310,11 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
         endif;
 
-        /** @var    $after_widget   string - defined by theme */
+        /** @var $after_widget string - defined by theme */
         echo $after_widget;
-        wp_reset_query();
+
+        /** Reset post data - see $bnsfc_query object */
+        wp_reset_postdata();
     }
 
     function update( $new_instance, $old_instance ) {
