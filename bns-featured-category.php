@@ -161,11 +161,11 @@ add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
  * @uses    wp_enqueue_script
  * @uses    wp_enqueue_style
  *
+ * @internal 'jQuery' is enqueued as a dependency of the 'bnsfc-options.js' enqueue
  * @internal Used with action: admin_enqueue_scripts
  */
 function BNSFC_Options_Scripts_and_Styles() {
         /** Enqueue Options Scripts */
-        wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), '2.0' );
         /** Enqueue Options Style Sheets */
         wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );

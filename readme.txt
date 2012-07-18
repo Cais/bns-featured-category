@@ -144,6 +144,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Corrected 'no_excerpt" label issue
 * Featured images link to post
 * Changed `query_posts` to `WP_Query`
+* Remove 'jQuery' enqueue as it is enqueued as a dependency of the 'bnsfc-options.js' enqueue
 
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random
