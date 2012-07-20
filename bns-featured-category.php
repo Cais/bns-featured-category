@@ -48,13 +48,13 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.2
- * @date        July 18, 2012
+ * @date        July 20, 2012
  * Featured images link to post
- * Changed `query_posts` to `WP_Query`
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  * @todo Feature request - add option to not show the Post Title
+ * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  */
 
 /**
@@ -252,12 +252,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $query_args = "cat=$cat_choice&posts_per_page=$show_count&offset=$offset&order=$sort_order";
 
         /** @var $bnsfc_query - object of posts matching query criteria */
-        $bnsfc_query = new WP_Query( $query_args );
+        // $bnsfc_query = new WP_Query( $query_args );
+        query_posts( $query_args );
 
         if ( $show_cat_desc )
             echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 
-        if ( have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
+        // if ( have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
+        if ( have_posts() ) : while ( have_posts() ) : the_post();
             // static $count = 0; /* see above */
             if ( $count == $show_count ) {
                 break;
@@ -314,7 +316,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         echo $after_widget;
 
         /** Reset post data - see $bnsfc_query object */
-        wp_reset_postdata();
+        // wp_reset_postdata();
+        wp_reset_query();
     }
 
     function update( $new_instance, $old_instance ) {
