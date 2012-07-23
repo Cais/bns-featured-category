@@ -6,6 +6,7 @@ Description: Plugin with multi-widget functionality that displays most recent po
 Version: 2.2-beta
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
+Textdomain: bns-fc
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
@@ -48,13 +49,14 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.2
- * @date        July 20, 2012
+ * @date        July 23, 2012
  * Featured images link to post
+ * Added option to not show the Post Title
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
- * @todo Feature request - add option to not show the Post Title
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
+ * @todo New screenshot(s) ... dot-org header image, too?
  */
 
 /**
@@ -212,6 +214,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $show_cat_desc	= $instance['show_cat_desc'];
         $show_tags      = $instance['show_tags'];
         $only_titles    = $instance['only_titles'];
+        $no_titles      = $instance['no_titles'];
         $show_full      = $instance['show_full'];
         $excerpt_length	= $instance['excerpt_length'];
         $no_excerpt     = $instance['no_excerpt'];
@@ -265,7 +268,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 break;
             } else { ?>
                 <div <?php post_class(); ?>>
-                    <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
+                    <?php if ( ! $no_titles ) { ?>
+                        <strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
+                    <?php } ?>
                     <div class="post-details">
                         <?php if ( $show_meta ) {
                             printf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
@@ -286,7 +291,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                                 /** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
-                                    // the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) );
                                 <?php the_content(); ?>
                                 <div class="bnsfc-clear"></div>
                                 <?php wp_link_pages( array( 'before' => '<p><strong>' . __( 'Pages: ', 'bns-fc') . '</strong>', 'after' => '</p>', 'next_or_number' => 'number' ) );
@@ -339,6 +343,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $instance['show_cat_desc']  = $new_instance['show_cat_desc'];
         $instance['show_tags']      = $new_instance['show_tags'];
         $instance['only_titles']    = $new_instance['only_titles'];
+        $instance['no_titles']      = $new_instance['no_titles'];
         $instance['show_full']      = $new_instance['show_full'];
         $instance['excerpt_length']	= $new_instance['excerpt_length'];
         $instance['no_excerpt']     = $new_instance['no_excerpt'];
@@ -388,6 +393,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             'show_cat_desc'     => false,
             'show_tags'         => false,
             'only_titles'       => false,
+            'no_titles'         => false,
             'show_full'         => false,
             'excerpt_length'    => '',
             'no_excerpt'        => false
@@ -450,6 +456,11 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['only_titles'], true ); ?> id="<?php echo $this->get_field_id( 'only_titles' ); ?>" name="<?php echo $this->get_field_name( 'only_titles' ); ?>" />
             <?php $all_options_toggle = ( checked( (bool) $instance['only_titles'], true, false ) ) ? 'closed' : 'open'; ?>
             <label for="<?php echo $this->get_field_id( 'only_titles' ); ?>"><?php _e( 'ONLY display Post Titles?', 'bns-fc' ); ?></label>
+        </p>
+
+        <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-no-titles">
+            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['no_titles'], true ); ?> id="<?php echo $this->get_field_id( 'no_titles' ); ?>" name="<?php echo $this->get_field_name( 'no_titles' ); ?>" />
+            <label for="<?php echo $this->get_field_id( 'no_titles' ); ?>"><?php _e( 'Do NOT display Post Titles?', 'bns-fc' ); ?></label>
         </p>
 
         <!-- If the theme supports post-thumbnails carry on; otherwise hide the thumbnails section -->
@@ -571,6 +582,7 @@ function bnsfc_shortcode( $atts ) {
             'show_cat_desc'     => false,
             'show_tags'         => false,
             'only_titles'       => false,
+            'no_titles'         => false,
             'show_full'         => false, /** Do not set to true!!! */
             'excerpt_length'    => '',
             'no_excerpt'        => false
