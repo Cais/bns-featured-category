@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.2-beta
+Version: 2.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -105,22 +105,22 @@ load_plugin_textdomain( 'bns-fc' );
  * @return  string
  */
 function bnsfc_custom_excerpt( $text, $length = 55 ) {
-        $text = strip_tags( $text );
-        $words = explode( ' ', $text, $length + 1 );
+    $text = strip_tags( $text );
+    $words = explode( ' ', $text, $length + 1 );
 
-        /** Create link to full post for end of custom length excerpt output */
-        $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
+    /** Create link to full post for end of custom length excerpt output */
+    $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
 
-        if ( ( ! $length ) || ( count( $words ) < $length ) ) {
-            $text .= $bnsfc_link;
-            return $text;
-        } else {
-            array_pop( $words );
-            array_push( $words, '...' );
-            $text = implode( ' ', $words );
-        }
+    if ( ( ! $length ) || ( count( $words ) < $length ) ) {
         $text .= $bnsfc_link;
         return $text;
+    } else {
+        array_pop( $words );
+        array_push( $words, '...' );
+        $text = implode( ' ', $words );
+    }
+    $text .= $bnsfc_link;
+    return $text;
 }
 
 /**
@@ -131,22 +131,29 @@ function bnsfc_custom_excerpt( $text, $length = 55 ) {
  * @package BNS_Featured_Category
  * @since   1.9
  *
+ * @uses    get_plugin_data
  * @uses    plugin_dir_path
  * @uses    plugin_dir_url
  * @uses    wp_enqueue_style
  *
  * @internal Used with action: wp_enqueue_scripts
  *
- * @version 1.9.3
- * Fixed problem with non-existent custom stylesheet
+ * @version 2.2
+ * @date    August 2, 2012
+ * Programmatically add version number to enqueue calls
  */
 function BNSFC_Scripts_and_Styles() {
-        /** Enqueue Scripts */
-        /** Enqueue Style Sheets */
-        wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), '2.0', 'screen' );
-        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
-            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), '2.0', 'screen' );
-        }
+    /** Call the wp-admin plugin code */
+    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+    /** @var $bnsfc_data - holds the plugin header data */
+    $bnsfc_data = get_plugin_data( __FILE__ );
+
+    /** Enqueue Scripts */
+    /** Enqueue Style Sheets */
+    wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), $bnsfc_data['Version'], 'screen' );
+    if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
+        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
 
@@ -167,19 +174,19 @@ add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
  * @internal Used with action: admin_enqueue_scripts
  */
 function BNSFC_Options_Scripts_and_Styles() {
-        /** Enqueue Options Scripts */
-        wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), '2.0' );
-        /** Enqueue Options Style Sheets */
-        wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );
-        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
-            wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), '2.0', 'screen' );
-        }
+    /** Enqueue Options Scripts */
+    wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), '2.0' );
+    /** Enqueue Options Style Sheets */
+    wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );
+    if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
+        wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), '2.0', 'screen' );
+    }
 }
 add_action( 'admin_enqueue_scripts', 'BNSFC_Options_Scripts_and_Styles' );
 
 /** Register widget */
 function load_bnsfc_widget() {
-        register_widget( 'BNS_Featured_Category_Widget' );
+    register_widget( 'BNS_Featured_Category_Widget' );
 }
 add_action( 'widgets_init', 'load_bnsfc_widget' );
 

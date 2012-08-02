@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options
 Requires at least: 2.9
 Tested up to: 3.4
-Stable tag: 2.2-beta
+Stable tag: 2.2
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -145,6 +145,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Featured images link to post
 * Remove 'jQuery' enqueue as it is enqueued as a dependency of the 'bnsfc-options.js' enqueue
 * Added option to not show the Post Title
+* Programmatically add version number to enqueue calls
 
 = 2.1 =
 * Added option to set post sort order - ascending, descending, and random
