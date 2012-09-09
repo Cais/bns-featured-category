@@ -1,9 +1,9 @@
 === BNS Featured Category ===
 Contributors: cais
 Donate link: http://buynowshop.com
-Tags: posts, category, featured, multi-widget, user-options
+Tags: posts, category, featured, multi-widget, user-options, widget-only
 Requires at least: 2.9
-Tested up to: 3.4
+Tested up to: 3.4.2
 Stable tag: 2.2
 
 Displays most recent posts from a specific featured category or categories.
