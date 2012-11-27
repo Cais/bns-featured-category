@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.2
+Version: 2.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.2
+ * @version     2.3
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2012, Edward Caissie
  *
@@ -48,10 +48,14 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.2
- * @date        July 23, 2012
+ * @version 2.2
+ * @date    July 23, 2012
  * Featured images link to post
  * Added option to not show the Post Title
+ *
+ * @version 2.3
+ * @date    November 27, 2012
+ * Remove load_plugin_textdomain as redundant
  *
  * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
@@ -70,20 +74,6 @@ global $wp_version;
 $exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
 if ( version_compare( $wp_version, "2.9", "<" ) )
     exit ( $exit_message );
-
-/**
- * BNS Featured Category TextDomain
- * Make plugin text available for translation (i18n)
- *
- * @package:    BNS Featured Category
- * @since:      1.9
- *
- * Note: Translation files are expected to be found in the plugin root folder / directory.
- * `bns-fc` is being used in place of `bns-featured-category`
- *
- * Last revised November 12, 2011
- */
-load_plugin_textdomain( 'bns-fc' );
 
 /**
  * BNS Featured Category Custom Excerpt
