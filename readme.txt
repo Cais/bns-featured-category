@@ -66,6 +66,7 @@ Parameters are very similar to the plugin:
 *   'show_comments'     => false
 *   'show_cats'         => false
 *   'show_cat_desc'     => false
+*   'link_title'        => false
 *   'show_tags'         => false
 *   'only_titles'       => false
 *   'excerpt_length'    => ''
@@ -141,6 +142,8 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.3 =
 * Release November 2012
+* Add option to use widget title as link to single category archive
+* Optimize output buffer closure in shortcode function
 * Remove load_plugin_textdomain as redundant
 
 = 2.2 =

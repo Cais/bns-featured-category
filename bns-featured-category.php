@@ -54,10 +54,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Added option to not show the Post Title
  *
  * @version 2.3
- * @date    November 27, 2012
+ * @date    November 30, 2012
  * Remove load_plugin_textdomain as redundant
+ * Add option to use widget title as link to single category archive
  *
- * @todo Review - http://wordpress.org/support/topic/plugin-bns-featured-category-how-to-make-header-title-as-link-to-category
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  * @todo New screenshot(s) ... dot-org header image, too?
@@ -209,6 +209,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $show_comments  = $instance['show_comments'];
         $show_cats      = $instance['show_cats'];
         $show_cat_desc	= $instance['show_cat_desc'];
+        $link_title     = $instance['link_title'];
         $show_tags      = $instance['show_tags'];
         $only_titles    = $instance['only_titles'];
         $no_titles      = $instance['no_titles'];
@@ -226,16 +227,25 @@ class BNS_Featured_Category_Widget extends WP_Widget {
          */
         $cat_choice_class = preg_replace( '/\\040/', '', $cat_choice );
         $cat_choice_class = preg_replace( "/[,]/", "-", $cat_choice_class );
+
+        /** Check if multiple categories have been chosen */
+        if ( strpos( $cat_choice_class, '-' ) !== false ) {
+            $multiple_cats = true;
+        } else {
+            $multiple_cats = false;
+        }
+
         /** Widget $title, $before_widget, and $after_widget defined by theme */
         if ( $title ) {
             /**
              * @var $before_title   string - defined by theme
              * @var $after_title    string - defined by theme
              */
-            echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
-            // The following `echo` statement will make the widget title link to the category choice
-            // @todo requires further review before going live
-            // echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
+            if ( ( true == $link_title ) && ( false == $multiple_cats ) ) {
+                echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
+            } else {
+                echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
+            }
         }
 
         /** Display posts from widget settings. */
@@ -338,6 +348,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $instance['show_comments']  = $new_instance['show_comments'];
         $instance['show_cats']      = $new_instance['show_cats'];
         $instance['show_cat_desc']  = $new_instance['show_cat_desc'];
+        $instance['link_title']     = $new_instance['link_title'];
         $instance['show_tags']      = $new_instance['show_tags'];
         $instance['only_titles']    = $new_instance['only_titles'];
         $instance['no_titles']      = $new_instance['no_titles'];
@@ -388,6 +399,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             'show_comments'     => false,
             'show_cats'         => false,
             'show_cat_desc'     => false,
+            'link_title'        => false,
             'show_tags'         => false,
             'only_titles'       => false,
             'no_titles'         => false,
@@ -409,7 +421,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
         <p>
             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_cat_desc'], true ); ?> id="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>" name="<?php echo $this->get_field_name( 'show_cat_desc' ); ?>" />
-            <label for="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>"><?php _e( 'Show first category choice\'s description?', 'bns-fc' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'show_cat_desc' ); ?>"><?php _e( "Show first category's description?", 'bns-fc' ); ?></label>
+        </p>
+
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['link_title'], true ); ?> id="<?php echo $this->get_field_id( 'link_title' ); ?>" name="<?php echo $this->get_field_name( 'link_title' ); ?>" />
+            <label for="<?php echo $this->get_field_id( 'link_title' ); ?>"><?php _e( 'Link widget title to category?<br /><strong>NB: Only use with single category!</strong>', 'bns-fc' ); ?></label>
         </p>
 
         <p>
@@ -553,8 +570,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
  * @version 1.9.1
  * Last revised November 24, 2011
  * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
+ *
  * @version 1.9.2
  * Added 'offset' option
+ *
+ * @version 2.3
+ * @date    November 30, 2012
+ * Add option to use widget title as link to single category archive
+ * Optimize output buffer closure
  *
  * @todo Fix 'show_full=true' issue
  */
@@ -577,6 +600,7 @@ function bnsfc_shortcode( $atts ) {
             'show_comments'     => false,
             'show_cats'         => false,
             'show_cat_desc'     => false,
+            'link_title'        => false,
             'show_tags'         => false,
             'only_titles'       => false,
             'no_titles'         => false,
@@ -593,9 +617,7 @@ function bnsfc_shortcode( $atts ) {
         )
     );
     /** Get the_widget output and put into its own container */
-    $bnsfc_content = ob_get_contents();
-    ob_end_clean();
-    /** All your snipes belong to us! */
+    $bnsfc_content = ob_get_clean();
 
     return $bnsfc_content;
 }
