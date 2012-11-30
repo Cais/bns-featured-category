@@ -57,10 +57,11 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @date    November 30, 2012
  * Remove load_plugin_textdomain as redundant
  * Add option to use widget title as link to single category archive
+ * Add filters to allow modification of author and date post meta details
+ * Add filters to allow modification of category list post meta details
  *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
- * @todo New screenshot(s) ... dot-org header image, too?
  */
 
 /**
@@ -280,13 +281,13 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     <?php } ?>
                     <div class="post-details">
                         <?php if ( $show_meta ) {
-                            printf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ); ?><br />
+                            echo apply_filters( 'bnsfc_show_meta', sprintf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ) ); ?><br />
                         <?php }
                         if ( ( $show_comments ) && ( ! post_password_required() ) ) {
                             comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?><br />
                         <?php }
                         if ( $show_cats ) {
-                            printf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ); ?><br />
+                            echo apply_filters( 'bnsfc_show_cats', sprintf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ) ); ?><br />
                         <?php }
                         if ( $show_tags ) {
                             the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?><br />
@@ -426,7 +427,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
         <p>
             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['link_title'], true ); ?> id="<?php echo $this->get_field_id( 'link_title' ); ?>" name="<?php echo $this->get_field_name( 'link_title' ); ?>" />
-            <label for="<?php echo $this->get_field_id( 'link_title' ); ?>"><?php _e( 'Link widget title to category?<br /><strong>NB: Only use with single category!</strong>', 'bns-fc' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'link_title' ); ?>"><?php _e( 'Link widget title to category?<br /><strong>NB: Use a single category choice only!</strong>', 'bns-fc' ); ?></label>
         </p>
 
         <p>

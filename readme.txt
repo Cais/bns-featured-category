@@ -37,7 +37,7 @@ This section describes how to install the plugin and get it working.
 4. Install.
 5. Activate through the 'Plugins' menu.
 6. Place the BNS Featured Category widget appropriately in the Appearance | Widgets section of the dashboard.
-7. Set options to personal preferences:
+7. Set options to personal preferences, for example:
 
 * Widget Title
 * Categories - separated by commas
@@ -143,9 +143,12 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.3 =
 * Release November 2012
 * Add option to use widget title as link to single category archive
+* Add filters to allow modification of author and date post meta details
+* Add filters to allow modification of category list post meta details
 * Documentation updates
 * Optimize output buffer closure in shortcode function
 * Remove load_plugin_textdomain as redundant
+* Updated widget option panel screenshot
 
 = 2.2 =
 * Documentation updates
