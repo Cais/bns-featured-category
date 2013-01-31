@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.3
+Version: 2.4
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,9 +24,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.3
+ * @version     2.4
  * @author      Edward Caissie <edward.caissie@gmail.com>
- * @copyright   Copyright (c) 2009-2012, Edward Caissie
+ * @copyright   Copyright (c) 2009-2013, Edward Caissie
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 2, as published by the
@@ -87,16 +87,20 @@ if ( version_compare( $wp_version, "2.9", "<" ) )
  * @package BNS_Featured_Category
  * @since   1.9
  *
- * @param   $text - post content
  * @param   int $length - user defined amount of words
  *
  * @uses    get_permalink
  * @uses    the_title_attribute
  *
  * @return  string
+ *
+ * @version 2.4
+ * @date    January 31, 2013
+ * Assigned the string from `get_the_excerpt` to be used as the basis of the
+ * custom excerpt string
  */
-function bnsfc_custom_excerpt( $text, $length = 55 ) {
-    $text = strip_tags( $text );
+function bnsfc_custom_excerpt( $length = 55 ) {
+    $text = get_the_excerpt();
     $words = explode( ' ', $text, $length + 1 );
 
     /** Create link to full post for end of custom length excerpt output */

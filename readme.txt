@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, widget-only
 Requires at least: 2.9
-Tested up to: 3.5
-Stable tag: 2.3
+Tested up to: 3.5.1
+Stable tag: 2.4
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -114,7 +114,7 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 1. The options panel as it appears in default.
 
 == Other Notes ==
-* Copyright 2009-2012  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2009-2013  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -140,6 +140,10 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.4 =
+* Release February 2013
+* Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
+
 = 2.3 =
 * Release November 2012
 * Add option to use widget title as link to single category archive
