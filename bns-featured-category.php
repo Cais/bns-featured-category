@@ -88,6 +88,7 @@ if ( version_compare( $wp_version, "2.9", "<" ) )
  * @since   1.9
  *
  * @param   int $length - user defined amount of words
+ * @internal param string $text - the post content
  *
  * @uses    get_permalink
  * @uses    the_title_attribute
@@ -309,7 +310,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                             } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
-                                <?php echo bnsfc_custom_excerpt( get_the_content(), $instance['excerpt_length'] );
+                                <?php echo bnsfc_custom_excerpt( $instance['excerpt_length'] );
                             } elseif ( ! $instance['no_excerpt'] ) {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
