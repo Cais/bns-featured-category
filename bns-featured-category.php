@@ -72,13 +72,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  */
 
-
-/** Register widget */
-function load_bnsfc_widget() {
-    register_widget( 'BNS_Featured_Category_Widget' );
-}
-add_action( 'widgets_init', 'load_bnsfc_widget' );
-
 class BNS_Featured_Category_Widget extends WP_Widget {
 
     /** Constructor */
@@ -682,3 +675,17 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 
 } /** End class extension */
+
+
+/**
+ * Load BNSFC Widget
+ * Register widget to be used in the widget init hook
+ *
+ * @package BNS_Featured_Category
+ *
+ * @uses    register_widget
+ */
+function load_bnsfc_widget() {
+    register_widget( 'BNS_Featured_Category_Widget' );
+} /** End function - load bnsfc widget */
+add_action( 'widgets_init', 'load_bnsfc_widget' );
