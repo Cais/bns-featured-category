@@ -64,60 +64,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  */
 
-/**
- * Check installed WordPress version for compatibility
- * @internal    Requires WordPress version 2.9
- * @internal    @uses current_theme_supports
- * @internal    @uses the_post_thumbnail
- * @internal    @uses has_post_thumbnail
- */
-global $wp_version;
-$exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
-if ( version_compare( $wp_version, "2.9", "<" ) )
-    exit ( $exit_message );
-
-/**
- * BNS Featured Category Custom Excerpt
- *
- * Strips the post content of tags and returns the entire post content if there
- * are less than $length words; otherwise the amount of words equal to $length
- * is returned. In both cases, the returned text is appended with a permalink to
- * the full post.
- *
- * @package BNS_Featured_Category
- * @since   1.9
- *
- * @param   int $length - user defined amount of words
- * @internal param string $text - the post content
- *
- * @uses    get_permalink
- * @uses    the_title_attribute
- *
- * @return  string
- *
- * @version 2.4
- * @date    January 31, 2013
- * Assigned the string from `get_the_excerpt` to be used as the basis of the
- * custom excerpt string
- */
-function bnsfc_custom_excerpt( $length = 55 ) {
-    $text = get_the_excerpt();
-    $words = explode( ' ', $text, $length + 1 );
-
-    /** Create link to full post for end of custom length excerpt output */
-    $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
-
-    if ( ( ! $length ) || ( count( $words ) < $length ) ) {
-        $text .= $bnsfc_link;
-        return $text;
-    } else {
-        array_pop( $words );
-        array_push( $words, '...' );
-        $text = implode( ' ', $words );
-    }
-    $text .= $bnsfc_link;
-    return $text;
-}
 
 /**
  * Enqueue Plugin Scripts and Styles
@@ -187,7 +133,9 @@ function load_bnsfc_widget() {
 add_action( 'widgets_init', 'load_bnsfc_widget' );
 
 class BNS_Featured_Category_Widget extends WP_Widget {
-    function BNS_Featured_Category_Widget() {
+
+    /** Constructor */
+    function __construct() {
         /** Widget settings. */
         $widget_ops = array( 'classname' => 'bns-featured-category', 'description' => __( 'Displays most recent posts from a specific featured category or categories.', 'bns-fc' ) );
 
@@ -196,7 +144,21 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
         /** Create the widget. */
         $this->WP_Widget( 'bns-featured-category', 'BNS Featured Category', $widget_ops, $control_ops );
-    }
+
+        /**
+         * Check installed WordPress version for compatibility
+         * @internal    Requires WordPress version 2.9
+         * @internal    @uses current_theme_supports
+         * @internal    @uses the_post_thumbnail
+         * @internal    @uses has_post_thumbnail
+         */
+        global $wp_version;
+        $exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
+        if ( version_compare( $wp_version, "2.9", "<" ) ) {
+            exit ( $exit_message );
+        } /** End if */
+
+    } /** End function - construct */
 
     function widget( $args, $instance ) {
         extract( $args );
@@ -310,7 +272,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                             } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
-                                <?php echo bnsfc_custom_excerpt( $instance['excerpt_length'] );
+                                <?php echo $this->custom_excerpt( $instance['excerpt_length'] );
                             } elseif ( ! $instance['no_excerpt'] ) {
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
@@ -553,7 +515,59 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         </p>
 
     <?php }
-}
+
+    /**
+     * Custom Excerpt
+     * Gets the default excerpt as a base line and returns either the excerpt as
+     * is if there are less words than the custom value ($length). If there are
+     * more words than $length the excess are removed. Otherwise, the amount of
+     * words equal to $length are returned. In both cases, the returned text is
+     * appended with a permalink to the full post. If there is no excerpt, no
+     * additioanl permalink will be returned.
+     *
+     * @package BNS_Featured_Category
+     * @since   1.9
+     *
+     * @param   int $length - user defined amount of words
+     * @internal param string $text - the post content
+     *
+     * @uses    get_permalink
+     * @uses    the_title_attribute
+     *
+     * @return  string
+     *
+     * @version 2.4
+     * @date    January 31, 2013
+     * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string.
+     * Added conditional to only append link if there are words to be used in the excerpt.
+     */
+    function custom_excerpt( $length = 55 ) {
+        /** @var $text - holds default excerpt */
+        $text = get_the_excerpt();
+        /** @var $words - holds excerpt of $length words */
+        $words = explode( ' ', $text, $length + 1 );
+
+        /** Create link to full post for end of custom length excerpt output */
+        if ( ! empty( $text ) ) {
+            $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
+        }
+
+        /** Check if $length has a value; or, the total words is less than the $length */
+        if ( ( ! $length ) || ( count( $words ) < $length ) ) {
+            $text .= $bnsfc_link;
+            return $text;
+        } else {
+            array_pop( $words );
+            array_push( $words, '...' );
+            $text = implode( ' ', $words );
+        } /** End if */
+
+        $text .= $bnsfc_link;
+        return $text;
+    } /** End function - custom excerpt */
+
+
+} /** End class extension */
 
 /**
  * BNSFC Shortcode

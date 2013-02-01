@@ -143,6 +143,8 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.4 =
 * Release February 2013
 * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
+* Added conditional to only append link if there are words to be used in the excerpt
+* Added termination comments to code blocks
 
 = 2.3 =
 * Release November 2012
