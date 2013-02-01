@@ -145,6 +145,8 @@ Please stay current with your WordPress installation, your active theme, and you
 * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
 * Added conditional to only append link if there are words to be used in the excerpt
 * Added termination comments to code blocks
+* Added dynamic version to enqueue parameters used in Options
+* Refactored code into a more OOP style
 
 = 2.3 =
 * Release November 2012

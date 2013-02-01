@@ -60,71 +60,18 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Add filters to allow modification of author and date post meta details
  * Add filters to allow modification of category list post meta details
  *
+ * @version 2.4
+ * @date    February 2013
+ * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
+ * Added conditional to only append link if there are words to be used in the excerpt
+ * Added termination comments to code blocks
+ * Added dynamic version to enqueue parameters used in Options
+ * Refactored code into a more OOP style
+ *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  */
 
-
-/**
- * Enqueue Plugin Scripts and Styles
- *
- * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
- *
- * @package BNS_Featured_Category
- * @since   1.9
- *
- * @uses    get_plugin_data
- * @uses    plugin_dir_path
- * @uses    plugin_dir_url
- * @uses    wp_enqueue_style
- *
- * @internal Used with action: wp_enqueue_scripts
- *
- * @version 2.2
- * @date    August 2, 2012
- * Programmatically add version number to enqueue calls
- */
-function BNSFC_Scripts_and_Styles() {
-    /** Call the wp-admin plugin code */
-    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-    /** @var $bnsfc_data - holds the plugin header data */
-    $bnsfc_data = get_plugin_data( __FILE__ );
-
-    /** Enqueue Scripts */
-    /** Enqueue Style Sheets */
-    wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), $bnsfc_data['Version'], 'screen' );
-    if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
-        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
-    }
-}
-add_action( 'wp_enqueue_scripts', 'BNSFC_Scripts_and_Styles' );
-
-/**
- * Enqueue Options Plugin Scripts and Styles
- *
- * Add plugin options scripts and stylesheet(s) to be used only on the Administration Panels
- *
- * @package BNS_Featured_Category
- * @since   2.0
- *
- * @uses    plugin_dir_path
- * @uses    plugin_dir_url
- * @uses    wp_enqueue_script
- * @uses    wp_enqueue_style
- *
- * @internal 'jQuery' is enqueued as a dependency of the 'bnsfc-options.js' enqueue
- * @internal Used with action: admin_enqueue_scripts
- */
-function BNSFC_Options_Scripts_and_Styles() {
-    /** Enqueue Options Scripts */
-    wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), '2.0' );
-    /** Enqueue Options Style Sheets */
-    wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), '2.0', 'screen' );
-    if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
-        wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), '2.0', 'screen' );
-    }
-}
-add_action( 'admin_enqueue_scripts', 'BNSFC_Options_Scripts_and_Styles' );
 
 /** Register widget */
 function load_bnsfc_widget() {
@@ -157,6 +104,16 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         if ( version_compare( $wp_version, "2.9", "<" ) ) {
             exit ( $exit_message );
         } /** End if */
+
+        /** Enqueue Scripts and Styles for front-facing views */
+        add_action( 'wp_enqueue_scripts', array( $this, 'BNSFC_Scripts_and_Styles' ) );
+
+        /** Enqueue Widget Options Panel Scripts and Styles */
+        add_action( 'admin_enqueue_scripts', array( $this, 'BNSFC_Options_Scripts_and_Styles' ) );
+
+        /** Add shortcode */
+        add_shortcode( 'bnsfc', array( $this, 'bnsfc_shortcode' ) );
+
 
     } /** End function - construct */
 
@@ -297,7 +254,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         /** Reset post data - see $bnsfc_query object */
         // wp_reset_postdata();
         wp_reset_query();
-    }
+
+    } /** End function - widget */
 
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
@@ -327,7 +285,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $instance['count']          = $new_instance['count'];
 
         return $instance;
-    }
+
+    } /** End function - update */
 
     /**
      * Extend the `form` function
@@ -429,7 +388,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </p>
                 </td>
             </tr>
-        </table>
+        </table><!-- End table -->
 
         <hr />
         <!-- The following option choices may affect the widget option panel layout -->
@@ -468,7 +427,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                         </p>
                     </td>
                 </tr>
-            </table>
+            </table> <!-- End table -->
         <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '</div>'; ?>
         <!-- Carry on from here if there is no thumbnail support -->
 
@@ -514,16 +473,17 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['no_excerpt'], true ); ?> id="<?php echo $this->get_field_id( 'no_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'no_excerpt' ); ?>" />
         </p>
 
-    <?php }
+    <?php } /** End function - form */
 
     /**
      * Custom Excerpt
+     *
      * Gets the default excerpt as a base line and returns either the excerpt as
      * is if there are less words than the custom value ($length). If there are
      * more words than $length the excess are removed. Otherwise, the amount of
      * words equal to $length are returned. In both cases, the returned text is
      * appended with a permalink to the full post. If there is no excerpt, no
-     * additioanl permalink will be returned.
+     * additional permalink will be returned.
      *
      * @package BNS_Featured_Category
      * @since   1.9
@@ -546,11 +506,13 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $text = get_the_excerpt();
         /** @var $words - holds excerpt of $length words */
         $words = explode( ' ', $text, $length + 1 );
+        /** @var $bnsfc_link - initialize as empty */
+        $bnsfc_link = '';
 
         /** Create link to full post for end of custom length excerpt output */
         if ( ! empty( $text ) ) {
             $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
-        }
+        } /** End if - not empty text */
 
         /** Check if $length has a value; or, the total words is less than the $length */
         if ( ( ! $length ) || ( count( $words ) < $length ) ) {
@@ -563,83 +525,160 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         } /** End if */
 
         $text .= $bnsfc_link;
+
         return $text;
+
     } /** End function - custom excerpt */
 
 
+    /**
+     * Enqueue Plugin Scripts and Styles
+     *
+     * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
+     *
+     * @package BNS_Featured_Category
+     * @since   1.9
+     *
+     * @uses    get_plugin_data
+     * @uses    plugin_dir_path
+     * @uses    plugin_dir_url
+     * @uses    wp_enqueue_style
+     *
+     * @internal Used with action: wp_enqueue_scripts
+     *
+     * @version 2.2
+     * @date    August 2, 2012
+     * Programmatically add version number to enqueue calls
+     */
+    function BNSFC_Scripts_and_Styles() {
+        /** Call the wp-admin plugin code */
+        require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        /** @var $bnsfc_data - holds the plugin header data */
+        $bnsfc_data = get_plugin_data( __FILE__ );
+
+        /** Enqueue Scripts */
+        /** Enqueue Style Sheets */
+        wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), $bnsfc_data['Version'], 'screen' );
+        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
+            wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
+        } /** End if - is readable */
+
+    } /** End function - scripts and styles */
+
+
+    /**
+     * Enqueue Options Plugin Scripts and Styles
+     *
+     * Add plugin options scripts and stylesheet(s) to be used only on the
+     * Administration Panels
+     *
+     * @package BNS_Featured_Category
+     * @since   2.0
+     *
+     * @uses    plugin_dir_path
+     * @uses    plugin_dir_url
+     * @uses    wp_enqueue_script
+     * @uses    wp_enqueue_style
+     *
+     * @internal Used with action: admin_enqueue_scripts
+     *
+     * @version 2.4
+     * @date    January 31, 2013
+     * Added dynamic version to enqueue parameters
+     */
+    function BNSFC_Options_Scripts_and_Styles() {
+        /** Call the wp-admin plugin code */
+        require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        /** @var $bnsfc_data - holds the plugin header data */
+        $bnsfc_data = get_plugin_data( __FILE__ );
+
+        /** Enqueue Options Scripts; 'jQuery' is enqueued as a dependency */
+        wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), $bnsfc_data['Version'] );
+
+        /** Enqueue Options Style Sheets */
+        wp_enqueue_style( 'BNSFC-Option-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-option-style.css', array(), $bnsfc_data['Version'], 'screen' );
+        if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-options-custom-style.css' ) ) {
+            wp_enqueue_style( 'BNSFC-Options-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-options-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
+        } /** End if - is readable */
+
+    } /** End function - options scripts and styles */
+
+
+    /**
+     * BNSFC Shortcode
+     * - May the Gods of programming protect us all!
+     *
+     * @package BNS_Featured_Category
+     * @since   1.8
+     *
+     * @param   $atts
+     *
+     * @uses    shortcode_atts
+     * @uses    the_widget
+     *
+     * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
+     * @internal Note 'content_thumb' although available has no use if 'show_full=false'
+     * @internal Used with `add_shortcode`
+     *
+     * @return  string
+     *
+     * @version 1.9.1
+     * Last revised November 24, 2011
+     * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
+     *
+     * @version 1.9.2
+     * Added 'offset' option
+     *
+     * @version 2.3
+     * @date    November 30, 2012
+     * Add option to use widget title as link to single category archive
+     * Optimize output buffer closure
+     *
+     * @todo Fix 'show_full=true' issue
+     */
+    function bnsfc_shortcode( $atts ) {
+        /** Get ready to capture the elusive widget output */
+        ob_start();
+
+        the_widget( 'BNS_Featured_Category_Widget',
+            $instance = shortcode_atts( array(
+                'title'             => __( 'Featured Category', 'bns-fc' ),
+                'cat_choice'        => '1',
+                'use_current'       => false,
+                'count'             => '0',
+                'show_count'        => '3',
+                'offset'            => '0',
+                'sort_order'        => 'DESC',
+                'use_thumbnails'    => true,
+                'content_thumb'     => '100',
+                'excerpt_thumb'     => '50',
+                'show_meta'         => false,
+                'show_comments'     => false,
+                'show_cats'         => false,
+                'show_cat_desc'     => false,
+                'link_title'        => false,
+                'show_tags'         => false,
+                'only_titles'       => false,
+                'no_titles'         => false,
+                'show_full'         => false, /** Do not set to true!!! */
+                'excerpt_length'    => '',
+                'no_excerpt'        => false
+            ), $atts ),
+            $args = array(
+                /** clear variables defined by theme for widgets */
+                $before_widget  = '',
+                $after_widget   = '',
+                $before_title   = '',
+                $after_title    = '',
+            )
+        );
+
+        /** Get the_widget output and put into its own container */
+        $bnsfc_content = ob_get_clean();
+
+        return $bnsfc_content;
+
+    } /** End function - shortcode */
+
+
 } /** End class extension */
-
-/**
- * BNSFC Shortcode
- * - May the Gods of programming protect us all!
- *
- * @package BNS_Featured_Category
- * @since   1.8
- *
- * @param   $atts
- *
- * @uses    shortcode_atts
- * @uses    the_widget
- *
- * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
- * @internal Note 'content_thumb' although available has no use if 'show_full=false'
- * @internal Used with `add_shortcode`
- *
- * @return  string
- *
- * @version 1.9.1
- * Last revised November 24, 2011
- * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
- *
- * @version 1.9.2
- * Added 'offset' option
- *
- * @version 2.3
- * @date    November 30, 2012
- * Add option to use widget title as link to single category archive
- * Optimize output buffer closure
- *
- * @todo Fix 'show_full=true' issue
- */
-function bnsfc_shortcode( $atts ) {
-    /** Get ready to capture the elusive widget output */
-    ob_start();
-    the_widget( 'BNS_Featured_Category_Widget',
-        $instance = shortcode_atts( array(
-            'title'             => __( 'Featured Category', 'bns-fc' ),
-            'cat_choice'        => '1',
-            'use_current'       => false,
-            'count'             => '0',
-            'show_count'        => '3',
-            'offset'            => '0',
-            'sort_order'        => 'DESC',
-            'use_thumbnails'    => true,
-            'content_thumb'     => '100',
-            'excerpt_thumb'     => '50',
-            'show_meta'         => false,
-            'show_comments'     => false,
-            'show_cats'         => false,
-            'show_cat_desc'     => false,
-            'link_title'        => false,
-            'show_tags'         => false,
-            'only_titles'       => false,
-            'no_titles'         => false,
-            'show_full'         => false, /** Do not set to true!!! */
-            'excerpt_length'    => '',
-            'no_excerpt'        => false
-        ), $atts ),
-        $args = array(
-            /** clear variables defined by theme for widgets */
-            $before_widget  = '',
-            $after_widget   = '',
-            $before_title   = '',
-            $after_title    = '',
-        )
-    );
-    /** Get the_widget output and put into its own container */
-    $bnsfc_content = ob_get_clean();
-
-    return $bnsfc_content;
-}
-add_shortcode( 'bnsfc', 'bnsfc_shortcode' );
-// End BNSFC Shortcode - Say your prayers ...
