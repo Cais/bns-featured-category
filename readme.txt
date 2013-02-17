@@ -143,6 +143,7 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.4.1 =
 * Released February 2013
 * Changed call to `query_posts` to `WP_Query`
+* Fixed conditionals for showing thumbnails
 
 = 2.4 =
 * Released February 2013
