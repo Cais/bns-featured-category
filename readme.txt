@@ -145,6 +145,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Added code block termination comments and other comments / documentation updates
 * Changed call to `query_posts` to `WP_Query`
 * Fixed conditionals for showing thumbnails
+* Fixed where content and excerpt post thumbnail sizes are used
 * Moved all code into class structure
 
 = 2.4 =

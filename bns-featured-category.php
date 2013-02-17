@@ -113,6 +113,40 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
     } /** End function - construct */
 
+
+    /**
+     * Widget
+     *
+     * @package BNS_Featured_Category
+     *
+     * @class   WP_Query
+     * @uses    apply_filters
+     * @uses    category_description
+     * @uses    current_theme_supports
+     * @uses    get_category_link
+     * @uses    get_option
+     * @uses    get_the_author
+     * @uses    get_the_category_list
+     * @uses    get_the_ID
+     * @uses    get_the_time
+     * @uses    has_post_thumbnail
+     * @uses    have_posts
+     * @uses    is_single
+     * @uses    post_class
+     * @uses    post_password_required
+     * @uses    the_permalink
+     * @uses    the_post
+     * @uses    the_post_thumbnail
+     * @uses    the_title
+     * @uses    the_title_attribute
+     * @uses    wp_get_post_categories
+     *
+     * @param   array $args
+     * @param   array $instance
+     *
+     * @version 2.4.1
+     * Fixed where content and excerpt post thumbnail sizes are used
+     */
     function widget( $args, $instance ) {
         extract( $args );
 
@@ -245,7 +279,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                             } elseif ( isset( $instance['excerpt_length']) && $instance['excerpt_length'] > 0 ) {
 
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
-                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
                                 <?php } /** End if */
 
                                 echo $this->custom_excerpt( $instance['excerpt_length'] );
@@ -253,7 +287,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                             } elseif ( ! $instance['no_excerpt'] ) {
 
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
-                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                    <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $excerpt_thumb, $excerpt_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
                                 <?php } /** End if */
 
                                 the_excerpt();
