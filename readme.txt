@@ -142,8 +142,10 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.4.1 =
 * Released February 2013
+* Added code block termination comments and other comments / documentation updates
 * Changed call to `query_posts` to `WP_Query`
 * Fixed conditionals for showing thumbnails
+* Moved all code into class structure
 
 = 2.4 =
 * Released February 2013

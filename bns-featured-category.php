@@ -65,8 +65,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @version 2.4.1
  * @date    February 17, 2013
+ * Added code block termination comments and other comments / documentation updates
  * Changed call to `query_posts` to `WP_Query`
  * Fixed conditionals for showing thumbnails
+ * Moved all code into class structure
  *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
@@ -106,6 +108,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         /** Add shortcode */
         add_shortcode( 'bnsfc', array( $this, 'bnsfc_shortcode' ) );
 
+        /** Add widget */
+        add_action( 'widgets_init', array( $this, 'load_bnsfc_widget' ) );
 
     } /** End function - construct */
 
@@ -150,7 +154,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $multiple_cats = true;
         } else {
             $multiple_cats = false;
-        }
+        } /** End if - string position */
 
         /** Widget $title, $before_widget, and $after_widget defined by theme */
         if ( $title ) {
@@ -162,15 +166,18 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
             } else {
                 echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
-            }
-        }
+            } /** End if - link title */
+        } /** End if - title */
 
-        /** Display posts from widget settings. */
-        // If viewing a page displaying a single post add the current post first category to category choices used by plugin
+        /** Display posts from widget settings */
+        /**
+         * If viewing a page displaying a single post add the current post
+         * first category to category choices used by plugin
+         */
         if ( is_single() && $use_current ){
             $cat_choices = wp_get_post_categories( get_the_ID() );
             $cat_choice = $cat_choices[0];
-        }
+        } /** End if - is single and use current */
 
         /** Check if $sort_order is set to rand (random) and use the `orderby` parameter; otherwise use the `order` parameter */
         if ( 'rand' == $sort_order ) {
@@ -187,16 +194,16 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 'offset'            => $offset,
                 'order'             => $sort_order
             );
-        }
+        } /** End if - sort order */
 
         /** @var $bnsfc_query - object of posts matching query criteria */
         $bnsfc_query = new WP_Query( $query_args );
 
-        if ( $show_cat_desc )
+        if ( $show_cat_desc ) {
             echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
+        } /** End if - show category description */
 
         if ( $bnsfc_query->have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
-            // static $count = 0; /* see above */
             if ( $count == $show_count ) {
                 break;
             } else { ?>
@@ -227,7 +234,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                                 /** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
-                                <?php }
+                                <?php } /** End if */
+
                                 the_content(); ?>
 
                                 <div class="bnsfc-clear"></div>
@@ -238,8 +246,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
-
-                                <?php }
+                                <?php } /** End if */
 
                                 echo $this->custom_excerpt( $instance['excerpt_length'] );
 
@@ -247,26 +254,27 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                <?php } /** End if */
 
-                                <?php }
                                 the_excerpt();
 
                             } else {
 
                                 if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) { ?>
                                     <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail( array( $content_thumb, $content_thumb ) , array( 'class' => 'alignleft' ) ); ?></a>
+                                <?php } /** End if */
 
-                            <?php }
-
-                            } ?>
+                            } /** End if - show full */ ?>
 
                         </div> <!-- .bnsfc-content -->
 
-                    <?php } ?>
+                    <?php } /** End if - not only titles */ ?>
 
                 </div> <!-- .post #post-ID -->
+
                 <?php $count++;
-            }
+
+            } /** End if - count */
             endwhile;
         else :
             _e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
@@ -280,6 +288,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         // wp_reset_query();
 
     } /** End function - widget */
+
 
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
@@ -311,6 +320,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         return $instance;
 
     } /** End function - update */
+
 
     /**
      * Extend the `form` function
@@ -429,7 +439,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         </p>
 
         <!-- If the theme supports post-thumbnails carry on; otherwise hide the thumbnails section -->
-        <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '<div class="bnsfc-thumbnails-closed">'; ?>
+        <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) {
+            echo '<div class="bnsfc-thumbnails-closed">';
+        } /** End if - not post thumbnails */ ?>
             <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?> bnsfc-display-thumbnail-sizes"><!-- Hide all options below if ONLY post titles are to be displayed -->
                 <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_thumbnails'], true ); ?> id="<?php echo $this->get_field_id( 'use_thumbnails' ); ?>" name="<?php echo $this->get_field_name( 'use_thumbnails' ); ?>" />
                 <?php $thumbnails_toggle = ( checked( (bool) $instance['use_thumbnails'], true, false ) ) ? 'open' : 'closed'; ?>
@@ -452,7 +464,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                     </td>
                 </tr>
             </table> <!-- End table -->
-        <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) echo '</div>'; ?>
+        <?php if ( ! current_theme_supports( 'post-thumbnails' ) ) {
+            echo '</div><!-- bnsfc-thumbnails-closed -->';
+        } /** End if - not post thumbnails */ ?>
+
         <!-- Carry on from here if there is no thumbnail support -->
 
         <p class="bnsfc-all-options-<?php echo $all_options_toggle; ?>">
@@ -498,6 +513,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         </p>
 
     <?php } /** End function - form */
+
 
     /**
      * Custom Excerpt
@@ -629,6 +645,19 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 
     /**
+     * Load BNSFC Widget
+     * Register widget to be used in the widget init hook
+     *
+     * @package BNS_Featured_Category
+     *
+     * @uses    register_widget
+     */
+    function load_bnsfc_widget() {
+        register_widget( 'BNS_Featured_Category_Widget' );
+    } /** End function - load bnsfc widget */
+
+
+    /**
      * BNSFC Shortcode
      * - May the Gods of programming protect us all!
      *
@@ -708,15 +737,5 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 } /** End class extension */
 
 
-/**
- * Load BNSFC Widget
- * Register widget to be used in the widget init hook
- *
- * @package BNS_Featured_Category
- *
- * @uses    register_widget
- */
-function load_bnsfc_widget() {
-    register_widget( 'BNS_Featured_Category_Widget' );
-} /** End function - load bnsfc widget */
-add_action( 'widgets_init', 'load_bnsfc_widget' );
+/** @var $bnsfc - instantiate the class */
+$bnsfc = new BNS_Featured_Category_Widget();
