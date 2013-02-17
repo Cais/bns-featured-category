@@ -75,7 +75,15 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 class BNS_Featured_Category_Widget extends WP_Widget {
 
-    /** Constructor */
+    /**
+     * Constructor
+     *
+     * @package BNS_Featured_Category
+     *
+     * @class   WP_Widget
+     * @uses    add_action
+     * @uses    add_shortcode
+     */
     function __construct() {
         /** Widget settings. */
         $widget_ops = array( 'classname' => 'bns-featured-category', 'description' => __( 'Displays most recent posts from a specific featured category or categories.', 'bns-fc' ) );
@@ -324,6 +332,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
     } /** End function - widget */
 
 
+    /**
+     * Update
+     *
+     * @param   array $new_instance
+     * @param   array $old_instance
+     *
+     * @return  array
+     */
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
 
