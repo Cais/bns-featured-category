@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, widget-only
 Requires at least: 2.9
 Tested up to: 3.5.1
-Stable tag: 2.4
+Stable tag: 2.4.1
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -140,8 +140,12 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.4.1 =
+* Released February 2013
+* Changed call to `query_posts` to `WP_Query`
+
 = 2.4 =
-* Release February 2013
+* Released February 2013
 * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
 * Added conditional to only append link if there are words to be used in the excerpt
 * Added termination comments to code blocks
@@ -149,7 +153,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Refactored code into a more OOP style
 
 = 2.3 =
-* Release November 2012
+* Released November 2012
 * Add option to use widget title as link to single category archive
 * Add filters to allow modification of author and date post meta details
 * Add filters to allow modification of category list post meta details

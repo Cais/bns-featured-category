@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.4
+ * @version     2.4.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2013, Edward Caissie
  *
@@ -48,11 +48,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version 2.2
- * @date    July 23, 2012
- * Featured images link to post
- * Added option to not show the Post Title
- *
  * @version 2.3
  * @date    November 30, 2012
  * Remove load_plugin_textdomain as redundant
@@ -61,15 +56,18 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Add filters to allow modification of category list post meta details
  *
  * @version 2.4
- * @date    February 2013
+ * @date    February 2, 2013
  * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
  * Added conditional to only append link if there are words to be used in the excerpt
  * Added termination comments to code blocks
  * Added dynamic version to enqueue parameters used in Options
  * Refactored code into a more OOP style
  *
+ * @version 2.4.1
+ * @date    February 17, 2013
+ * Changed call to `query_posts` to `WP_Query`
+ *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
- * @todo Review implementing use of WP_Query class versus query_posts; using WP_Query currently breaks the shortcode output
  */
 
 class BNS_Featured_Category_Widget extends WP_Widget {
@@ -174,20 +172,29 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         }
 
         /** Check if $sort_order is set to rand (random) and use the `orderby` parameter; otherwise use the `order` parameter */
-        if ( 'rand' == $sort_order )
-            $query_args = "cat=$cat_choice&posts_per_page=$show_count&offset=$offset&orderby=$sort_order";
-        else
-            $query_args = "cat=$cat_choice&posts_per_page=$show_count&offset=$offset&order=$sort_order";
+        if ( 'rand' == $sort_order ) {
+            $query_args = array(
+                'cat'               => $cat_choice,
+                'posts_per_page'    => $show_count,
+                'offset'            => $offset,
+                'orderby'           => $sort_order
+            );
+        } else {
+            $query_args = array(
+                'cat'               => $cat_choice,
+                'posts_per_page'    => $show_count,
+                'offset'            => $offset,
+                'order'             => $sort_order
+            );
+        }
 
         /** @var $bnsfc_query - object of posts matching query criteria */
-        // $bnsfc_query = new WP_Query( $query_args );
-        query_posts( $query_args );
+        $bnsfc_query = new WP_Query( $query_args );
 
         if ( $show_cat_desc )
             echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 
-        // if ( have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
-        if ( have_posts() ) : while ( have_posts() ) : the_post();
+        if ( $bnsfc_query->have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
             // static $count = 0; /* see above */
             if ( $count == $show_count ) {
                 break;
@@ -245,8 +252,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         echo $after_widget;
 
         /** Reset post data - see $bnsfc_query object */
-        // wp_reset_postdata();
-        wp_reset_query();
+        wp_reset_postdata();
+        // wp_reset_query();
 
     } /** End function - widget */
 
