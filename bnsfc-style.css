@@ -2,7 +2,7 @@
  * This file is part of BNS Featured Category
  * Last revised at version 1.9.2
  *
- * Copyright 2009-2012  Edward Caissie  (email : edward.caissie@gmail.com)
+ * Copyright 2009-2013  Edward Caissie  (email : edward.caissie@gmail.com)
  *
  * BNS Featured Category is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License, version 2, as
@@ -28,7 +28,10 @@ a.bnsfc-link:link,
 a.bnsfc-link:visited,
 a.bnsfc-link:hover,
 a.bnsfc-link:focus,
-a.bnsfc-link:active { font-size: 125%; text-decoration: none; }
+a.bnsfc-link:active {
+    font-size: 125%;
+    text-decoration: none;
+}
 
 .bnsfc-content { overflow-x: auto; }
 .bnsfc-clear { clear: both; }
