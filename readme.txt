@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, widget-only
 Requires at least: 2.9
 Tested up to: 3.6
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -140,6 +140,10 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.4.3 =
+* Released September 2013
+* Added third parameter to `shortcode_atts` for automatic filter creation
+
 = 2.4.2 =
 * Released May 2013
 * Version number compatibility update

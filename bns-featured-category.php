@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.4.2
+Version: 2.4.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.4.2
+ * @version     2.4.3
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2013, Edward Caissie
  *
@@ -73,6 +73,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version 2.4.2
  * @date    May 22, 2013
  * Version number compatibility update
+ *
+ * @version 2.4.3
+ * @date    September 2013
  *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
@@ -741,6 +744,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      * Add option to use widget title as link to single category archive
      * Optimize output buffer closure
      *
+     * @version 2.4.3
+     * @date    September 7, 2013
+     * Added third parameter to `shortcode_atts` for automatic filter creation
+     *
      * @todo Fix 'show_full=true' issue
      */
     function bnsfc_shortcode( $atts ) {
@@ -770,7 +777,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
                 'show_full'         => false, /** Do not set to true!!! */
                 'excerpt_length'    => '',
                 'no_excerpt'        => false
-            ), $atts ),
+            ), $atts, 'bnsfc' ),
             $args = array(
                 /** clear variables defined by theme for widgets */
                 $before_widget  = '',
