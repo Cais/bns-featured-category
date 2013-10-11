@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.4.3
+Version: 2.4.4
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.4.3
+ * @version     2.4.4
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2013, Edward Caissie
  *
@@ -76,6 +76,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @version 2.4.3
  * @date    September 2013
+ *
+ * @version 2.4.4
+ * @date    October 2013
+ * Add hooks for extensibility - ht: Imran via WordCamp Toronto 2013
  *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
@@ -161,6 +165,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      *
      * @version 2.4.1
      * Fixed where content and excerpt post thumbnail sizes are used
+     *
+     * @version 2.4.3
+     * Add hook `bnsfc_query` allowing the query arguments to be over-written
      */
     function widget( $args, $instance ) {
         extract( $args );
@@ -246,7 +253,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         } /** End if - sort order */
 
         /** @var $bnsfc_query - object of posts matching query criteria */
-        $bnsfc_query = new WP_Query( $query_args );
+        $bnsfc_query = false;
+        /** Allow query to be completely over-written via `bnsfc_query` hook */
+        apply_filters( 'bnsfc_query', $bnsfc_query );
+        if ( false == $bnsfc_query ) {
+            $bnsfc_query = new WP_Query( $query_args );
+        } /** End if - bnsfc query is false, use plugin arguments */
 
         if ( $show_cat_desc ) {
             echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
