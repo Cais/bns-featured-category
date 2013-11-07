@@ -821,3 +821,37 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 /** @var $bnsfc - instantiate the class */
 $bnsfc = new BNS_Featured_Category_Widget();
+
+
+/**
+ * BNSFC Plugin Meta
+ * Adds additional links to plugin meta links
+ *
+ * @package BNS_Featured_Category
+ * @since   2.4.4
+ *
+ * @uses    __
+ * @uses    plugin_basename
+ *
+ * @param   $links
+ * @param   $file
+ *
+ * @return  array $links
+ */
+function bnsfc_plugin_meta( $links, $file ) {
+
+    $plugin_file = plugin_basename( __FILE__ );
+
+    if ( $file == $plugin_file ) {
+
+        // $links[] = '<a href="http://wordpress.org/extend/plugins/bns-featured-category/other_notes/">' . __( 'Other Notes', 'bns-fc' ) . '</a>';
+        $links[] = '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>';
+
+    } /** End if - file is the same as plugin */
+
+    return $links;
+
+} /** End function - plugin meta */
+
+/** Add Plugin Row Meta details */
+add_filter( 'plugin_row_meta', 'bnsfc_plugin_meta', 10, 2 );
