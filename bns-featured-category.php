@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.4.4
+Version: 2.5-alpha
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.4.4
+ * @version     2.5
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2013, Edward Caissie
  *
@@ -73,6 +73,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version 2.4.4
  * @date    October 2013
  * Add hooks for extensibility - ht: Imran via WordCamp Toronto 2013
+ *
+ * @version 2.5
+ * @date    November 2013
+ * Added new "union" option so posts must be in all categories chosen
  *
  * @todo Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
@@ -169,6 +173,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         /** User-selected settings. */
         $title          = apply_filters( 'widget_title', $instance['title'] );
         $cat_choice     = $instance['cat_choice'];
+        $union          = $instance['union'];
         $use_current    = $instance['use_current'];
         $show_count     = $instance['show_count'];
         $offset         = $instance['offset'];
@@ -229,22 +234,46 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $cat_choice = $cat_choices[0];
         } /** End if - is single and use current */
 
-        /** Check if $sort_order is set to rand (random) and use the `orderby` parameter; otherwise use the `order` parameter */
+        /** @var array $query_args - holds query arguments to be passed */
+        $query_args = array(
+            'cat'               => $cat_choice,
+            'posts_per_page'    => $show_count,
+            'offset'            => $offset,
+        );
+
+        /**
+         * Check if $sort_order is set to rand (random) and use the `orderby`
+         * parameter; otherwise use the `order` parameter
+         */
         if ( 'rand' == $sort_order ) {
-            $query_args = array(
-                'cat'               => $cat_choice,
-                'posts_per_page'    => $show_count,
-                'offset'            => $offset,
-                'orderby'           => $sort_order
-            );
+            $query_args = array_merge( $query_args, array( 'orderby' => $sort_order ) );
         } else {
-            $query_args = array(
-                'cat'               => $cat_choice,
-                'posts_per_page'    => $show_count,
-                'offset'            => $offset,
-                'order'             => $sort_order
-            );
-        } /** End if - sort order */
+            $query_args = array_merge( $query_args, array( 'order' => $sort_order ) );
+        } /** End if - set query argument parameter */
+
+        /**
+         * Check if post need to be in *all* categories and make necessary
+         * changes to the data so it can be correctly used
+         */
+        if ( $union ) {
+
+            /** Remove the default use any category parameter */
+            unset( $query_args['cat'] );
+
+            /** @var string $cat_choice - category choices without spaces */
+            $cat_choice = preg_replace( '/\s+/', '', $cat_choice );
+            /** @var array $cat_choice_union - derived from the string */
+            $cat_choice_union = explode( ",", $cat_choice );
+
+            /** Sanity testing? - Change strings to integer values */
+            foreach ($cat_choice_union AS $index => $value)
+                $cat_choice_union[$index] = (int)$value;
+
+            /** @var array $query_args - merged new query arguments */
+            $query_args = array_merge( $query_args, array( 'category__and' => $cat_choice_union ) );
+
+        } /** End if - do we want to use a union of the categories */
+
 
         /** @var $bnsfc_query - object of posts matching query criteria */
         $bnsfc_query = false;
@@ -367,6 +396,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         /** Strip tags (if needed) and update the widget settings */
         $instance['title']          = strip_tags( $new_instance['title'] );
         $instance['cat_choice']     = strip_tags( $new_instance['cat_choice'] );
+        $instance['union']          = $new_instance['union'];
         $instance['use_current']    = $new_instance['use_current'];
         $instance['show_count']     = $new_instance['show_count'];
         $instance['offset']         = $new_instance['offset'];
@@ -419,6 +449,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $defaults = array(
             'title'             => __( 'Featured Category', 'bns-fc' ),
             'cat_choice'        => '1',
+            'union'             => false,
             'use_current'       => false,
             'count'             => '0',
             'show_count'        => '3',
@@ -449,6 +480,11 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'cat_choice' ); ?>"><?php _e( 'Category IDs, separated by commas:', 'bns-fc' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'cat_choice' ); ?>" name="<?php echo $this->get_field_name( 'cat_choice' ); ?>" value="<?php echo $instance['cat_choice']; ?>" style="width:95%;" />
+        </p>
+
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['union'], true ); ?> id="<?php echo $this->get_field_id( 'union' ); ?>" name="<?php echo $this->get_field_name( 'union' ); ?>" />
+            <label for="<?php echo $this->get_field_id( 'union' ); ?>"><?php _e( "<strong>ONLY</strong> show posts that have <strong>ALL</strong> Categories?", 'bns-fc' ); ?></label>
         </p>
 
         <p>
@@ -774,6 +810,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
             $instance = shortcode_atts( array(
                 'title'             => __( 'Featured Category', 'bns-fc' ),
                 'cat_choice'        => '1',
+                'union'             => false,
                 'use_current'       => false,
                 'count'             => '0',
                 'show_count'        => '3',
