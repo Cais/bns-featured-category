@@ -628,6 +628,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $bnsfc_link = '';
 
         /** Create link to full post for end of custom length excerpt output */
+        // @todo - Add filter for the infinity symbol output
         if ( ! empty( $text ) ) {
             $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
         } /** End if - not empty text */
