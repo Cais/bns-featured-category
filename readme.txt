@@ -145,6 +145,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 * Add hook `bnsfc_output` allowing the entire output to be over-written
 * Add plugin row meta details
+* Added filter `bnsfc_link` to allow the infinity symbol be more readily changed
 
 = 2.4.3 =
 * Released September 2013

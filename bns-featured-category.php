@@ -609,6 +609,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      * @param   int $length - user defined amount of words
      * @internal param string $text - the post content
      *
+     * @uses    apply_filters
      * @uses    get_permalink
      * @uses    the_title_attribute
      *
@@ -618,6 +619,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      * @date    January 31, 2013
      * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string.
      * Added conditional to only append link if there are words to be used in the excerpt.
+     *
+     * @version 2.4.4
+     * @date    November 29, 2013
+     * Added filter `bnsfc_link` to allow the infinity symbol be more readily changed
      */
     function custom_excerpt( $length = 55 ) {
         /** @var $text - holds default excerpt */
@@ -628,9 +633,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
         $bnsfc_link = '';
 
         /** Create link to full post for end of custom length excerpt output */
-        // @todo - Add filter for the infinity symbol output
         if ( ! empty( $text ) ) {
-            $bnsfc_link = ' <strong><a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">&infin;</a></strong>';
+            $bnsfc_link = ' <strong>
+                <a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'before' => __( 'Permalink to: ', 'bns-fc' ), 'after' => '', 'echo' => false ) ) . '">'
+                    . apply_filters( 'bnsfc_link', '&infin;' ) .
+                '</a>
+            </strong>';
         } /** End if - not empty text */
 
         /** Check if $length has a value; or, the total words is less than the $length */
