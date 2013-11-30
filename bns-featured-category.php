@@ -48,13 +48,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version 2.3
- * @date    November 30, 2012
- * Remove load_plugin_textdomain as redundant
- * Add option to use widget title as link to single category archive
- * Add filters to allow modification of author and date post meta details
- * Add filters to allow modification of category list post meta details
- *
  * @version 2.4
  * @date    February 2, 2013
  * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
@@ -853,7 +846,7 @@ function bnsfc_plugin_meta( $links, $file ) {
 
     if ( $file == $plugin_file ) {
 
-        // $links[] = '<a href="http://wordpress.org/extend/plugins/bns-featured-category/other_notes/">' . __( 'Other Notes', 'bns-fc' ) . '</a>';
+        $links[] = '<a href="http://wordpress.org/extend/plugins/bns-featured-category/other_notes/">' . __( 'Other Notes', 'bns-fc' ) . '</a>';
         $links[] = '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>';
 
     } /** End if - file is the same as plugin */
