@@ -48,25 +48,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version 2.4
- * @date    February 2, 2013
- * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string
- * Added conditional to only append link if there are words to be used in the excerpt
- * Added termination comments to code blocks
- * Added dynamic version to enqueue parameters used in Options
- * Refactored code into a more OOP style
- *
- * @version 2.4.1
- * @date    February 17, 2013
- * Added code block termination comments and other comments / documentation updates
- * Changed call to `query_posts` to `WP_Query`
- * Fixed conditionals for showing thumbnails
- * Moved all code into class structure
- *
- * @version 2.4.2
- * @date    May 22, 2013
- * Version number compatibility update
- *
  * @version 2.4.3
  * @date    September 2013
  *

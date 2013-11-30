@@ -55,6 +55,7 @@ Parameters are very similar to the plugin:
 
 *   'title'             => '',
 *   'cat_choice'        => '1'
+*   'union'             => false
 *   'use_current'       => false
 *   'count'             => '0'
 *   'show_count'        => '3'
@@ -141,6 +142,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.5 =
+* Released ...
 * Add new "union" option so posts must be in all categories chosen
 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 * Add hook `bnsfc_output` allowing the entire output to be over-written
