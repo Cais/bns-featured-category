@@ -1,7 +1,7 @@
 === BNS Featured Category ===
 Contributors: cais
 Donate link: http://buynowshop.com
-Tags: posts, category, featured, multi-widget, user-options, widget-only
+Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 2.9
 Tested up to: 3.8
 Stable tag: 2.4.4
@@ -144,8 +144,8 @@ Please stay current with your WordPress installation, your active theme, and you
 * Released ...
 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 * Add hook `bnsfc_output` allowing the entire output to be over-written
+* Add hook `bnsfc_link` to allow the infinity symbol to be more easily changed
 * Add plugin row meta details
-* Add filter `bnsfc_link` to allow the infinity symbol to be more easily changed
 
 = 2.4.3 =
 * Released September 2013

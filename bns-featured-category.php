@@ -755,13 +755,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
      *
      * @return  string
      *
-     * @version 1.9.1
-     * Last revised November 24, 2011
-     * Added 'content_thumb' and 'show_full' to options; the former has no use as the latter should not be set to true, but the additions remove the errors being thrown by WP_Debug
-     *
-     * @version 1.9.2
-     * Added 'offset' option
-     *
      * @version 2.3
      * @date    November 30, 2012
      * Add option to use widget title as link to single category archive
@@ -846,7 +839,6 @@ function bnsfc_plugin_meta( $links, $file ) {
 
     if ( $file == $plugin_file ) {
 
-        $links[] = '<a href="http://wordpress.org/extend/plugins/bns-featured-category/other_notes/">' . __( 'Other Notes', 'bns-fc' ) . '</a>';
         $links[] = '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>';
 
     } /** End if - file is the same as plugin */
