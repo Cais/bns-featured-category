@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 2.9
 Tested up to: 3.8
-Stable tag: 2.5-alpha
+Stable tag: 2.5
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -142,7 +142,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.5 =
-* Released ...
+* Released December 2013
 * Add new "union" option so posts must be in all categories chosen
 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 * Add hook `bnsfc_output` allowing the entire output to be over-written
