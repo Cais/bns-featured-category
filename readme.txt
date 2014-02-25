@@ -55,6 +55,7 @@ Parameters are very similar to the plugin:
 
 *   'title'             => '',
 *   'cat_choice'        => '1'
+*	'display_children'	=> false
 *   'union'             => false
 *   'use_current'       => false
 *   'count'             => '0'
@@ -115,7 +116,7 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 1. The options panel as it appears in default.
 
 == Other Notes ==
-* Copyright 2009-2013  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2009-2014  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -141,6 +142,10 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.6 =
+* Released ...
+* Added option to only show posts from child categories
+
 = 2.5 =
 * Released December 2013
 * Add new "union" option so posts must be in all categories chosen

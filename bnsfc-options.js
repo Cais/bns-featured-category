@@ -2,7 +2,7 @@
  * This file is part of BNS Featured Category
  * Last revised at version 2.0
  *
- * Copyright 2009-2013  Edward Caissie  (email : edward.caissie@gmail.com)
+ * Copyright 2009-2014  Edward Caissie  (email : edward.caissie@gmail.com)
  *
  * BNS Featured Category is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License, version 2, as
@@ -22,17 +22,17 @@
  *      51 Franklin St, Fifth Floor
  *      Boston, MA  02110-1301  USA
  */
-jQuery(document).ready(function($) {
-    // Note: $() will work as an alias for jQuery() inside of this function
-    $("p.bnsfc-display-all-posts-check input.checkbox").click(function () {
-        $(".bnsfc-all-options-open").toggleClass("bnsfc-all-options-closed");
-    });
+jQuery( document ).ready( function ( $ ) {
+	// Note: $() will work as an alias for jQuery() inside of this function
+	$( "p.bnsfc-display-all-posts-check input.checkbox" ).click( function () {
+		$( ".bnsfc-all-options-open" ).toggleClass( "bnsfc-all-options-closed" );
+	} );
 
-    $("p.bnsfc-display-thumbnail-sizes input.checkbox").click( function(){
-        $(".bnsfc-thumbnails-open").toggleClass("bnsfc-thumbnails-closed");
-    });
+	$( "p.bnsfc-display-thumbnail-sizes input.checkbox" ).click( function () {
+		$( ".bnsfc-thumbnails-open" ).toggleClass( "bnsfc-thumbnails-closed" );
+	} );
 
-    $("p.bnsfc-excerpt-option-open-check input.checkbox").click( function(){
-        $(".bnsfc-excerpt-option-open").toggleClass("bnsfc-excerpt-option-closed");
-    });
-});
+	$( "p.bnsfc-excerpt-option-open-check input.checkbox" ).click( function () {
+		$( ".bnsfc-excerpt-option-open" ).toggleClass( "bnsfc-excerpt-option-closed" );
+	} );
+} );
