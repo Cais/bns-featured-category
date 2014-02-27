@@ -59,8 +59,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @date        November 2013
  * Added new "union" option so posts must be in all categories chosen
  *
- * @version	2.6
- * @date	February 24, 2014
+ * @version     2.6
+ * @date        February 27, 2014
  * Added option to only show posts from child categories
  *
  * @todo        Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
@@ -134,39 +134,43 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	/**
 	 * Widget
 	 *
-	 * @package BNS_Featured_Category
+	 * @package     BNS_Featured_Category
 	 *
-	 * @class   WP_Query
-	 * @uses    apply_filters
-	 * @uses    category_description
-	 * @uses    current_theme_supports
-	 * @uses    get_category_link
-	 * @uses    get_option
-	 * @uses    get_the_author
-	 * @uses    get_the_category_list
-	 * @uses    get_the_ID
-	 * @uses    get_the_time
-	 * @uses    has_post_thumbnail
-	 * @uses    have_posts
-	 * @uses    is_single
-	 * @uses    post_class
-	 * @uses    post_password_required
-	 * @uses    the_permalink
-	 * @uses    the_post
-	 * @uses    the_post_thumbnail
-	 * @uses    the_title
-	 * @uses    the_title_attribute
-	 * @uses    wp_get_post_categories
+	 * @class       WP_Query
+	 * @uses        apply_filters
+	 * @uses        category_description
+	 * @uses        current_theme_supports
+	 * @uses        get_category_link
+	 * @uses        get_option
+	 * @uses        get_the_author
+	 * @uses        get_the_category_list
+	 * @uses        get_the_ID
+	 * @uses        get_the_time
+	 * @uses        has_post_thumbnail
+	 * @uses        have_posts
+	 * @uses        is_single
+	 * @uses        post_class
+	 * @uses        post_password_required
+	 * @uses        the_permalink
+	 * @uses        the_post
+	 * @uses        the_post_thumbnail
+	 * @uses        the_title
+	 * @uses        the_title_attribute
+	 * @uses        wp_get_post_categories
 	 *
 	 * @param   array $args
 	 * @param   array $instance
 	 *
-	 * @version 2.4.1
+	 * @version     2.4.1
 	 * Fixed where content and excerpt post thumbnail sizes are used
 	 *
-	 * @version 2.4.3
+	 * @version     2.4.3
 	 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 	 * Add hook `bnsfc_output` allowing the entire output to be over-written
+	 *
+	 * @version     2.6
+	 * @date        February 27, 2014
+	 * Added option to only show posts from child categories
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -247,13 +251,35 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 			'offset'         => $offset,
 		);
 
+		/** Alpha code - Use with extreme caution */
+		/** Only display post from the child categories */
 		if ( $display_children ) {
 
+			/** Unset the current 'cat' parameter */
 			unset( $query_args['cat'] );
 
-			$query_args = array_merge( $query_args, array( 'cat' => get_categories( array( 'parent' => $cat_choice ) ) ) );
+			/** @var array $child_categories - contains child-categories object */
+			$child_categories = get_categories( array( 'parent' => $cat_choice ) );
+
+			/** @var array $child_category_list - initialize as empty */
+			$child_category_list = '';
+
+			/**
+			 * Cycle through the child categories object to get the category ID
+			 * of each child category
+			 */
+			foreach ( $child_categories as $child_category ) {
+
+				$child_category_list[] = $child_category->term_id;
+
+			}
+			/** End foreach - child categories */
+
+			/** @var array $query_args - re-assembled query arguments to use for child only option */
+			$query_args = array_merge( $query_args, array( 'cat' => implode( ',', $child_category_list ) ) );
 
 		}
+		/** End if - display children (only) */
 
 		/**
 		 * Check if $sort_order is set to rand (random) and use the `orderby`
