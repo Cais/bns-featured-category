@@ -48,13 +48,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.4.3
- * @date        September 2013
- *
- * @version     2.4.4
- * @date        October 2013
- * Add hooks for extensibility - ht: Imran via WordCamp Toronto 2013
- *
  * @version     2.5
  * @date        November 2013
  * Added new "union" option so posts must be in all categories chosen
@@ -62,8 +55,6 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version     2.6
  * @date        February 27, 2014
  * Added option to only show posts from child categories
- *
- * @todo        Review - http://buynowshop.com/plugins/bns-featured-category/comment-page-2/#comment-13468 - date range option(s)?
  */
 class BNS_Featured_Category_Widget extends WP_Widget {
 
