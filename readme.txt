@@ -146,6 +146,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Released ...
 * Added option to only show posts from child categories
 * Code Reformatting to better match current WordPress Coding Standards
+* Extracted code to create `plugin_data` method
 
 = 2.5 =
 * Released December 2013

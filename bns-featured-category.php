@@ -797,25 +797,28 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 *
 	 * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
 	 *
-	 * @package  BNS_Featured_Category
-	 * @since    1.9
+	 * @package    BNS_Featured_Category
+	 * @since      1.9
 	 *
-	 * @uses     get_plugin_data
-	 * @uses     plugin_dir_path
-	 * @uses     plugin_dir_url
-	 * @uses     wp_enqueue_style
+	 * @uses       BNS_Featured_Category_Widget::plugin_data
+	 * @uses       plugin_dir_path
+	 * @uses       plugin_dir_url
+	 * @uses       wp_enqueue_style
 	 *
-	 * @internal Used with action: wp_enqueue_scripts
+	 * @internal   Used with action: wp_enqueue_scripts
 	 *
-	 * @version  2.2
-	 * @date     August 2, 2012
+	 * @version    2.2
+	 * @date       August 2, 2012
 	 * Programmatically add version number to enqueue calls
+	 *
+	 * @version    2.6
+	 * @date       March 10, 2014
+	 * Extracted code to create plugin data method
 	 */
 	function BNSFC_Scripts_and_Styles() {
-		/** Call the wp-admin plugin code */
-		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		/** @var $bnsfc_data - holds the plugin header data */
-		$bnsfc_data = get_plugin_data( __FILE__ );
+
+		/** @var object $bnsfc_data - plugin header data */
+		$bnsfc_data = $this->plugin_data();
 
 		/** Enqueue Scripts */
 		/** Enqueue Style Sheets */
@@ -834,25 +837,29 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * Add plugin options scripts and stylesheet(s) to be used only on the
 	 * Administration Panels
 	 *
-	 * @package  BNS_Featured_Category
-	 * @since    2.0
+	 * @package    BNS_Featured_Category
+	 * @since      2.0
 	 *
-	 * @uses     plugin_dir_path
-	 * @uses     plugin_dir_url
-	 * @uses     wp_enqueue_script
-	 * @uses     wp_enqueue_style
+	 * @uses       BNS_Featured_Category_Widget::plugin_data
+	 * @uses       plugin_dir_path
+	 * @uses       plugin_dir_url
+	 * @uses       wp_enqueue_script
+	 * @uses       wp_enqueue_style
 	 *
-	 * @internal Used with action: admin_enqueue_scripts
+	 * @internal   Used with action: admin_enqueue_scripts
 	 *
-	 * @version  2.4
-	 * @date     January 31, 2013
+	 * @version    2.4
+	 * @date       January 31, 2013
 	 * Added dynamic version to enqueue parameters
+	 *
+	 * @version    2.6
+	 * @date       March 10, 2014
+	 * Extracted code to create plugin data method
 	 */
 	function BNSFC_Options_Scripts_and_Styles() {
-		/** Call the wp-admin plugin code */
-		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		/** @var $bnsfc_data - holds the plugin header data */
-		$bnsfc_data = get_plugin_data( __FILE__ );
+
+		/** @var object $bnsfc_data - plugin header data */
+		$bnsfc_data = $this->plugin_data();
 
 		/** Enqueue Options Scripts; 'jQuery' is enqueued as a dependency */
 		wp_enqueue_script( 'bnsfc-options', plugin_dir_url( __FILE__ ) . 'bnsfc-options.js', array( 'jquery' ), $bnsfc_data['Version'] );
@@ -957,6 +964,26 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		return $bnsfc_content;
 
+	}
+
+	/**
+	 * Plugin Data
+	 * Returns the plugin header data as an array
+	 *
+	 * @package    BNS_Featured_Category
+	 * @since      2.6
+	 *
+	 * @uses       get_plugin_data
+	 *
+	 * @return array
+	 */
+	function plugin_data() {
+		/** Call the wp-admin plugin code */
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		/** @var $plugin_data - holds the plugin header data */
+		$plugin_data = get_plugin_data( __FILE__ );
+
+		return $plugin_data;
 	}
 	/** End function - shortcode */
 
