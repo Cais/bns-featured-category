@@ -119,6 +119,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		/** Add widget */
 		add_action( 'widgets_init', array( $this, 'load_bnsfc_widget' ) );
 
+		/** Add Plugin Row Meta details */
+		add_filter(
+			'plugin_row_meta', array(
+				$this,
+				'bnsfc_plugin_meta'
+			), 10, 2
+		);
+
 	} /** End function - construct */
 
 
@@ -964,7 +972,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		return $bnsfc_content;
 
-	}
+	} /** End function - shortcode */
+
 
 	/**
 	 * Plugin Data
@@ -984,8 +993,45 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		$plugin_data = get_plugin_data( __FILE__ );
 
 		return $plugin_data;
+	} /** End function - plugin data */
+
+
+	/**
+	 * BNSFC Plugin Meta
+	 * Adds additional links to plugin meta links
+	 *
+	 * @package BNS_Featured_Category
+	 * @since   2.4.4
+	 *
+	 * @uses    __
+	 * @uses    plugin_basename
+	 *
+	 * @param   $links
+	 * @param   $file
+	 *
+	 * @return  array $links
+	 *
+	 * @version	2.6
+	 * @date	March 10, 2014
+	 * Moved into main class of plugin
+	 */
+	function bnsfc_plugin_meta( $links, $file ) {
+
+		$plugin_file = plugin_basename( __FILE__ );
+
+		if ( $file == $plugin_file ) {
+
+			$links = array_merge( $links, array( 'plugin_meta' => '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>' ) );
+
+		}
+
+		/** End if - file is the same as plugin */
+
+		return $links;
+
 	}
-	/** End function - shortcode */
+
+	/** End function - plugin meta */
 
 
 }
@@ -995,40 +1041,3 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 /** @var $bnsfc - instantiate the class */
 $bnsfc = new BNS_Featured_Category_Widget();
-
-
-/**
- * BNSFC Plugin Meta
- * Adds additional links to plugin meta links
- *
- * @package BNS_Featured_Category
- * @since   2.4.4
- *
- * @uses    __
- * @uses    plugin_basename
- *
- * @param   $links
- * @param   $file
- *
- * @return  array $links
- */
-function bnsfc_plugin_meta( $links, $file ) {
-
-	$plugin_file = plugin_basename( __FILE__ );
-
-	if ( $file == $plugin_file ) {
-
-		$links[] = '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>';
-
-	}
-
-	/** End if - file is the same as plugin */
-
-	return $links;
-
-}
-
-/** End function - plugin meta */
-
-/** Add Plugin Row Meta details */
-add_filter( 'plugin_row_meta', 'bnsfc_plugin_meta', 10, 2 );

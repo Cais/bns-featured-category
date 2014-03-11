@@ -147,6 +147,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Added option to only show posts from child categories
 * Code Reformatting to better match current WordPress Coding Standards
 * Extracted code to create `plugin_data` method
+* Moved BNSFC Plugin Meta function into main class of plugin
 
 = 2.5 =
 * Released December 2013
