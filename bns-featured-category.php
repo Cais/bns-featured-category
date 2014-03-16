@@ -775,9 +775,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 						'echo'   => false
 					)
 				) . '">'
-						  . apply_filters( 'bnsfc_link', '&infin;' ) .
-						  '</a>
-					</strong>';
+				. apply_filters( 'bnsfc_link', '&infin;' ) .
+				'</a>
+			</strong>';
 		}
 		/** End if - not empty text */
 
@@ -1000,20 +1000,21 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * BNSFC Plugin Meta
 	 * Adds additional links to plugin meta links
 	 *
-	 * @package BNS_Featured_Category
-	 * @since   2.4.4
+	 * @package    BNS_Featured_Category
+	 * @since      2.4.4
 	 *
-	 * @uses    __
-	 * @uses    plugin_basename
+	 * @uses       __
+	 * @uses       plugin_basename
 	 *
 	 * @param   $links
 	 * @param   $file
 	 *
 	 * @return  array $links
 	 *
-	 * @version	2.6
-	 * @date	March 10, 2014
+	 * @version    2.6
+	 * @date       March 15, 2014
 	 * Moved into main class of plugin
+	 * Added a "wish link"
 	 */
 	function bnsfc_plugin_meta( $links, $file ) {
 
@@ -1021,7 +1022,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		if ( $file == $plugin_file ) {
 
-			$links = array_merge( $links, array( 'plugin_meta' => '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>' ) );
+			$links = array_merge( $links, array( 'fork_link' => '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>' ) );
+			$links = array_merge( $links, array( 'wish_link' => '<a href="http://www.amazon.ca/registry/wishlist/2NNNE1PAQIRUL">' . __( 'Grant a wish?', 'bns-fc' ) . '</a>' ) );
 
 		}
 

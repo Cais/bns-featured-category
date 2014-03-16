@@ -145,6 +145,7 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.6 =
 * Released ...
 * Added option to only show posts from child categories
+* Added a "wish link" to the plugin meta data
 * Code Reformatting to better match current WordPress Coding Standards
 * Extracted code to create `plugin_data` method
 * Moved BNSFC Plugin Meta function into main class of plugin
