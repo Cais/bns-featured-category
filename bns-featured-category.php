@@ -332,135 +332,177 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		apply_filters( 'bnsfc_output', $bnsfc_output );
 		if ( false == $bnsfc_output ) {
 
+			/** Wrapping CSS container element */
+			echo '<div class="bnsfc-container">';
+
+			/** Show the category description */
 			if ( $show_cat_desc ) {
 				echo '<div class="bnsfc-cat-desc">' . category_description() . '</div>';
 			}
 			/** End if - show category description */
 
-			if ( $bnsfc_query->have_posts() ) : while ( $bnsfc_query->have_posts() ) : $bnsfc_query->the_post();
-				if ( $count == $show_count ) {
-					break;
-				} else {
-					?>
-					<div <?php post_class(); ?>>
-						<?php if ( ! $no_titles ) { ?>
-							<strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
-						<?php } ?>
-						<div class="post-details">
-							<?php if ( $show_meta ) {
-								echo apply_filters( 'bnsfc_show_meta', sprintf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ) ); ?>
-								<br />
-							<?php
-							}
-							if ( ( $show_comments ) && ( ! post_password_required() ) ) {
-								comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?>
-								<br />
-							<?php
-							}
-							if ( $show_cats ) {
-								echo apply_filters( 'bnsfc_show_cats', sprintf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ) ); ?>
-								<br />
-							<?php
-							}
-							if ( $show_tags ) {
-								the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?>
-								<br />
+			/** Start the Loop */
+			if ( $bnsfc_query->have_posts() ) {
+
+				while ( $bnsfc_query->have_posts() ) {
+
+					/** Get the post based on the query */
+					$bnsfc_query->the_post();
+
+					/** Check if post count has been met */
+					if ( $count == $show_count ) {
+
+						break;
+
+					} else {
+
+						?>
+						<div <?php post_class(); ?>>
+
+							<?php if ( ! $no_titles ) { ?>
+								<strong><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></strong>
 							<?php } ?>
-						</div>
-						<!-- .post-details -->
-						<?php if ( ! $only_titles ) { ?>
 
-							<div class="bnsfc-content">
+							<div class="post-details">
 
-								<?php if ( $show_full ) {
 
-									/** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
-									if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
-										?>
-										<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
-												array(
-													$content_thumb,
-													$content_thumb
-												), array( 'class' => 'alignleft' )
-											); ?></a>
-									<?php
-									}
-									/** End if */
+								<?php /** Show Post Meta Data */
+								if ( $show_meta ) {
+									echo apply_filters( 'bnsfc_show_meta', sprintf( __( 'by %1$s on %2$s', 'bns-fc' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ) ); ?>
+									<br />
+								<?php
+								}
 
-									the_content(); ?>
+								/** Show Comments */
+								if ( ( $show_comments ) && ( ! post_password_required() ) ) {
+									comments_popup_link( __( 'with No Comments', 'bns-fc' ), __( 'with 1 Comment', 'bns-fc' ), __( 'with % Comments', 'bns-fc' ), '', __( 'with Comments Closed', 'bns-fc' ) ); ?>
+									<br />
+								<?php
+								}
 
-									<div class="bnsfc-clear"></div>
+								/** Show all categories */
+								if ( $show_cats ) {
+									echo apply_filters( 'bnsfc_show_cats', sprintf( __( 'in %s', 'bns-fc' ), get_the_category_list( ', ' ) ) ); ?>
+									<br />
+								<?php
+								}
 
-									<?php wp_link_pages(
-										array(
-											'before'         => '<p><strong>' . __( 'Pages: ', 'bns-fc' ) . '</strong>',
-											'after'          => '</p>',
-											'next_or_number' => 'number'
-										)
-									);
+								/** Show all tags */
+								if ( $show_tags ) {
+									the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?>
+									<br />
+								<?php } ?>
 
-								} elseif ( isset( $instance['excerpt_length'] ) && $instance['excerpt_length'] > 0 ) {
+							</div>
+							<!-- .post-details -->
 
-									if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
-										?>
-										<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
-												array(
-													$excerpt_thumb,
-													$excerpt_thumb
-												), array( 'class' => 'alignleft' )
-											); ?></a>
-									<?php
-									}
-									/** End if */
+							<?php if ( ! $only_titles ) { ?>
 
-									echo $this->custom_excerpt( $instance['excerpt_length'] );
+								<div class="bnsfc-content">
 
-								} elseif ( ! $instance['no_excerpt'] ) {
+									<?php /** Show full post */
+									if ( $show_full ) {
 
-									if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
-										?>
-										<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
-												array(
-													$excerpt_thumb,
-													$excerpt_thumb
-												), array( 'class' => 'alignleft' )
-											); ?></a>
-									<?php
-									}
-									/** End if */
+										/** Conditions: Theme supports post-thumbnails -and- there is a post-thumbnail -and- the option to show the post thumbnail is checked */
+										if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
+											?>
+											<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
+													array(
+														$content_thumb,
+														$content_thumb
+													), array( 'class' => 'alignleft' )
+												); ?></a>
+										<?php
+										}
+										/** End if */
 
-									the_excerpt();
+										the_content(); ?>
 
-								} else {
+										<div class="bnsfc-clear"></div>
 
-									if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
-										?>
-										<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
-												array(
-													$content_thumb,
-													$content_thumb
-												), array( 'class' => 'alignleft' )
-											); ?></a>
-									<?php
-									}
-									/** End if */
+										<?php wp_link_pages(
+											array(
+												'before'         => '<p><strong>' . __( 'Pages: ', 'bns-fc' ) . '</strong>',
+												'after'          => '</p>',
+												'next_or_number' => 'number'
+											)
+										);
 
-								} /** End if - show full */
-								?>
+									} /** Only show excerpt with custom length */
+									elseif ( isset( $instance['excerpt_length'] ) && $instance['excerpt_length'] > 0 ) {
 
-							</div> <!-- .bnsfc-content -->
+										if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
+											?>
+											<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
+													array(
+														$excerpt_thumb,
+														$excerpt_thumb
+													), array( 'class' => 'alignleft' )
+												); ?></a>
+										<?php
+										}
+										/** End if */
 
-						<?php } /** End if - not only titles */ ?>
+										echo $this->custom_excerpt( $instance['excerpt_length'] );
 
-					</div> <!-- .post #post-ID -->
+									} /** Show excerpt */
+									elseif ( ! $instance['no_excerpt'] ) {
 
-					<?php $count ++;
+										if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
+											?>
+											<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
+													array(
+														$excerpt_thumb,
+														$excerpt_thumb
+													), array( 'class' => 'alignleft' )
+												); ?></a>
+										<?php
+										}
+										/** End if */
 
-				} /** End if - count */
-			endwhile;
-			else :
-				_e( 'Yes, we have no bananas, or posts, today.', 'bns-fc' );
-			endif;
+										the_excerpt();
+
+									} /** Just show the title */
+									else {
+
+										if ( current_theme_supports( 'post-thumbnails' ) && has_post_thumbnail() && ( $use_thumbnails ) ) {
+											?>
+											<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'bns-fc' ); ?> <?php the_title_attribute(); ?>"><?php the_post_thumbnail(
+													array(
+														$content_thumb,
+														$content_thumb
+													), array( 'class' => 'alignleft' )
+												); ?></a>
+										<?php
+										}
+										/** End if */
+
+									} /** End if - show full */
+									?>
+
+								</div> <!-- .bnsfc-content -->
+
+							<?php } /** End if - not only titles */ ?>
+
+						</div> <!-- .post #post-ID -->
+
+						<?php $count ++;
+
+					}
+					/** End if - count */
+
+				}
+				/** End while - have posts */
+
+			} else {
+
+				/** There are no posts. Leave a filterable message */
+				apply_filters( 'bnsfc_no_posts_message', __( 'Yes, we have no bananas, or posts, today.', 'bns-fc' ) );
+
+			}
+			/** End if - have posts */
+
+			echo '</div><!-- bnsfc-container -->';
 
 		}
 		/** End if - replace entire output when hook `bnsfc_output` is used */
@@ -775,9 +817,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 						'echo'   => false
 					)
 				) . '">'
-				. apply_filters( 'bnsfc_link', '&infin;' ) .
-				'</a>
-			</strong>';
+						  . apply_filters( 'bnsfc_link', '&infin;' ) .
+						  '</a>
+					</strong>';
 		}
 		/** End if - not empty text */
 

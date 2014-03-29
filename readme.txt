@@ -149,6 +149,8 @@ Please stay current with your WordPress installation, your active theme, and you
 * Code Reformatting to better match current WordPress Coding Standards
 * Extracted code to create `plugin_data` method
 * Moved BNSFC Plugin Meta function into main class of plugin
+* Added `bnsfc-container` wrapper CSS element
+* Added hook to no posts message
 
 = 2.5 =
 * Released December 2013
