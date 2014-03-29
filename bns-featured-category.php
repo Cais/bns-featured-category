@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.6-alpha
+Version: 2.6-beta
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -497,7 +497,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 			} else {
 
 				/** There are no posts. Leave a filterable message */
-				apply_filters( 'bnsfc_no_posts_message', __( 'Yes, we have no bananas, or posts, today.', 'bns-fc' ) );
+				apply_filters( 'bnsfc_no_posts_message', '<span class="bnsfc-no-posts-message">' . __( 'Yes, we have no bananas, or posts, today.', 'bns-fc' ) . '</span>' );
 
 			}
 			/** End if - have posts */
@@ -994,8 +994,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 					'show_tags'        => false,
 					'only_titles'      => false,
 					'no_titles'        => false,
+					/** Do not set `show_full` to true!!! */
 					'show_full'        => false,
-					/** Do not set to true!!! */
 					'excerpt_length'   => '',
 					'no_excerpt'       => false
 				), $atts, 'bnsfc'
@@ -1057,6 +1057,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * @date       March 15, 2014
 	 * Moved into main class of plugin
 	 * Added a "wish link"
+	 * Added a "support link"
 	 */
 	function bnsfc_plugin_meta( $links, $file ) {
 
@@ -1064,8 +1065,13 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		if ( $file == $plugin_file ) {
 
-			$links = array_merge( $links, array( 'fork_link' => '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on Github', 'bns-fc' ) . '</a>' ) );
-			$links = array_merge( $links, array( 'wish_link' => '<a href="http://www.amazon.ca/registry/wishlist/2NNNE1PAQIRUL">' . __( 'Grant a wish?', 'bns-fc' ) . '</a>' ) );
+			$links = array_merge(
+				$links, array(
+					'fork_link'    => '<a href="https://github.com/Cais/BNS-Featured-Category">' . __( 'Fork on GitHub', 'bns-fc' ) . '</a>',
+					'wish_link'    => '<a href="http://www.amazon.ca/registry/wishlist/2NNNE1PAQIRUL">' . __( 'Grant a wish?', 'bns-fc' ) . '</a>',
+					'support_link' => '<a href="http://wordpress.org/support/plugin/bns-featured-category">' . __( 'WordPress Support Forums', 'bns-fc' ) . '</a>'
+				)
+			);
 
 		}
 
