@@ -2,9 +2,9 @@
 Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
-Requires at least: 2.9
+Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 2.5
+Stable tag: 2.6
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -146,7 +146,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.6 =
-* Released ...
+* Released March 2014
 * Added `bnsfc-container` wrapper CSS element
 * Added `bnsfc-widget-title` class
 * Added `bnsfc_no_posts_message` hook to no posts message
@@ -155,6 +155,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Code Reformatting to better match current WordPress Coding Standards
 * Extracted code to create `plugin_data` method
 * Moved BNSFC Plugin Meta function into main class of plugin
+* Raised required version to WordPress 3.6
 * Updates to the `readme.txt` documentation
 
 = 2.5 =

@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination).  
-Version: 2.6-beta
+Version: 2.6
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -55,6 +55,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version     2.6
  * @date        February 27, 2014
  * Added option to only show posts from child categories
+ * Raised required version to WordPress 3.6
  */
 class BNS_Featured_Category_Widget extends WP_Widget {
 
@@ -85,14 +86,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		/**
 		 * Check installed WordPress version for compatibility
-		 * @internal    Requires WordPress version 2.9
-		 * @internal    @uses current_theme_supports
-		 * @internal    @uses the_post_thumbnail
-		 * @internal    @uses has_post_thumbnail
+		 * @internal    Requires WordPress version 3.6
+		 * @internal    @uses shortcode_atts with optional shortcode filter parameter
 		 */
 		global $wp_version;
-		$exit_message = 'BNS Featured Category requires WordPress version 2.9 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
-		if ( version_compare( $wp_version, "2.9", "<" ) ) {
+		$exit_message = 'BNS Featured Category requires WordPress version 3.6 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
+		if ( version_compare( $wp_version, "3.6", "<" ) ) {
 			exit ( $exit_message );
 		}
 		/** End if */
