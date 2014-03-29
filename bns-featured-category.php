@@ -224,9 +224,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 			 * @var $after_title    string - defined by theme
 			 */
 			if ( ( true == $link_title ) && ( false == $multiple_cats ) ) {
-				echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
+				echo $before_title . '<span class="bnsfc-widget-title bnsfc-cat-class-' . $cat_choice_class . '"><a href="' . get_category_link( $cat_choice ) . '">' . $title . '</a></span>' . $after_title;
 			} else {
-				echo $before_title . '<span class="bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
+				echo $before_title . '<span class="bnsfc-widget-title bnsfc-cat-class-' . $cat_choice_class . '">' . $title . '</span>' . $after_title;
 			}
 			/** End if - link title */
 		}
