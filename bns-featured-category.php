@@ -406,6 +406,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 										<br />
 									<?php
 									}
+									/** End if - show meta */
 
 									/** Show Comments */
 									if ( ( $show_comments ) && ( ! post_password_required() ) ) {
@@ -413,6 +414,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 										<br />
 									<?php
 									}
+									/** End if - show comments */
 
 									/** Show all categories */
 									if ( $show_cats ) {
@@ -420,14 +422,17 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 										<br />
 									<?php
 									}
+									/** End if - show cats */
 
 									/** Show all tags */
 									if ( $show_tags ) {
-										the_tags( __( 'as ', 'bns-fc' ), ', ', '' ); ?>
+										$show_all_tags = get_the_tag_list( __( 'as ', 'bns-fc' ), ', ', '' );
+										echo apply_filters( 'bnsfc_show_tags', $show_all_tags );
+										?>
 										<br />
-									<?php } ?>
+									<?php } /** End if - show tags */ ?>
 
-								<?php } ?>
+								<?php } /** End if - featured image and title only */ ?>
 
 							</div>
 							<!-- .post-details -->
@@ -452,7 +457,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 													); ?></a>
 											<?php
 											}
-											/** End if */
+											/** End if - current theme supports */
 
 											the_content(); ?>
 
@@ -479,7 +484,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 													); ?></a>
 											<?php
 											}
-											/** End if */
+											/** End if - current theme supports */
 
 											echo $this->custom_excerpt( $instance['excerpt_length'] );
 
@@ -496,7 +501,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 													); ?></a>
 											<?php
 											}
-											/** End if */
+											/** End if - current theme supports */
 
 											the_excerpt();
 
@@ -513,7 +518,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 													); ?></a>
 											<?php
 											}
-											/** End if */
+											/** End if - current theme supports */
 
 										} /** End if - show full */
 										?>

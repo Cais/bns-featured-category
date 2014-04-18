@@ -153,6 +153,7 @@ Please stay current with your WordPress installation, your active theme, and you
 = 2.7 =
 * Released ...
 * Add new option "Featured Image and Post Title only"
+* Updated inline documentation
 * Updated `readme.txt`
 
 = 2.6 =
