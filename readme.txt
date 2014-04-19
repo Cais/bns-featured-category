@@ -71,7 +71,7 @@ Parameters are very similar to the plugin:
 * 'show_cat_desc'                 => false,
 * 'link_title'                    => false,
 * 'show_tags'                     => false,
-* 'featured_image_and_title_only' => false,
+* 'featured_image_first' => false,
 * 'only_titles'                   => false,
 * 'no_titles'                     => false,
 * 'show_full'                     => false,
@@ -152,7 +152,8 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.7 =
 * Released ...
-* Add new option "Featured Image and Post Title only"
+* Added CSS wrapper class to separate shortcode style elements from widget usage
+* Added new option "Featured Image First" to display before balance of post
 * Updated inline documentation
 * Updated `readme.txt`
 

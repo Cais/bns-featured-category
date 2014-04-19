@@ -1,6 +1,6 @@
 /**
  * This file is part of BNS Featured Category
- * Last revised at version 1.9.2
+ * Last revised at version 2.7
  *
  * Copyright 2009-2014  Edward Caissie  (email : edward.caissie@gmail.com)
  *
@@ -45,4 +45,9 @@ a.bnsfc-link:active {
 .post .widget.bns-featured-category h2 {
 	background: none;
 	width: 100%;
+}
+
+.bnsfc-shortcode .bnsfc-featured-image-first a img {
+	float: left;
+	margin-right: 10px;
 }
