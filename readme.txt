@@ -161,6 +161,7 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 2.7 =
 * Released ...
+* Add new constants for use with plugin path and URL functionality
 * Added CSS wrapper class to separate shortcode style elements from widget usage
 * Added new option "Featured Image First" to display before balance of post
 * Added new style enqueue statement to read from update safe folder
