@@ -82,6 +82,15 @@ NB: Use the shortcode at your own risk!
 
 == Frequently Asked Questions ==
 
+= Where do I put my custom stylesheet? =
+
+You will need to use an FTP client to add the `/bns-customs/` folder under the `/wp-content/` folder, then place your `bns-custom-style.css` file in the `/bns-customs/` folder.
+
+= Why did you add the `/bns-customs/` folder? =
+
+The `/bns-customs/` folder will be used as an update safe location for all plugins I write.
+As most of these plugins use the "BNS" designator, the folder name will make it easier to locate your customizations.
+
 = Can I use this in more than one widget area? =
 
 Yes, this plugin has been made for multi-widget compatibility. Each instance of the widget will display, if wanted, differently than every other instance of the widget.
@@ -154,6 +163,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Released ...
 * Added CSS wrapper class to separate shortcode style elements from widget usage
 * Added new option "Featured Image First" to display before balance of post
+* Added new style enqueue statement to read from update safe folder
 * Updated inline documentation
 * Updated `readme.txt`
 

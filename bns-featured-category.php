@@ -99,6 +99,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		}
 		/** End if */
 
+		/** Define location for BNS plugin customizations */
+		define( 'BNS_CUSTOM_PATH', WP_CONTENT_DIR . '/bns-customs/' );
+		define( 'BNS_CUSTOM_URL', content_url( '/bns-customs/' ) );
+
 		/** Enqueue Scripts and Styles for front-facing views */
 		add_action(
 			'wp_enqueue_scripts', array(
@@ -219,6 +223,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 			$multiple_cats = false;
 		}
 		/** End if - string position */
+
+		/** Test */ echo 'Path test: ' . BNS_CUSTOM_PATH . ' ... after path' . '<br />';
+		/** Test */ echo 'URL test: ' . BNS_CUSTOM_URL . ' ... after URL';
 
 		/** Widget $title, $before_widget, and $after_widget defined by theme */
 		if ( $title ) {
@@ -909,6 +916,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * @version    2.6
 	 * @date       March 10, 2014
 	 * Extracted code to create plugin data method
+	 *
+	 * @version    2.7
+	 * @date	April 20, 2014
+	 * Added new enqueue statement to read from update safe folder
 	 */
 	function BNSFC_Scripts_and_Styles() {
 
@@ -918,10 +929,17 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		/** Enqueue Scripts */
 		/** Enqueue Style Sheets */
 		wp_enqueue_style( 'BNSFC-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-style.css', array(), $bnsfc_data['Version'], 'screen' );
+
+		/** Custom Stylesheets */
 		if ( is_readable( plugin_dir_path( __FILE__ ) . 'bnsfc-custom-style.css' ) ) {
-			wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
+			wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'] . '-old', 'screen' );
 		}
 		/** End if - is readable */
+
+		/** Move to use generic folder for all "BNS" plugins to use */
+		if ( is_readable( BNS_CUSTOM_PATH . 'bnsfc-custom-style.css' ) ) {
+			wp_enqueue_style( 'BNSFC-Custom-Style', BNS_CUSTOM_URL . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
+		} /** End if - is readable */
 
 	} /** End function - scripts and styles */
 
