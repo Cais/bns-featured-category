@@ -224,9 +224,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		}
 		/** End if - string position */
 
-		/** Test */ echo 'Path test: ' . BNS_CUSTOM_PATH . ' ... after path' . '<br />';
-		/** Test */ echo 'URL test: ' . BNS_CUSTOM_URL . ' ... after URL';
-
 		/** Widget $title, $before_widget, and $after_widget defined by theme */
 		if ( $title ) {
 			/**
