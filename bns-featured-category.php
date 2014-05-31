@@ -621,6 +621,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * @version 2.2
 	 * @date    July 13, 2012
 	 * Corrected 'no_excerpt" label issue
+	 *
+	 * @version	2.7
+	 * @date	May 31, 2014
+	 * Fixed sort order implementation
 	 */
 	function form( $instance ) {
 		/** Set default widget settings */
@@ -707,9 +711,9 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 					<p>
 						<label for="<?php echo $this->get_field_id( 'sort_order' ); ?>"><?php _e( 'Sort Order:', 'bns-fc' ); ?></label>
 						<select id="<?php echo $this->get_field_id( 'sort_order' ); ?>" name="<?php echo $this->get_field_name( 'sort_order' ); ?>" class="widefat">
-							<option <?php selected( 'asc', $instance['sort_order'], true ); ?>>asc</option>
-							<option <?php selected( 'desc', $instance['sort_order'], true ); ?>>desc</option>
-							<option <?php selected( 'rand', $instance['sort_order'], true ); ?>>rand</option>
+							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php  _e( 'Ascending', 'bns-fc' ); ?></option>
+							<option value="desc" <?php selected( 'desc', $instance['sort_order'], true ); ?>><?php _e( 'Descending', 'bns-fc' ); ?></option>
+							<option value="rand" <?php selected( 'rand', $instance['sort_order'], true ); ?>><?php _e( 'Random', 'bns-fc' ); ?></option>
 						</select>
 					</p>
 				</td>

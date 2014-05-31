@@ -165,6 +165,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Added CSS wrapper class to separate shortcode style elements from widget usage
 * Added new option "Featured Image First" to display before balance of post
 * Added new style enqueue statement to read from update safe folder
+* Fixed sort order implementation
 * Updated inline documentation
 * Updated `readme.txt`
 
