@@ -604,26 +604,26 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	/**
 	 * Extend the `form` function
 	 *
-	 * @package BNS_Featured_Category
-	 * @since   1.0
+	 * @package    BNS_Featured_Category
+	 * @since      1.0
 	 *
 	 * @param   $instance
 	 *
-	 * @uses    checked
-	 * @uses    current_theme_supports
-	 * @uses    get_field_id
-	 * @uses    get_field_name
-	 * @uses    selected
-	 * @uses    wp_parse_args
+	 * @uses       checked
+	 * @uses       current_theme_supports
+	 * @uses       get_field_id
+	 * @uses       get_field_name
+	 * @uses       selected
+	 * @uses       wp_parse_args
 	 *
 	 * @return string|void
 	 *
-	 * @version 2.2
-	 * @date    July 13, 2012
+	 * @version    2.2
+	 * @date       July 13, 2012
 	 * Corrected 'no_excerpt" label issue
 	 *
-	 * @version	2.7
-	 * @date	May 31, 2014
+	 * @version    2.7
+	 * @date       May 31, 2014
 	 * Fixed sort order implementation
 	 */
 	function form( $instance ) {
@@ -711,7 +711,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 					<p>
 						<label for="<?php echo $this->get_field_id( 'sort_order' ); ?>"><?php _e( 'Sort Order:', 'bns-fc' ); ?></label>
 						<select id="<?php echo $this->get_field_id( 'sort_order' ); ?>" name="<?php echo $this->get_field_name( 'sort_order' ); ?>" class="widefat">
-							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php  _e( 'Ascending', 'bns-fc' ); ?></option>
+							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php _e( 'Ascending', 'bns-fc' ); ?></option>
 							<option value="desc" <?php selected( 'desc', $instance['sort_order'], true ); ?>><?php _e( 'Descending', 'bns-fc' ); ?></option>
 							<option value="rand" <?php selected( 'rand', $instance['sort_order'], true ); ?>><?php _e( 'Random', 'bns-fc' ); ?></option>
 						</select>
@@ -919,7 +919,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * Extracted code to create plugin data method
 	 *
 	 * @version    2.7
-	 * @date	April 20, 2014
+	 * @date       April 20, 2014
 	 * Added new enqueue statement to read from update safe folder
 	 */
 	function BNSFC_Scripts_and_Styles() {
@@ -940,7 +940,8 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		/** Move to use generic folder for all "BNS" plugins to use */
 		if ( is_readable( BNS_CUSTOM_PATH . 'bnsfc-custom-style.css' ) ) {
 			wp_enqueue_style( 'BNSFC-Custom-Style', BNS_CUSTOM_URL . 'bnsfc-custom-style.css', array(), $bnsfc_data['Version'], 'screen' );
-		} /** End if - is readable */
+		}
+		/** End if - is readable */
 
 	} /** End function - scripts and styles */
 
@@ -1005,34 +1006,34 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * BNSFC Shortcode
 	 * - May the Gods of programming protect us all!
 	 *
-	 * @package  BNS_Featured_Category
-	 * @since    1.8
+	 * @package    BNS_Featured_Category
+	 * @since      1.8
 	 *
 	 * @param   $atts
 	 *
-	 * @uses     shortcode_atts
-	 * @uses     the_widget
+	 * @uses       shortcode_atts
+	 * @uses       the_widget
 	 *
-	 * @internal Do NOT set 'show_full=true' it will create a recursive loop and crash
-	 * @internal Note 'content_thumb' although available has no use if 'show_full=false'
-	 * @internal Used with `add_shortcode`
+	 * @internal   Do NOT set 'show_full=true' it will create a recursive loop and crash
+	 * @internal   Note 'content_thumb' although available has no use if 'show_full=false'
+	 * @internal   Used with `add_shortcode`
 	 *
 	 * @return  string
 	 *
-	 * @version  2.3
-	 * @date     November 30, 2012
+	 * @version    2.3
+	 * @date       November 30, 2012
 	 * Add option to use widget title as link to single category archive
 	 * Optimize output buffer closure
 	 *
-	 * @version  2.4.3
-	 * @date     September 7, 2013
+	 * @version    2.4.3
+	 * @date       September 7, 2013
 	 * Added third parameter to `shortcode_atts` for automatic filter creation
 	 *
-	 * @version	2.7
-	 * @date	April 19, 2014
+	 * @version    2.7
+	 * @date       April 19, 2014
 	 * Added CSS wrapper class to separate style elements from widget usage
 	 *
-	 * @todo     Fix 'show_full=true' issue
+	 * @todo       Fix 'show_full=true' issue
 	 */
 	function bnsfc_shortcode( $atts ) {
 		/** Get ready to capture the elusive widget output */
