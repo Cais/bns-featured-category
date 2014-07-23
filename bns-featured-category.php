@@ -100,8 +100,14 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		/** End if */
 
 		/** Define location for BNS plugin customizations */
-		define( 'BNS_CUSTOM_PATH', WP_CONTENT_DIR . '/bns-customs/' );
-		define( 'BNS_CUSTOM_URL', content_url( '/bns-customs/' ) );
+		if ( ! defined( 'BNS_CUSTOM_PATH' ) ) {
+			define( 'BNS_CUSTOM_PATH', WP_CONTENT_DIR . '/bns-customs/' );
+		}
+		/** End if - not defined */
+		if ( ! defined( 'BNS_CUSTOM_URL' ) ) {
+			define( 'BNS_CUSTOM_URL', content_url( '/bns-customs/' ) );
+		}
+		/** End if - not defined */
 
 		/** Enqueue Scripts and Styles for front-facing views */
 		add_action(
