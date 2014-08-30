@@ -3,7 +3,7 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 2.7-alpha
 
 Displays most recent posts from a specific featured category or categories.
@@ -165,6 +165,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Added CSS wrapper class to separate shortcode style elements from widget usage
 * Added new option "Featured Image First" to display before balance of post
 * Added new style enqueue statement to read from update safe folder
+* Added sanity check to ensure there are "child categories" to display
 * Fixed sort order implementation
 * Updated inline documentation
 * Updated `readme.txt`

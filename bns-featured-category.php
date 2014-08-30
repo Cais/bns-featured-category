@@ -182,6 +182,10 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * @version     2.6
 	 * @date        February 27, 2014
 	 * Added option to only show posts from child categories
+	 *
+	 * @version     2.7
+	 * @date        August 30, 2014
+	 * Added sanity check to ensure there are "child categories" to display
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -267,28 +271,34 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		/** Only display post from the child categories */
 		if ( $display_children ) {
 
-			/** Unset the current 'cat' parameter */
-			unset( $query_args['cat'] );
-
 			/** @var array $child_categories - contains child-categories object */
 			$child_categories = get_categories( array( 'parent' => $cat_choice ) );
 
-			/** @var array $child_category_list - initialize as empty */
-			$child_category_list = '';
+			/** Sanity Check - Do we have child categories */
+			if ( ! empty( $child_categories ) ) {
 
-			/**
-			 * Cycle through the child categories object to get the category ID
-			 * of each child category
-			 */
-			foreach ( $child_categories as $child_category ) {
+				/** Unset the current 'cat' parameter */
+				unset( $query_args['cat'] );
 
-				$child_category_list[] = $child_category->term_id;
+				/** @var array $child_category_list - initialize as empty */
+				$child_category_list = '';
+
+				/**
+				 * Cycle through the child categories object to get the category ID
+				 * of each child category
+				 */
+				foreach ( $child_categories as $child_category ) {
+
+					$child_category_list[] = $child_category->term_id;
+
+				}
+				/** End foreach - child categories */
+
+				/** @var array $query_args - re-assembled query arguments to use for child only option */
+				$query_args = array_merge( $query_args, array( 'cat' => implode( ',', $child_category_list ) ) );
 
 			}
-			/** End foreach - child categories */
-
-			/** @var array $query_args - re-assembled query arguments to use for child only option */
-			$query_args = array_merge( $query_args, array( 'cat' => implode( ',', $child_category_list ) ) );
+			/** End if - not empty child categories */
 
 		}
 		/** End if - display children (only) */
