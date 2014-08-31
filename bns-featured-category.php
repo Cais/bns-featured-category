@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.7-alpha
+Version: 2.7
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-fc
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        http://wordpress.org/extend/plugins/bns-featured-category/
- * @version     2.7-alpha
+ * @version     2.7
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2014, Edward Caissie
  *
@@ -48,17 +48,13 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.5
- * @date        November 2013
- * Added new "union" option so posts must be in all categories chosen
- *
  * @version     2.6
  * @date        February 27, 2014
  * Added option to only show posts from child categories
  * Raised required version to WordPress 3.6
  *
  * @version     2.7
- * @date        April 18, 2014
+ * @date        August 30, 2014
  */
 class BNS_Featured_Category_Widget extends WP_Widget {
 
@@ -397,8 +393,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 											); ?>
 										</a>
 									<?php
-									}
-									/** End if */
+									} /** End if */
 									?>
 
 									<!-- Display the Post Title -->
@@ -569,7 +564,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		/** Reset post data - see $bnsfc_query object */
 		wp_reset_postdata();
-		// wp_reset_query();
 
 	} /** End function - widget */
 
@@ -878,6 +872,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		/** Create link to full post for end of custom length excerpt output */
 		if ( ! empty( $text ) ) {
+
 			$bnsfc_link = ' <strong>
                 <a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute(
 					array(
@@ -889,18 +884,23 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 						  . apply_filters( 'bnsfc_link', '&infin;' ) .
 						  '</a>
 					</strong>';
+
 		}
 		/** End if - not empty text */
 
 		/** Check if $length has a value; or, the total words is less than the $length */
 		if ( ( ! $length ) || ( count( $words ) < $length ) ) {
+
 			$text .= $bnsfc_link;
 
 			return $text;
+
 		} else {
+
 			array_pop( $words );
 			array_push( $words, '...' );
 			$text = implode( ' ', $words );
+
 		}
 		/** End if */
 
@@ -1170,14 +1170,12 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		return $links;
 
 	}
-
 	/** End function - plugin meta */
 
 
 }
 
 /** End class extension */
-
 
 /** @var $bnsfc - instantiate the class */
 $bnsfc = new BNS_Featured_Category_Widget();
