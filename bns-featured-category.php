@@ -1129,3 +1129,117 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 /** @var $bnsfc - instantiate the class */
 $bnsfc = new BNS_Featured_Category_Widget();
+
+
+/**
+ * BNS Featured Category Update Message
+ *
+ * @package BNS_Featured_Category
+ * @since   2.7.1
+ *
+ * @uses    get_transient
+ * @uses    is_wp_error
+ * @uses    set_transient
+ * @uses    wp_kses_post
+ * @uses    wp_remote_get
+ *
+ * @param $args
+ */
+function bnsfc_in_plugin_update_message( $args ) {
+
+	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	$bnsfc_data = get_plugin_data( __FILE__ );
+
+	$transient_name = 'bnsfc_upgrade_notice_' . $args['Version'];
+	if ( false === ( $upgrade_notice = get_transient( $transient_name ) ) ) {
+
+		/** @var string $response - get the readme.txt file from WordPress */
+		$response = wp_remote_get( 'https://plugins.svn.wordpress.org/bns-featured-category/trunk/readme.txt' );
+
+		if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+			$matches = null;
+		}
+		$regexp         = '~==\s*Changelog\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $bnsfc_data['Version'] ) . '\s*=|$)~Uis';
+		$upgrade_notice = '';
+
+		if ( preg_match( $regexp, $response['body'], $matches ) ) {
+			$version = trim( $matches[1] );
+			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
+
+			if ( version_compare( $bnsfc_data['Version'], $version, '<' ) ) {
+
+				/** @var string $upgrade_notice - start building message (inline styles) */
+				$upgrade_notice = '<style type="text/css">
+							.bnsfc_plugin_upgrade_notice { padding-top: 20px; }
+							.bnsfc_plugin_upgrade_notice ul { width: 50%; list-style: disc; margin-left: 20px; margin-top: 0; }
+							.bnsfc_plugin_upgrade_notice li { margin: 0; }
+						</style>';
+
+				/** @var string $upgrade_notice - start building message (begin block) */
+				$upgrade_notice .= '<div class="bnsfc_plugin_upgrade_notice">';
+
+				$ul = false;
+
+				foreach ( $notices as $index => $line ) {
+
+					if ( preg_match( '~^=\s*(.*)\s*=$~i', $line ) ) {
+
+						if ( $ul ) {
+							$upgrade_notice .= '</ul><div style="clear: left;"></div>';
+						}
+
+						$upgrade_notice .= '<hr/>';
+						continue;
+
+					}
+
+					/** @var string $return_value - body of message */
+					$return_value = '';
+
+					if ( preg_match( '~^\s*\*\s*~', $line ) ) {
+
+						if ( ! $ul ) {
+							$return_value = '<ul">';
+							$ul           = true;
+						}
+
+						$line = preg_replace( '~^\s*\*\s*~', '', htmlspecialchars( $line ) );
+						$return_value .= '<li style=" ' . ( $index % 2 == 0 ? 'clear: left;' : '' ) . '">' . $line . '</li>';
+
+					} else {
+
+						if ( $ul ) {
+
+							$return_value = '</ul><div style="clear: left;"></div>';
+							$return_value .= '<p>' . $line . '</p>';
+							$ul = false;
+
+						} else {
+
+							$return_value .= '<p>' . $line . '</p>';
+
+						}
+
+					}
+
+					$upgrade_notice .= wp_kses_post( preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $return_value ) );
+
+				}
+
+				$upgrade_notice .= '</div>';
+
+			}
+
+		}
+
+		/** Set transient - minimize calls to WordPress */
+		set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+
+	}
+
+	echo $upgrade_notice;
+
+}
+
+/** End function - in plugin update message */
+add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), 'bnsfc_in_plugin_update_message' );

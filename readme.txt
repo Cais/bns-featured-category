@@ -164,6 +164,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Update copyright years
 * Remove extraneous structure end comments ...
 * Changed `textdomain` from `bns-fc` to `bns-featured-category`
+* Added "in plugin" update message
 
 = 2.7 =
 * Released August 2014
