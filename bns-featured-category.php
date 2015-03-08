@@ -49,7 +49,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.7.1
- * @date        March 8, 2014
+ * @date        March 8, 2015
  */
 class BNS_Featured_Category_Widget extends WP_Widget {
 
