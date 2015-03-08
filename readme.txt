@@ -163,6 +163,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Released ...
 * Update copyright years
 * Remove extraneous structure end comments ...
+* Changed `textdomain` from `bns-fc` to `bns-featured-category`
 
 = 2.7 =
 * Released August 2014
