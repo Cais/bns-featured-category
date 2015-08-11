@@ -3,7 +3,7 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
-Tested up to: 4.2.2
+Tested up to: 4.3
 Stable tag: 2.7.2
 
 Displays most recent posts from a specific featured category or categories.
@@ -160,7 +160,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.7.2 =
-* Released ...
+* Released August 2015
 * Updated to use PHP5 constructor objects
 
 = 2.7.1 =
