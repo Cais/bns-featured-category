@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.7.3
+Version: 2.8-alpha
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-featured-category
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        https://wordpress.org/plugins/bns-featured-category/
- * @version     2.7.2
+ * @version     2.8
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2016, Edward Caissie
  *
@@ -48,8 +48,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.7.2
- * @date        August 2015
+ * @version     2.8
+ * @date        January 2016
  */
 class BNS_Featured_Category_Widget extends WP_Widget {
 
@@ -133,47 +133,54 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	/**
 	 * Widget
 	 *
-	 * @package     BNS_Featured_Category
+	 * @package    BNS_Featured_Category
 	 *
-	 * @class       WP_Query
-	 * @uses        apply_filters
-	 * @uses        category_description
-	 * @uses        current_theme_supports
-	 * @uses        get_category_link
-	 * @uses        get_option
-	 * @uses        get_the_author
-	 * @uses        get_the_category_list
-	 * @uses        get_the_ID
-	 * @uses        get_the_time
-	 * @uses        has_post_thumbnail
-	 * @uses        have_posts
-	 * @uses        is_single
-	 * @uses        post_class
-	 * @uses        post_password_required
-	 * @uses        the_permalink
-	 * @uses        the_post
-	 * @uses        the_post_thumbnail
-	 * @uses        the_title
-	 * @uses        the_title_attribute
-	 * @uses        wp_get_post_categories
+	 * @class      WP_Query
+	 * @uses       __
+	 * @uses       apply_filters
+	 * @uses       category_description
+	 * @uses       current_theme_supports
+	 * @uses       get_category_link
+	 * @uses       get_option
+	 * @uses       get_the_author
+	 * @uses       get_the_category_list
+	 * @uses       get_the_content
+	 * @uses       get_the_ID
+	 * @uses       get_the_time
+	 * @uses       has_post_thumbnail
+	 * @uses       have_posts
+	 * @uses       is_single
+	 * @uses       post_class
+	 * @uses       post_password_required
+	 * @uses       the_permalink
+	 * @uses       the_post
+	 * @uses       the_post_thumbnail
+	 * @uses       the_title
+	 * @uses       the_title_attribute
+	 * @uses       wp_get_post_categories
+	 * @uses       wp_trim_words
 	 *
 	 * @param   array $args
 	 * @param   array $instance
 	 *
-	 * @version     2.4.1
+	 * @version    2.4.1
 	 * Fixed where content and excerpt post thumbnail sizes are used
 	 *
-	 * @version     2.4.3
+	 * @version    2.4.3
 	 * Add hook `bnsfc_query` allowing the query arguments to be over-written
 	 * Add hook `bnsfc_output` allowing the entire output to be over-written
 	 *
-	 * @version     2.6
-	 * @date        February 27, 2014
+	 * @version    2.6
+	 * @date       February 27, 2014
 	 * Added option to only show posts from child categories
 	 *
-	 * @version     2.7
-	 * @date        August 30, 2014
+	 * @version    2.7
+	 * @date       August 30, 2014
 	 * Added sanity check to ensure there are "child categories" to display
+	 *
+	 * @version    2.8
+	 * @date       January 10, 2016
+	 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -310,7 +317,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 			/** Sanity testing? - Change strings to integer values */
 			foreach ( $cat_choice_union AS $index => $value ) {
-				$cat_choice_union[ $index ] = (int) $value;
+				$cat_choice_union[$index] = (int) $value;
 			}
 
 			/** @var array $query_args - merged new query arguments */
@@ -372,7 +379,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 												) /*, array( 'class' => 'alignleft' ) */
 											); ?>
 										</a>
-									<?php
+										<?php
 									}
 									?>
 
@@ -397,7 +404,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 								if ( $show_meta ) {
 									echo apply_filters( 'bnsfc_show_meta', sprintf( __( 'by %1$s on %2$s', 'bns-featured-category' ), get_the_author(), get_the_time( get_option( 'date_format' ) ) ) ); ?>
 									<br />
-								<?php
+									<?php
 								}
 
 								/** Show Comments */
@@ -439,7 +446,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 														$content_thumb
 													), array( 'class' => 'alignleft' )
 												); ?></a>
-										<?php
+											<?php
 										}
 
 										the_content(); ?>
@@ -467,7 +474,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 												); ?></a>
 										<?php }
 
-										echo $this->custom_excerpt( $instance['excerpt_length'] );
+										echo wp_trim_words( get_the_content(), $instance['excerpt_length'], $this->excerpt_link() );
 
 									} /** Show excerpt */
 									elseif ( ! $instance['no_excerpt'] ) {
@@ -791,85 +798,6 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 
 	/**
-	 * Custom Excerpt
-	 *
-	 * Gets the default excerpt as a base line and returns either the excerpt as
-	 * is if there are less words than the custom value ($length). If there are
-	 * more words than $length the excess are removed. Otherwise, the amount of
-	 * words equal to $length are returned. In both cases, the returned text is
-	 * appended with a permalink to the full post. If there is no excerpt, no
-	 * additional permalink will be returned.
-	 *
-	 * @package  BNS_Featured_Category
-	 * @since    1.9
-	 *
-	 * @param   int $length - user defined amount of words
-	 *
-	 * @internal param string $text - the post content
-	 *
-	 * @uses     apply_filters
-	 * @uses     get_permalink
-	 * @uses     the_title_attribute
-	 *
-	 * @return  string
-	 *
-	 * @version  2.4
-	 * @date     January 31, 2013
-	 * Assigned the string from `get_the_excerpt` to be used as the basis of the custom excerpt string.
-	 * Added conditional to only append link if there are words to be used in the excerpt.
-	 *
-	 * @version  2.4.4
-	 * @date     November 29, 2013
-	 * Added filter `bnsfc_link` to allow the infinity symbol be more readily changed
-	 */
-	function custom_excerpt( $length = 55 ) {
-		/** @var $text - holds default excerpt */
-		$text = get_the_excerpt();
-		/** @var $words - holds excerpt of $length words */
-		$words = explode( ' ', $text, $length + 1 );
-		/** @var $bnsfc_link - initialize as empty */
-		$bnsfc_link = '';
-
-		/** Create link to full post for end of custom length excerpt output */
-		if ( ! empty( $text ) ) {
-
-			$bnsfc_link = ' <strong>
-                <a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute(
-					array(
-						'before' => __( 'Permalink to: ', 'bns-featured-category' ),
-						'after'  => '',
-						'echo'   => false
-					)
-				) . '">'
-			              . apply_filters( 'bnsfc_link', '&infin;' ) .
-			              '</a>
-					</strong>';
-
-		}
-
-		/** Check if $length has a value; or, the total words is less than the $length */
-		if ( ( ! $length ) || ( count( $words ) < $length ) ) {
-
-			$text .= $bnsfc_link;
-
-			return $text;
-
-		} else {
-
-			array_pop( $words );
-			array_push( $words, '...' );
-			$text = implode( ' ', $words );
-
-		}
-
-		$text .= $bnsfc_link;
-
-		return $text;
-
-	}
-
-
-	/**
 	 * Enqueue Plugin Scripts and Styles
 	 *
 	 * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
@@ -1122,6 +1050,34 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 
 		return $links;
 
+	}
+
+	/**
+	 * Excerpt Link
+	 *
+	 * Returns a filterable ellipsis and infinity character combination
+	 *
+	 * @package    BNS_Featured_Category
+	 * @since      2.2
+	 * @date       January 10, 2016
+	 *
+	 * @uses       __
+	 * @uses       apply_filters
+	 * @uses       get_permalink
+	 * @uses       the_title_attribute
+	 *
+	 * @return string
+	 */
+	public function excerpt_link() {
+		$bnsfc_link = '<a class="bnsfc-link" href="' . get_permalink() . '" title="' . the_title_attribute(
+				array(
+					'before' => __( 'Permalink to: ', 'bns-featured-category' ),
+					'after'  => '',
+					'echo'   => false
+				)
+			) . '">' . apply_filters( 'bnsfc_link', '&hellip; &infin;' ) . '</a>';
+
+		return $bnsfc_link;
 	}
 
 

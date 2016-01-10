@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
 Tested up to: 4.4.1
-Stable tag: 2.7.3
+Stable tag: 2.8
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -159,7 +159,8 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
-= 2.7.3 =
+= 2.8 =
+* Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
 * Updated copyright year in all files
 
 = 2.7.2 =
