@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 2.7.2
+Tested up to: 4.4.1
+Stable tag: 2.7.3
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -133,7 +133,7 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 1. The options panel as it appears in default.
 
 == Other Notes ==
-* Copyright 2009-2015  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2009-2016  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -159,6 +159,9 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.7.3 =
+* Updated copyright year in all files
+
 = 2.7.2 =
 * Released August 2015
 * Updated to use PHP5 constructor objects

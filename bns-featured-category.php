@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.7.2
+Version: 2.7.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-featured-category
@@ -26,7 +26,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        https://wordpress.org/plugins/bns-featured-category/
  * @version     2.7.2
  * @author      Edward Caissie <edward.caissie@gmail.com>
- * @copyright   Copyright (c) 2009-2015, Edward Caissie
+ * @copyright   Copyright (c) 2009-2016, Edward Caissie
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 2, as published by the
