@@ -160,6 +160,7 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.8 =
+* Renamed `BNS_Feature_Category_Widget` to `BNS_Featured_Category`
 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
 * Updated copyright year in all files
 

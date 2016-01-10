@@ -51,7 +51,31 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version     2.8
  * @date        January 2016
  */
-class BNS_Featured_Category_Widget extends WP_Widget {
+class BNS_Featured_Category extends WP_Widget {
+
+	private static $instance = null;
+
+	/**
+	 * Create Instance
+	 *
+	 * Creates a single instance of the class
+	 *
+	 * @package BNS_Featured_Category
+	 * @since   2.8
+	 * @date    January 10, 2016
+	 *
+	 * @return null|BNS_Featured_Category
+	 */
+	public static function create_instance() {
+
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+
+	}
+
 
 	/**
 	 * Constructor
@@ -897,7 +921,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 	 * @uses    register_widget
 	 */
 	function load_bnsfc_widget() {
-		register_widget( 'BNS_Featured_Category_Widget' );
+		register_widget( 'BNS_Featured_Category' );
 	}
 
 
@@ -941,7 +965,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 		echo '<div class="bnsfc-shortcode">';
 
 		the_widget(
-			'BNS_Featured_Category_Widget',
+			'BNS_Featured_Category',
 			$instance = shortcode_atts(
 				array(
 					'title'                => __( 'Featured Category', 'bns-featured-category' ),
@@ -1084,7 +1108,7 @@ class BNS_Featured_Category_Widget extends WP_Widget {
 }
 
 /** @var $bnsfc - instantiate the class */
-$bnsfc = new BNS_Featured_Category_Widget();
+$bnsfc = new BNS_Featured_Category();
 
 
 /**
