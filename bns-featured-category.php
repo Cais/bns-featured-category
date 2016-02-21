@@ -3,10 +3,10 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.8-alpha
+Version: 2.8.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
-Textdomain: bns-featured-category
+Text Domain: bns-featured-category
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        https://wordpress.org/plugins/bns-featured-category/
- * @version     2.8
+ * @version     2.8.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2016, Edward Caissie
  *
@@ -48,7 +48,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.8
+ * @version     2.8.1
  * @date        February 2016
  */
 class BNS_Featured_Category extends WP_Widget {
@@ -95,6 +95,11 @@ class BNS_Featured_Category extends WP_Widget {
 	 * Moved "in plugin update message" function into class
 	 */
 	function __construct() {
+
+		register_activation_hook( __FILE__, array( $this, 'install' ) );
+
+		load_plugin_textdomain( 'bns-featured-category' );
+
 		/** Widget settings. */
 		$widget_ops = array(
 			'classname'   => 'bns-featured-category',
@@ -146,6 +151,44 @@ class BNS_Featured_Category extends WP_Widget {
 
 		/** Add "in plugin update message" text */
 		add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), array( $this, 'bnsfc_in_plugin_update_message' ) );
+
+	}
+
+
+	/**
+	 * Check installed WordPress version for compatibility
+	 *
+	 * @package     BNS_Featured_Category
+	 * @since       2.8.1
+	 * @date        February 21, 2016
+	 *
+	 * @internal    Version 3.6 being used in reference to shortcode attributes
+	 *
+	 * @uses        BNS_Featured_Category::plugin_data
+	 * @uses        __
+	 * @uses        apply_filters
+	 * @uses        deactivate_plugins
+	 * @uses        get_bloginfo
+	 */
+	function install() {
+
+		/** @var float $version_required - see "Requires at least" from `readme.txt` */
+		$version_required = apply_filters( 'bns_featured_category_requires_at_least_version', '3.6' );
+
+		$plugin_data = $this->plugin_data();
+
+		/** @var string $exit_message - build an explanation message */
+		$exit_message = sprintf( __( '%1$s requires WordPress version %2$s or later.', 'bns-featured_category' ), $plugin_data['Name'], $version_required );
+		$exit_message .= '<br />';
+		$exit_message .= sprintf( '<a href="http://codex.wordpress.org/Upgrading_WordPress" target="_blank">%1$s</a>', __( 'Please Update!', 'bns-featured_category' ) );
+
+		/** Conditional check of current WordPress version */
+		if ( version_compare( get_bloginfo( 'version' ), floatval( $version_required ), '<' ) ) {
+
+			deactivate_plugins( basename( __FILE__ ) );
+			exit( $exit_message );
+
+		}
 
 	}
 

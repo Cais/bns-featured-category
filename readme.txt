@@ -159,6 +159,10 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.8.1 =
+* Released February 2016
+* Added i18n language files
+
 = 2.8 =
 * Released February 2016
 * Added "Title" option to sort order, both "A to Z" and "Z to A"

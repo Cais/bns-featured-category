@@ -1,0 +1,252 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: BNS Featured Category\n"
+"POT-Creation-Date: 2016-02-21 16:10-0500\n"
+"PO-Revision-Date: 2016-02-21 16:10-0500\n"
+"Last-Translator: Edward Caissie <edward.caissie@gmail.com>\n"
+"Language-Team: Edward Caissie <edward.caissie@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-WPHeader: bns-featured-category.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: bns-featured-category.php:106
+msgid ""
+"Displays most recent posts from a specific featured category or categories."
+msgstr ""
+
+#: bns-featured-category.php:181
+#, php-format
+msgid "%1$s requires WordPress version %2$s or later."
+msgstr ""
+
+#: bns-featured-category.php:183
+msgid "Please Update!"
+msgstr ""
+
+#: bns-featured-category.php:444 bns-featured-category.php:457
+#: bns-featured-category.php:467 bns-featured-category.php:512
+#: bns-featured-category.php:538 bns-featured-category.php:552
+#: bns-featured-category.php:566
+msgid "Permanent Link to"
+msgstr ""
+
+#: bns-featured-category.php:474
+#, php-format
+msgid "by %1$s on %2$s"
+msgstr ""
+
+#: bns-featured-category.php:481
+msgid "with No Comments"
+msgstr ""
+
+#: bns-featured-category.php:481
+msgid "with 1 Comment"
+msgstr ""
+
+#: bns-featured-category.php:481
+msgid "with % Comments"
+msgstr ""
+
+#: bns-featured-category.php:481
+msgid "with Comments Closed"
+msgstr ""
+
+#: bns-featured-category.php:487
+#, php-format
+msgid "in %s"
+msgstr ""
+
+#: bns-featured-category.php:493
+msgid "as "
+msgstr ""
+
+#: bns-featured-category.php:527
+msgid "Pages: "
+msgstr ""
+
+#: bns-featured-category.php:591
+msgid "Yes, we have no bananas, or posts, today."
+msgstr ""
+
+#: bns-featured-category.php:679 bns-featured-category.php:1018
+msgid "Featured Category"
+msgstr ""
+
+#: bns-featured-category.php:707
+msgid "Title:"
+msgstr ""
+
+#: bns-featured-category.php:712
+msgid "Category IDs, separated by commas:"
+msgstr ""
+
+#: bns-featured-category.php:718
+msgid "<strong>ONLY</strong> show posts that are from child categories?"
+msgstr ""
+
+#: bns-featured-category.php:723
+msgid ""
+"<strong>ONLY</strong> show posts that have <strong>ALL</strong> Categories?"
+msgstr ""
+
+#: bns-featured-category.php:728
+msgid "Show first category's description?"
+msgstr ""
+
+#: bns-featured-category.php:733
+msgid ""
+"Link widget title to category?<br /><strong>NB: Use a single category choice "
+"only!</strong>"
+msgstr ""
+
+#: bns-featured-category.php:738
+msgid "Use current category in single view?"
+msgstr ""
+
+#: bns-featured-category.php:745
+msgid "Posts to Display:"
+msgstr ""
+
+#: bns-featured-category.php:751
+msgid "Posts Offset:"
+msgstr ""
+
+#: bns-featured-category.php:759
+msgid "Sort Order:"
+msgstr ""
+
+#: bns-featured-category.php:761
+msgid "Ascending"
+msgstr ""
+
+#: bns-featured-category.php:762
+msgid "Descending"
+msgstr ""
+
+#: bns-featured-category.php:763
+msgid "Random"
+msgstr ""
+
+#: bns-featured-category.php:764
+msgid "Title (A to Z)"
+msgstr ""
+
+#: bns-featured-category.php:765
+msgid "Title (Z to A)"
+msgstr ""
+
+#: bns-featured-category.php:774
+msgid ""
+"NB: Some options may not be available depending on which ones are selected."
+msgstr ""
+
+#: bns-featured-category.php:779
+msgid "ONLY display Post Titles?"
+msgstr ""
+
+#: bns-featured-category.php:784
+msgid "Do NOT display Post Titles?"
+msgstr ""
+
+#: bns-featured-category.php:795
+msgid "Use Featured Image Thumbnails?"
+msgstr ""
+
+#: bns-featured-category.php:800
+msgid "Display Featured Images before Title?"
+msgstr ""
+
+#: bns-featured-category.php:807
+msgid "Content Thumbnail Size (in px):"
+msgstr ""
+
+#: bns-featured-category.php:813
+msgid "Excerpt Thumbnail Size (in px):"
+msgstr ""
+
+#: bns-featured-category.php:828
+msgid "Display Author Meta Details?"
+msgstr ""
+
+#: bns-featured-category.php:833
+msgid "Display Comment Totals?"
+msgstr ""
+
+#: bns-featured-category.php:838
+msgid "Display the Post Categories?"
+msgstr ""
+
+#: bns-featured-category.php:843
+msgid "Display the Post Tags?"
+msgstr ""
+
+#: bns-featured-category.php:849
+msgid "Display entire Post?"
+msgstr ""
+
+#: bns-featured-category.php:855
+msgid ""
+"The post excerpt is shown by default, if it exists; otherwise the first 55 "
+"words of the post are shown as the excerpt ..."
+msgstr ""
+
+#: bns-featured-category.php:859
+msgid "... or set the amount of words you want to show:"
+msgstr ""
+
+#: bns-featured-category.php:864
+msgid "... or have no excerpt at all!"
+msgstr ""
+
+#: bns-featured-category.php:1114
+msgid "Fork on GitHub"
+msgstr ""
+
+#: bns-featured-category.php:1115
+msgid "Grant a wish?"
+msgstr ""
+
+#: bns-featured-category.php:1116
+msgid "WordPress Support Forums"
+msgstr ""
+
+#: bns-featured-category.php:1145
+msgid "Permalink to: "
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "BNS Featured Category"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://buynowshop.com/plugins/bns-featured-category/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Plugin with multi-widget functionality that displays most recent posts from "
+"specific category or categories (set with user options). Also includes user "
+"options to display: Category Description; Author and meta details; comment "
+"totals; post categories; post tags; and either full post, excerpt, or your "
+"choice of the amount of words (or any combination). Please make sure to read "
+"the latest changelog for new and modified features and options."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Edward Caissie"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://edwardcaissie.com/"
+msgstr ""
