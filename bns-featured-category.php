@@ -199,7 +199,8 @@ class BNS_Featured_Category extends WP_Widget {
 	 * Added sanity check to ensure there are "child categories" to display
 	 *
 	 * @version    2.8
-	 * @date       January 10, 2016
+	 * @date       February 21, 2016
+	 * Added "Title" option to sort order
 	 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
 	 */
 	function widget( $args, $instance ) {
@@ -312,13 +313,22 @@ class BNS_Featured_Category extends WP_Widget {
 		}
 
 		/**
-		 * Check if $sort_order is set to rand (random) and use the `orderby`
-		 * parameter; otherwise use the `order` parameter
+		 * Check if $sort_order is set to rand (random) or title use the
+		 * `orderby` parameter; otherwise use the `order` parameter
 		 */
-		if ( 'rand' == $sort_order ) {
+		if ( 'rand' == $sort_order || 'title' == $sort_order ) {
+
 			$query_args = array_merge( $query_args, array( 'orderby' => $sort_order ) );
+
+			/* Alphabetical order, from A to Z */
+			if ( 'title' == $sort_order ) {
+				$query_args = array_merge( $query_args, array( 'order' => 'asc' ) );
+			}
+
 		} else {
+
 			$query_args = array_merge( $query_args, array( 'order' => $sort_order ) );
+
 		}
 
 		/**
@@ -712,6 +722,7 @@ class BNS_Featured_Category extends WP_Widget {
 							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php _e( 'Ascending', 'bns-featured-category' ); ?></option>
 							<option value="desc" <?php selected( 'desc', $instance['sort_order'], true ); ?>><?php _e( 'Descending', 'bns-featured-category' ); ?></option>
 							<option value="rand" <?php selected( 'rand', $instance['sort_order'], true ); ?>><?php _e( 'Random', 'bns-featured-category' ); ?></option>
+							<option value="title" <?php selected( 'title', $instance['sort_order'], true ); ?>><?php _e( 'Title', 'bns-featured-category' ); ?></option>
 						</select>
 					</p>
 				</td>

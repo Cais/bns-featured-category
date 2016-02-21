@@ -160,6 +160,8 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.8 =
+* Released ...
+* Added "Title" option to sort order
 * Changed plugin class to "singleton" style
 * Moved "in plugin update message" function into class
 * Renamed `BNS_Feature_Category_Widget` to `BNS_Featured_Category`
