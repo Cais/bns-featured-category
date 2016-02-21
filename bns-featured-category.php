@@ -49,7 +49,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version     2.8
- * @date        January 2016
+ * @date        February 2016
  */
 class BNS_Featured_Category extends WP_Widget {
 
@@ -183,24 +183,13 @@ class BNS_Featured_Category extends WP_Widget {
 	 * @param   array $args
 	 * @param   array $instance
 	 *
-	 * @version    2.4.1
-	 * Fixed where content and excerpt post thumbnail sizes are used
-	 *
-	 * @version    2.4.3
-	 * Add hook `bnsfc_query` allowing the query arguments to be over-written
-	 * Add hook `bnsfc_output` allowing the entire output to be over-written
-	 *
-	 * @version    2.6
-	 * @date       February 27, 2014
-	 * Added option to only show posts from child categories
-	 *
 	 * @version    2.7
 	 * @date       August 30, 2014
 	 * Added sanity check to ensure there are "child categories" to display
 	 *
 	 * @version    2.8
 	 * @date       February 21, 2016
-	 * Added "Title" option to sort order
+	 * Added "Title" option to sort order, both "A to Z" and "Z to A"
 	 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
 	 */
 	function widget( $args, $instance ) {
@@ -313,17 +302,24 @@ class BNS_Featured_Category extends WP_Widget {
 		}
 
 		/**
-		 * Check if $sort_order is set to rand (random) or title use the
+		 * Check if $sort_order is set to rand (random) or title_* use the
 		 * `orderby` parameter; otherwise use the `order` parameter
 		 */
-		if ( 'rand' == $sort_order || 'title' == $sort_order ) {
+		if ( 'rand' == $sort_order || 'title_az' == $sort_order || 'title_za' == $sort_order ) {
 
-			$query_args = array_merge( $query_args, array( 'orderby' => $sort_order ) );
+			/* If sorting by title make sure to set the `$sort_order` parameter correctly */
+			if ( 'title_az' == $sort_order || 'title_za' == $sort_order ) {
 
-			/* Alphabetical order, from A to Z */
-			if ( 'title' == $sort_order ) {
-				$query_args = array_merge( $query_args, array( 'order' => 'asc' ) );
+				/* Before setting `$sort_order` to title set the A to Z order */
+				if ( 'title_az' == $sort_order ) {
+					$query_args = array_merge( $query_args, array( 'order' => 'asc' ) );
+				}
+				$sort_order = 'title';
+
 			}
+
+			/* Uses the rand option by default if title is not selected */
+			$query_args = array_merge( $query_args, array( 'orderby' => $sort_order ) );
 
 		} else {
 
@@ -626,13 +622,13 @@ class BNS_Featured_Category extends WP_Widget {
 	 *
 	 * @return string|void
 	 *
-	 * @version    2.2
-	 * @date       July 13, 2012
-	 * Corrected 'no_excerpt" label issue
-	 *
 	 * @version    2.7
 	 * @date       May 31, 2014
 	 * Fixed sort order implementation
+	 *
+	 * @version	2.8
+	 * @date	February 21, 2016
+	 * Added Title (A to Z) and (Z to A) option to sort order
 	 */
 	function form( $instance ) {
 		/** Set default widget settings */
@@ -722,7 +718,8 @@ class BNS_Featured_Category extends WP_Widget {
 							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php _e( 'Ascending', 'bns-featured-category' ); ?></option>
 							<option value="desc" <?php selected( 'desc', $instance['sort_order'], true ); ?>><?php _e( 'Descending', 'bns-featured-category' ); ?></option>
 							<option value="rand" <?php selected( 'rand', $instance['sort_order'], true ); ?>><?php _e( 'Random', 'bns-featured-category' ); ?></option>
-							<option value="title" <?php selected( 'title', $instance['sort_order'], true ); ?>><?php _e( 'Title', 'bns-featured-category' ); ?></option>
+							<option value="title_az" <?php selected( 'title_az', $instance['sort_order'], true ); ?>><?php _e( 'Title (A to Z)', 'bns-featured-category' ); ?></option>
+							<option value="title_za" <?php selected( 'title_za', $instance['sort_order'], true ); ?>><?php _e( 'Title (Z to A)', 'bns-featured-category' ); ?></option>
 						</select>
 					</p>
 				</td>

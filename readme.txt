@@ -3,7 +3,7 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
-Tested up to: 4.4.1
+Tested up to: 4.5
 Stable tag: 2.8
 
 Displays most recent posts from a specific featured category or categories.
@@ -160,8 +160,8 @@ Please stay current with your WordPress installation, your active theme, and you
 
 == Changelog ==
 = 2.8 =
-* Released ...
-* Added "Title" option to sort order
+* Released February 2016
+* Added "Title" option to sort order, both "A to Z" and "Z to A"
 * Changed plugin class to "singleton" style
 * Moved "in plugin update message" function into class
 * Renamed `BNS_Feature_Category_Widget` to `BNS_Featured_Category`
