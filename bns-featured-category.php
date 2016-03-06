@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.8.1
+Version: 2.8.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: bns-featured-category
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        https://wordpress.org/plugins/bns-featured-category/
- * @version     2.8.1
+ * @version     2.8.2
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2009-2016, Edward Caissie
  *
@@ -48,8 +48,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.8.1
- * @date        February 2016
+ * @version     2.8.2
+ * @date        March 2016
  */
 class BNS_Featured_Category extends WP_Widget {
 
@@ -234,6 +234,10 @@ class BNS_Featured_Category extends WP_Widget {
 	 * @date       February 21, 2016
 	 * Added "Title" option to sort order, both "A to Z" and "Z to A"
 	 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
+	 *
+	 * @version    2.8.2
+	 * @date       March 5, 2016
+	 * Added custom meta field search option
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -262,6 +266,8 @@ class BNS_Featured_Category extends WP_Widget {
 		$show_full            = $instance['show_full'];
 		$excerpt_length       = $instance['excerpt_length'];
 		$no_excerpt           = $instance['no_excerpt'];
+		$use_meta_field       = $instance['use_meta_field'];
+		$meta_field_name      = $instance['meta_field_name'];
 		/** Plugin requires counter variable to be part of its arguments?! */
 		$count = $instance['count'];
 
@@ -608,10 +614,17 @@ class BNS_Featured_Category extends WP_Widget {
 	/**
 	 * Update
 	 *
+	 * @package    BNS_Featured_Image
+	 * @since      1.0
+	 *
 	 * @param   array $new_instance
 	 * @param   array $old_instance
 	 *
 	 * @return  array
+	 *
+	 * @version    2.8.2
+	 * @date       March 5, 2016
+	 * Added custom meta field search option
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -640,6 +653,8 @@ class BNS_Featured_Category extends WP_Widget {
 		$instance['show_full']            = $new_instance['show_full'];
 		$instance['excerpt_length']       = $new_instance['excerpt_length'];
 		$instance['no_excerpt']           = $new_instance['no_excerpt'];
+		$instance['use_meta_field']       = $new_instance['use_meta_field'];
+		$instance['meta_field_name']      = $new_instance['meta_field_name'];
 		/** Added to reset count for every instance of the plugin */
 		$instance['count'] = $new_instance['count'];
 
@@ -669,9 +684,13 @@ class BNS_Featured_Category extends WP_Widget {
 	 * @date       May 31, 2014
 	 * Fixed sort order implementation
 	 *
-	 * @version	2.8
-	 * @date	February 21, 2016
+	 * @version    2.8
+	 * @date       February 21, 2016
 	 * Added Title (A to Z) and (Z to A) option to sort order
+	 *
+	 * @version    2.8.2
+	 * @date       March 5, 2016
+	 * Added custom meta field search option
 	 */
 	function form( $instance ) {
 		/** Set default widget settings */
@@ -699,7 +718,9 @@ class BNS_Featured_Category extends WP_Widget {
 			'no_titles'            => false,
 			'show_full'            => false,
 			'excerpt_length'       => '',
-			'no_excerpt'           => false
+			'no_excerpt'           => false,
+			'use_meta_field'       => false,
+			'meta_field_name'      => ''
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
@@ -739,7 +760,7 @@ class BNS_Featured_Category extends WP_Widget {
 		</p>
 
 		<table class="bnsfc-counts">
-			<tr>
+			<tr id="bnsfc-show-count-option">
 				<td>
 					<p>
 						<label for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e( 'Posts to Display:', 'bns-featured-category' ); ?></label>
@@ -747,15 +768,30 @@ class BNS_Featured_Category extends WP_Widget {
 					</p>
 				</td>
 				<td>
-					<p>
+					<p class="bnsfc-offset-options">
 						<label for="<?php echo $this->get_field_id( 'offset' ); ?>"><?php _e( 'Posts Offset:', 'bns-featured-category' ); ?></label>
 						<input id="<?php echo $this->get_field_id( 'offset' ); ?>" name="<?php echo $this->get_field_name( 'offset' ); ?>" value="<?php echo $instance['offset']; ?>" style="width:85%;" />
 					</p>
 				</td>
 			</tr>
+			<tr id="bnsfc-meta-field-options">
+				<td colspan="2">
+					<?php _e( 'Sort Options:', 'bns-featured-category' ); ?>
+					<hr />
+					<p class="bnsfc-use-meta-field-checkbox">
+						<input class="checkbox" type="checkbox" <?php checked( (bool) $instance['use_meta_field'], true ); ?> id="<?php echo $this->get_field_id( 'use_meta_field' ); ?>" name="<?php echo $this->get_field_name( 'use_meta_field' ); ?>" />
+						<?php $title_sort_options_toggle = ( checked( (bool) $instance['use_meta_field'], true, false ) ) ? 'disable' : 'enable'; ?>
+						<label for="<?php echo $this->get_field_id( 'use_meta_field' ); ?>"><?php _e( ' Sort by custom meta data value (disables title sort options).', 'bns-featured-category' ); ?></label>
+					</p>
+					<p>
+						<label for="<?php echo $this->get_field_id( 'meta_field_name' ); ?>"><?php _e( 'Meta data field name:', 'bns-featured-category' ); ?></label>
+						<input id="<?php echo $this->get_field_id( 'meta_field_name' ); ?>" name="<?php echo $this->get_field_name( 'meta_field_name' ); ?>" value="<?php echo $instance['meta_field_name']; ?>" style="width:95%;" />
+					</p>
+				</td>
+			</tr>
 			<tr>
 				<td>
-					<p>
+					<p id="bnsfc-sort-options">
 						<label for="<?php echo $this->get_field_id( 'sort_order' ); ?>"><?php _e( 'Sort Order:', 'bns-featured-category' ); ?></label>
 						<select id="<?php echo $this->get_field_id( 'sort_order' ); ?>" name="<?php echo $this->get_field_name( 'sort_order' ); ?>" class="widefat">
 							<option value="asc" <?php selected( 'asc', $instance['sort_order'], true ); ?>><?php _e( 'Ascending', 'bns-featured-category' ); ?></option>
@@ -1003,7 +1039,12 @@ class BNS_Featured_Category extends WP_Widget {
 	 * @date       April 19, 2014
 	 * Added CSS wrapper class to separate style elements from widget usage
 	 *
+	 * @version    2.8.2
+	 * @date       March 5, 2016
+	 * Added custom meta field search option
+	 *
 	 * @todo       Fix 'show_full=true' issue
+	 * @todo       Sort out "conflict" between title sorting and meta field sorting
 	 */
 	function bnsfc_shortcode( $atts ) {
 		/** Get ready to capture the elusive widget output */
@@ -1039,7 +1080,10 @@ class BNS_Featured_Category extends WP_Widget {
 					/** Do not set `show_full` to true!!! */
 					'show_full'            => false,
 					'excerpt_length'       => '',
-					'no_excerpt'           => false
+					'no_excerpt'           => false,
+					/** Not to be used with orderby title options */
+					'use_meta_field'       => false,
+					'meta_field_name'      => ''
 				), $atts, 'bnsfc'
 			),
 			$args = array(

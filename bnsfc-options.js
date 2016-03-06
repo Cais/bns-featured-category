@@ -22,17 +22,23 @@
  *      51 Franklin St, Fifth Floor
  *      Boston, MA  02110-1301  USA
  */
-jQuery( document ).ready( function ( $ ) {
+jQuery(document).ready(function ($) {
 	// Note: $() will work as an alias for jQuery() inside of this function
-	$( "p.bnsfc-display-all-posts-check input.checkbox" ).click( function () {
-		$( ".bnsfc-all-options-open" ).toggleClass( "bnsfc-all-options-closed" );
-	} );
+	$("p.bnsfc-display-all-posts-check input.checkbox").click(function () {
+		$(".bnsfc-all-options-open").toggleClass("bnsfc-all-options-closed");
+	});
 
-	$( "p.bnsfc-display-thumbnail-sizes input.checkbox" ).click( function () {
-		$( ".bnsfc-thumbnails-open" ).toggleClass( "bnsfc-thumbnails-closed" );
-	} );
+	$("p.bnsfc-display-thumbnail-sizes input.checkbox").click(function () {
+		$(".bnsfc-thumbnails-open").toggleClass("bnsfc-thumbnails-closed");
+	});
 
-	$( "p.bnsfc-excerpt-option-open-check input.checkbox" ).click( function () {
-		$( ".bnsfc-excerpt-option-open" ).toggleClass( "bnsfc-excerpt-option-closed" );
-	} );
-} );
+	$("p.bnsfc-excerpt-option-open-check input.checkbox").click(function () {
+		$(".bnsfc-excerpt-option-open").toggleClass("bnsfc-excerpt-option-closed");
+	});
+
+	/** Disable Title sort options if custom meta field option is used */
+	$("p.bnsfc-use-meta-field-checkbox input.checkbox").click(function () {
+		$('p#bnsfc-sort-options option[value="title_az"]').attr('disabled', 'disabled');
+		$('p#bnsfc-sort-options option[value="title_za"]').attr('disabled', 'disabled');
+	});
+});

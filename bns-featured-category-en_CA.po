@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BNS Featured Category\n"
-"POT-Creation-Date: 2016-02-21 16:13-0500\n"
-"PO-Revision-Date: 2016-02-21 16:14-0500\n"
+"POT-Creation-Date: 2016-03-06 13:33-0500\n"
+"PO-Revision-Date: 2016-03-06 13:34-0500\n"
 "Last-Translator: Edward Caissie <edward.caissie@gmail.com>\n"
 "Language-Team: Edward Caissie <edward.caissie@gmail.com>\n"
 "Language: en_CA\n"
@@ -35,78 +35,78 @@ msgstr "%1$s requires WordPress version %2$s or later."
 msgid "Please Update!"
 msgstr "Please Update!"
 
-#: bns-featured-category.php:444 bns-featured-category.php:457
-#: bns-featured-category.php:467 bns-featured-category.php:512
-#: bns-featured-category.php:538 bns-featured-category.php:552
-#: bns-featured-category.php:566
+#: bns-featured-category.php:450 bns-featured-category.php:463
+#: bns-featured-category.php:473 bns-featured-category.php:518
+#: bns-featured-category.php:544 bns-featured-category.php:558
+#: bns-featured-category.php:572
 msgid "Permanent Link to"
 msgstr "Permanent Link to"
 
-#: bns-featured-category.php:474
+#: bns-featured-category.php:480
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "by %1$s on %2$s"
 
-#: bns-featured-category.php:481
+#: bns-featured-category.php:487
 msgid "with No Comments"
 msgstr " with% Comments"
 
-#: bns-featured-category.php:481
+#: bns-featured-category.php:487
 msgid "with 1 Comment"
 msgstr " with 1 Comment"
 
-#: bns-featured-category.php:481
+#: bns-featured-category.php:487
 msgid "with % Comments"
 msgstr "with % Comments"
 
-#: bns-featured-category.php:481
+#: bns-featured-category.php:487
 msgid "with Comments Closed"
 msgstr "with Comments closed"
 
-#: bns-featured-category.php:487
+#: bns-featured-category.php:493
 #, php-format
 msgid "in %s"
 msgstr "in %s"
 
-#: bns-featured-category.php:493
+#: bns-featured-category.php:499
 msgid "as "
 msgstr "as"
 
-#: bns-featured-category.php:527
+#: bns-featured-category.php:533
 msgid "Pages: "
 msgstr "Pages:"
 
-#: bns-featured-category.php:591
+#: bns-featured-category.php:597
 msgid "Yes, we have no bananas, or posts, today."
 msgstr "Yes, we have no bananas, or posts, today."
 
-#: bns-featured-category.php:679 bns-featured-category.php:1018
+#: bns-featured-category.php:698 bns-featured-category.php:1059
 msgid "Featured Category"
 msgstr "Featured Category Listings"
 
-#: bns-featured-category.php:707
+#: bns-featured-category.php:728
 msgid "Title:"
 msgstr "Title:"
 
-#: bns-featured-category.php:712
+#: bns-featured-category.php:733
 msgid "Category IDs, separated by commas:"
 msgstr "Category IDs, separated by commas:"
 
-#: bns-featured-category.php:718
+#: bns-featured-category.php:739
 msgid "<strong>ONLY</strong> show posts that are from child categories?"
 msgstr "<strong>ONLY</strong> show posts that are from child categories?"
 
-#: bns-featured-category.php:723
+#: bns-featured-category.php:744
 msgid ""
 "<strong>ONLY</strong> show posts that have <strong>ALL</strong> Categories?"
 msgstr ""
 "<strong>ONLY</strong> show posts that have <strong>ALL</strong> Categories?"
 
-#: bns-featured-category.php:728
+#: bns-featured-category.php:749
 msgid "Show first category's description?"
 msgstr "Show first category’s description?"
 
-#: bns-featured-category.php:733
+#: bns-featured-category.php:754
 msgid ""
 "Link widget title to category?<br /><strong>NB: Use a single category choice "
 "only!</strong>"
@@ -114,93 +114,105 @@ msgstr ""
 "Link widget title to category?<br><strong>NB: Use a single category choice "
 "only!</strong>"
 
-#: bns-featured-category.php:738
+#: bns-featured-category.php:759
 msgid "Use current category in single view?"
 msgstr "Use current category in single view?"
 
-#: bns-featured-category.php:745
+#: bns-featured-category.php:766
 msgid "Posts to Display:"
 msgstr "Posts to Display:"
 
-#: bns-featured-category.php:751
+#: bns-featured-category.php:772
 msgid "Posts Offset:"
 msgstr "Posts Offset:"
 
-#: bns-featured-category.php:759
+#: bns-featured-category.php:779
+msgid "Sort Options:"
+msgstr "Sort Options:"
+
+#: bns-featured-category.php:784
+msgid " Sort by custom meta data value (disables title sort options)."
+msgstr "Sort by custom meta data value (disables title sort options)."
+
+#: bns-featured-category.php:787
+msgid "Meta data field name:"
+msgstr "Meta data field name:"
+
+#: bns-featured-category.php:795
 msgid "Sort Order:"
 msgstr "Sort Order:"
 
-#: bns-featured-category.php:761
+#: bns-featured-category.php:797
 msgid "Ascending"
 msgstr "Ascending"
 
-#: bns-featured-category.php:762
+#: bns-featured-category.php:798
 msgid "Descending"
 msgstr "Descending"
 
-#: bns-featured-category.php:763
+#: bns-featured-category.php:799
 msgid "Random"
 msgstr "Random"
 
-#: bns-featured-category.php:764
+#: bns-featured-category.php:800
 msgid "Title (A to Z)"
 msgstr "Title (A to Z)"
 
-#: bns-featured-category.php:765
+#: bns-featured-category.php:801
 msgid "Title (Z to A)"
 msgstr "Title (Z to A)"
 
-#: bns-featured-category.php:774
+#: bns-featured-category.php:810
 msgid ""
 "NB: Some options may not be available depending on which ones are selected."
 msgstr ""
 "NB: Some options may not be available depending on which ones are selected."
 
-#: bns-featured-category.php:779
+#: bns-featured-category.php:815
 msgid "ONLY display Post Titles?"
 msgstr "ONLY display Post Titles?"
 
-#: bns-featured-category.php:784
+#: bns-featured-category.php:820
 msgid "Do NOT display Post Titles?"
 msgstr "Do NOT display Post Titles?"
 
-#: bns-featured-category.php:795
+#: bns-featured-category.php:831
 msgid "Use Featured Image Thumbnails?"
 msgstr "Use Featured Image Thumbnails?"
 
-#: bns-featured-category.php:800
+#: bns-featured-category.php:836
 msgid "Display Featured Images before Title?"
 msgstr "Display Featured Images before Title?"
 
-#: bns-featured-category.php:807
+#: bns-featured-category.php:843
 msgid "Content Thumbnail Size (in px):"
 msgstr "Content Thumbnail Size (in px):"
 
-#: bns-featured-category.php:813
+#: bns-featured-category.php:849
 msgid "Excerpt Thumbnail Size (in px):"
 msgstr "Excerpt Thumbnail Size (in px):"
 
-#: bns-featured-category.php:828
+#: bns-featured-category.php:864
 msgid "Display Author Meta Details?"
 msgstr "Display Author Meta Details?"
 
-#: bns-featured-category.php:833
+#: bns-featured-category.php:869
 msgid "Display Comment Totals?"
 msgstr "Display Comment Totals?"
 
-#: bns-featured-category.php:838
+#: bns-featured-category.php:874
 msgid "Display the Post Categories?"
 msgstr "Display the Post Categories?"
 
-#: bns-featured-category.php:843
+#: bns-featured-category.php:879
 msgid "Display the Post Tags?"
 msgstr "Display the Post Tags?"
 
-#: bns-featured-category.php:849
+#: bns-featured-category.php:885
 msgid "Display entire Post?"
 msgstr "Display entire Post?"
 
-#: bns-featured-category.php:855
+#: bns-featured-category.php:891
 msgid ""
 "The post excerpt is shown by default, if it exists; otherwise the first 55 "
 "words of the post are shown as the excerpt ..."
@@ -208,27 +220,27 @@ msgstr ""
 "The post excerpt is shown by default, if it exists; otherwise the first 55 "
 "words of the post are shown as the excerpt …"
 
-#: bns-featured-category.php:859
+#: bns-featured-category.php:895
 msgid "... or set the amount of words you want to show:"
 msgstr "… or set the amount of words you want to show:"
 
-#: bns-featured-category.php:864
+#: bns-featured-category.php:900
 msgid "... or have no excerpt at all!"
 msgstr "… or have no excerpt at all!"
 
-#: bns-featured-category.php:1114
+#: bns-featured-category.php:1158
 msgid "Fork on GitHub"
 msgstr "Fork on GitHub"
 
-#: bns-featured-category.php:1115
+#: bns-featured-category.php:1159
 msgid "Grant a wish?"
 msgstr "Grant a wish?"
 
-#: bns-featured-category.php:1116
+#: bns-featured-category.php:1160
 msgid "WordPress Support Forums"
 msgstr "WordPress Support Forums"
 
-#: bns-featured-category.php:1145
+#: bns-featured-category.php:1189
 msgid "Permalink to: "
 msgstr "Permalink to: "
 
