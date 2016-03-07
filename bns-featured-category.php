@@ -317,6 +317,17 @@ class BNS_Featured_Category extends WP_Widget {
 			'offset'         => $offset,
 		);
 
+		/** Check for sort by meta field */
+		if ( $use_meta_field ) {
+
+			/** Merge the meta field args array with the existing query args array */
+			$query_args = array_merge( $query_args, array(
+				'orderby'  => 'meta_value',
+				'meta_key' => $meta_field_name,
+			) );
+
+		}
+
 		/** Alpha code - Use with extreme caution */
 		/** Only display post from the child categories */
 		if ( $display_children ) {
