@@ -4,5 +4,15 @@
     <content url="file://$MODULE_DIR$/../../.." />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file:///Applications/MAMP/htdocs/BNS-Projects" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///Applications/MAMP/htdocs/BNS-Projects" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

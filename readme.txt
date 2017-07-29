@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: posts, category, featured, multi-widget, user-options, shortcode
 Requires at least: 3.6
-Tested up to: 4.5
-Stable tag: 2.8.2
+Tested up to: 4.8.1
+Stable tag: 2.8.3
 
 Displays most recent posts from a specific featured category or categories.
 
@@ -159,6 +159,11 @@ As of version 1.6.2 the Total Posts to Display is independent of the "posts per 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 2.8.3 =
+* Released ...
+* Fixed issue with the `$bnsfc_output` hook not being honored as expected
+* Updated Copyright year
+
 = 2.8.2 =
 * Released March 2016
 * Added new custom meta field sort option (props Billy Solo)

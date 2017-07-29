@@ -3,7 +3,7 @@
 Plugin Name: BNS Featured Category
 Plugin URI: http://buynowshop.com/plugins/bns-featured-category/
 Description: Plugin with multi-widget functionality that displays most recent posts from specific category or categories (set with user options). Also includes user options to display: Category Description; Author and meta details; comment totals; post categories; post tags; and either full post, excerpt, or your choice of the amount of words (or any combination). Please make sure to read the latest changelog for new and modified features and options.
-Version: 2.8.2
+Version: 2.8.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: bns-featured-category
@@ -24,9 +24,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-featured-category/
  * @link        https://github.com/Cais/bns-featured-category/
  * @link        https://wordpress.org/plugins/bns-featured-category/
- * @version     2.8.2
+ * @version     2.8.3
  * @author      Edward Caissie <edward.caissie@gmail.com>
- * @copyright   Copyright (c) 2009-2016, Edward Caissie
+ * @copyright   Copyright (c) 2009-2017, Edward Caissie
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 2, as published by the
@@ -48,8 +48,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     2.8.2
- * @date        March 2016
+ * @version     2.8.3
+ * @date        July 2017
  */
 class BNS_Featured_Category extends WP_Widget {
 
@@ -135,10 +135,16 @@ class BNS_Featured_Category extends WP_Widget {
 		}
 
 		/** Enqueue Scripts and Styles for front-facing views */
-		add_action( 'wp_enqueue_scripts', array( $this, 'BNSFC_Scripts_and_Styles' ) );
+		add_action( 'wp_enqueue_scripts', array(
+			$this,
+			'BNSFC_Scripts_and_Styles'
+		) );
 
 		/** Enqueue Widget Options Panel Scripts and Styles */
-		add_action( 'admin_enqueue_scripts', array( $this, 'BNSFC_Options_Scripts_and_Styles' ) );
+		add_action( 'admin_enqueue_scripts', array(
+			$this,
+			'BNSFC_Options_Scripts_and_Styles'
+		) );
 
 		/** Add shortcode */
 		add_shortcode( 'bnsfc', array( $this, 'bnsfc_shortcode' ) );
@@ -147,10 +153,16 @@ class BNS_Featured_Category extends WP_Widget {
 		add_action( 'widgets_init', array( $this, 'load_bnsfc_widget' ) );
 
 		/** Add Plugin Row Meta details */
-		add_filter( 'plugin_row_meta', array( $this, 'bnsfc_plugin_meta' ), 10, 2 );
+		add_filter( 'plugin_row_meta', array(
+			$this,
+			'bnsfc_plugin_meta'
+		), 10, 2 );
 
 		/** Add "in plugin update message" text */
-		add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), array( $this, 'bnsfc_in_plugin_update_message' ) );
+		add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), array(
+			$this,
+			'bnsfc_in_plugin_update_message'
+		) );
 
 	}
 
@@ -226,18 +238,13 @@ class BNS_Featured_Category extends WP_Widget {
 	 * @param   array $args
 	 * @param   array $instance
 	 *
-	 * @version    2.7
-	 * @date       August 30, 2014
-	 * Added sanity check to ensure there are "child categories" to display
-	 *
-	 * @version    2.8
-	 * @date       February 21, 2016
-	 * Added "Title" option to sort order, both "A to Z" and "Z to A"
-	 * Replaced `BNS_Featured_Category::custom_excerpt` with `wp_trim_words`
-	 *
 	 * @version    2.8.2
 	 * @date       March 5, 2016
 	 * Added custom meta field search option
+	 *
+	 * @version    2.8.3
+	 * @date       July 29, 2017
+	 * Fixed issue with the `$bnsfc_output` hook not being honored as expected
 	 */
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -403,7 +410,7 @@ class BNS_Featured_Category extends WP_Widget {
 
 			/** Sanity testing? - Change strings to integer values */
 			foreach ( $cat_choice_union AS $index => $value ) {
-				$cat_choice_union[$index] = (int) $value;
+				$cat_choice_union[ $index ] = (int) $value;
 			}
 
 			/** @var array $query_args - merged new query arguments */
@@ -422,8 +429,10 @@ class BNS_Featured_Category extends WP_Widget {
 
 		/** @var $bnsfc_output - hook test */
 		$bnsfc_output = false;
+
 		/** Allow entire output to be filtered via hook `bnsfc_output` */
-		apply_filters( 'bnsfc_output', $bnsfc_output );
+		$bnsfc_output = apply_filters( 'bnsfc_output', $bnsfc_output );
+
 		if ( false == $bnsfc_output ) {
 
 			/** Wrapping CSS container element */
@@ -1279,7 +1288,7 @@ class BNS_Featured_Category extends WP_Widget {
 								$ul           = true;
 							}
 
-							$line = preg_replace( '~^\s*\*\s*~', '', htmlspecialchars( $line ) );
+							$line         = preg_replace( '~^\s*\*\s*~', '', htmlspecialchars( $line ) );
 							$return_value .= '<li style=" ' . ( $index % 2 == 0 ? 'clear: left;' : '' ) . '">' . $line . '</li>';
 
 						} else {
@@ -1288,7 +1297,7 @@ class BNS_Featured_Category extends WP_Widget {
 
 								$return_value = '</ul><div style="clear: left;"></div>';
 								$return_value .= '<p>' . $line . '</p>';
-								$ul = false;
+								$ul           = false;
 
 							} else {
 
